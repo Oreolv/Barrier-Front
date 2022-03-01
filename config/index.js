@@ -10,7 +10,7 @@ const config = {
   },
   sourceRoot: 'src',
   outputRoot: 'dist',
-  plugins: ['@tarojs/plugin-html'],
+  plugins: ['@tarojs/plugin-html', 'taro-plugin-pinia'],
   scss: {
     data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
   },
