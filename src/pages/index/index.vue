@@ -1,6 +1,7 @@
 <template>
   <view class="index">
-    <text>{{ msg }}</text>
+    <div>{{ msg }}</div>
+    <nut-button type="primary" block @click="tip">主要按钮</nut-button>
   </view>
 </template>
 
@@ -8,4 +9,7 @@
 import { ref } from 'vue';
 import './index.scss';
 const msg = ref('Hello world');
+const tip = () => {
+  console.log('tip');
+};
 </script>
