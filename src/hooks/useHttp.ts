@@ -1,7 +1,6 @@
 import axios from 'taro-axios';
-import { useUserStore } from '../store/users';
+import Taro from '@tarojs/taro';
 
-const userStore = useUserStore();
 const service = axios.create({
   baseURL: 'http://localhost:3000/api',
   timeout: 6000,
@@ -10,11 +9,12 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(
   (config) => {
-    if (userStore.cookie) {
+    const { token } = Taro.getStorageSync('userInfo');
+    if (token) {
       // 给请求头添加user-token
       config.headers = {
         'Content-Type': 'application/json;charset=utf-8',
-        // Cookie: userStore.cookie,
+        Authorization: `Bearer ${token}`,
       };
     }
     return config;
