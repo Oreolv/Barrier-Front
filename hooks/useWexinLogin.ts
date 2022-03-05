@@ -3,7 +3,6 @@ import { loginApi } from '../api/users';
 import { SuccessToast, ErrorToast } from './useShowToast';
 
 export const useWexinLogin = () => {
-  // :  Promise<UserProfileProp>
   return new Promise((resolve, reject) => {
     Taro.login({
       success: async (res) => {

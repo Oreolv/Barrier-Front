@@ -32,7 +32,7 @@
 
 <script setup lang="ts">
 import './index.scss';
-import { useUserStore } from '../../store/users';
+import { useUserStore } from '../../../store/users';
 import { storeToRefs } from 'pinia';
 import { useDidShow } from '@tarojs/taro';
 const userStore = useUserStore();
