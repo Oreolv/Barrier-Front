@@ -1,7 +1,7 @@
 {
   "miniprogramRoot": "./",
-  "projectname": "Barrier-Fe",
-  "appid": "testAppId",
+  "projectname": "Barrier-Front",
+  "appid": "wxa1c02916c95fc722",
   "setting": {
     "es6": false,
     "minified": false
