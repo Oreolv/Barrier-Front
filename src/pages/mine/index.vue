@@ -1,11 +1,46 @@
 <template>
   <view class="index">
-    <div>{{ msg }}</div>
+    <div class="info" v-if="userInfo.token">
+      <div class="info-avatar">
+        <img :src="userInfo.avatar" alt="" />
+      </div>
+      <div class="info-user">
+        <div class="info-nickName">{{ userInfo.nickName }}</div>
+        <div class="info-community">
+          {{ userInfo.cname ? userInfo.cname : '暂未绑定社区，请前往社区绑定' }}
+        </div>
+      </div>
+    </div>
+
+    <div class="info" @click="userStore.login()" v-else>
+      <div class="info-avatar">
+        <img :src="require('../../assets/avatar.png')" alt="" />
+      </div>
+      <div class="info-user">
+        <div class="info-nickName">立即登陆</div>
+        <div class="info-community">登陆享受更多精彩内容</div>
+      </div>
+    </div>
+    <br />
+
+    <nut-button type="primary" block plain @click="userStore.logout()" v-if="userInfo.token"
+      >退出登录</nut-button
+    >
+    <br />
   </view>
 </template>
 
-<script setup>
-import { ref } from 'vue';
+<script setup lang="ts">
 import './index.scss';
-const msg = ref('Hello world');
+import { useUserStore } from '../../store/users';
+import { storeToRefs } from 'pinia';
+import { useDidShow } from '@tarojs/taro';
+const userStore = useUserStore();
+const { userInfo } = storeToRefs(userStore);
+useDidShow(() => {
+  // 页面显示获取头像和昵称
+  if (userStore.checkLogin()) {
+    userStore.getInfo();
+  }
+});
 </script>
