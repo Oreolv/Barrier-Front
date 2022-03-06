@@ -1,8 +1,15 @@
 import axios from 'taro-axios';
 import Taro from '@tarojs/taro';
 
+let BASE_URL;
+if (process.env.NODE_ENV === 'production') {
+  BASE_URL = 'http://barrier.xinyu.ink/api';
+} else {
+  BASE_URL = 'http://localhost:3000/api';
+}
+
 const service = axios.create({
-  baseURL: 'http://localhost:3000/api',
+  baseURL: BASE_URL,
   timeout: 6000,
 });
 
