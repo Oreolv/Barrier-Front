@@ -1,0 +1,15 @@
+.nut-tabs__titles-item.active {
+  font-size: 16px !important;
+  .nut-tabs__titles-item__line {
+    background: #000;
+    width: 60%;
+    bottom: 10%;
+    border-radius: 10px;
+  }
+}
+
+.nut-tabs__titles-item {
+  width: auto;
+  min-width: 0;
+  flex: 0 1 auto;
+}
