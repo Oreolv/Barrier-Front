@@ -23,7 +23,7 @@ export interface UserProfileProp {
   uname?: string;
   usex?: UserSex;
   uphone?: number;
-  canme?: string;
+  cname?: string;
   vname?: string;
   bnum?: string;
   hnum?: string;
