@@ -19,8 +19,12 @@
   border: none;
 }
 
-.nut-tabpane {
-  padding: 12px 10px;
+// .nut-tabpane {
+//   padding: 12px 10px;
+// }
+
+.nut-grid {
+  padding: 0;
 }
 
 .update-time {
@@ -29,10 +33,42 @@
   font-size: 3.5vw;
   margin-bottom: 5px;
   .update-time-des {
-    margin-left: 8px;
+    margin-right: 8px;
     color: #7c7c7c;
   }
   .update-time-text {
     color: #222;
+  }
+}
+.city-data-des {
+  font-size: 4.5vw;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.nut-table__main__head__tr__td,
+.nut-table__main__head__tr__th,
+.nut-table__main__body__tr__td,
+.nut-table__main__body__tr__th {
+  text-align: center;
+  padding: 8px;
+}
+.nut-table__main__head__tr {
+  background-color: #eef4ff;
+  color: #4180f1;
+  white-space: nowrap;
+  text-align: center;
+}
+.nut-table__main__body__tr__td {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.nut-table__main__body__tr {
+  :nth-child(3) {
+    color: #ff7f7f;
+  }
+  :nth-child(5) {
+    text-align: right;
   }
 }

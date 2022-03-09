@@ -57,3 +57,26 @@ export const CovidList = [
     des: '累计死亡',
   },
 ];
+
+export const CityColumn = [
+  {
+    title: '城市(区)',
+    key: 'name',
+  },
+  {
+    title: '省市区',
+    key: 'province',
+  },
+  {
+    title: '新增',
+    key: 'confirm',
+  },
+  {
+    title: '现有确诊',
+    key: 'nowConfirm',
+  },
+  {
+    title: '区域风险',
+    key: 'grade',
+  },
+];

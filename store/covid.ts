@@ -12,7 +12,18 @@ export const useCovidStore = defineStore('covid', {
       cityData: [] as CityDataProp[],
     };
   },
-  getters: {},
+  getters: {
+    sortCityData() {
+      this.cityData.forEach((item) => {
+        if (item.confirm !== 0) {
+          item.confirm = `+${item.confirm}`;
+        }
+      });
+      return this.cityData.sort((a, b) => {
+        return b.confirm - a.confirm;
+      });
+    },
+  },
   actions: {
     async getCovidData() {
       const ret = await getCovidData();
