@@ -6,7 +6,8 @@ export const useCovidStore = defineStore('covid', {
     return {
       lastUpdateTime: '' as string,
       allData: {} as CovidDataProp,
-      chinaData: [] as ChinaDataProp[],
+      chinaAdd: {} as ChinaDataProp,
+      chinaTotal: {} as ChinaDataProp,
       provinceData: [] as ProvinceDataProp[],
       cityData: [] as CityDataProp[],
     };
@@ -16,7 +17,9 @@ export const useCovidStore = defineStore('covid', {
     async getCovidData() {
       const ret = await getCovidData();
       this.allData = ret.data;
-      this.chinaData = ret.data.china_data;
+      this.lastUpdateTime = ret.data.lastUpdateTime;
+      this.chinaAdd = ret.data.china_data[0];
+      this.chinaTotal = ret.data.china_data[1];
       this.cityData = ret.data.city_data;
       this.provinceData = ret.data.province_data;
     },
