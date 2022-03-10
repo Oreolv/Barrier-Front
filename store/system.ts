@@ -24,6 +24,11 @@ export const useSystemStore = defineStore('system', {
     getSearchBarWidth() {
       return `${this.menuButtonInfo.right - this.menuButtonInfo.width}px`;
     },
+    getSearchBarHeight() {
+      return `${
+        (this.menuButtonInfo.top - this.systemInfo.statusBarHeight) * 2 + this.menuButtonInfo.height
+      }px`;
+    },
   },
   actions: {
     getSystemInfo() {

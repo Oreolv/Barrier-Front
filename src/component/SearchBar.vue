@@ -27,6 +27,7 @@ const navBarHeight = systemStore.getNavBarHeigtht;
 const navBarTop = systemStore.getNavBarTop;
 const inputHeight = systemStore.getMenuButtonHeight;
 const searchBarWidth = systemStore.getSearchBarWidth;
+const searchBarHeight = systemStore.getSearchBarHeight;
 </script>
 
 <style lang="scss">
@@ -42,6 +43,7 @@ const searchBarWidth = systemStore.getSearchBarWidth;
   top: v-bind(navBarTop);
   left: 0;
   width: v-bind(searchBarWidth);
+  height: v-bind(searchBarHeight);
   .nut-searchbar__search-input {
     height: v-bind(inputHeight);
   }
