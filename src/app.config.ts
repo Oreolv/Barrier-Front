@@ -5,7 +5,7 @@ export default defineAppConfig({
     navigationBarBackgroundColor: '#fff',
     navigationBarTitleText: '疫情社区管理防控',
     navigationBarTextStyle: 'black',
-    navigationStyle: 'custom',
+    navigationStyle: 'default',
   },
   tabBar: {
     color: '#000',
