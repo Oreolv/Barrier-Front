@@ -13,6 +13,11 @@ export const useCovidStore = defineStore('covid', {
     };
   },
   getters: {
+    partCityData() {
+      return this.cityData.filter((c) => c.confirm > 0);
+    },
+  },
+  actions: {
     sortCityData() {
       this.cityData.forEach((item) => {
         if (item.confirm !== 0) {
@@ -23,8 +28,6 @@ export const useCovidStore = defineStore('covid', {
         return b.confirm - a.confirm;
       });
     },
-  },
-  actions: {
     async getCovidData() {
       const ret = await getCovidData();
       this.allData = ret.data;
@@ -33,6 +36,7 @@ export const useCovidStore = defineStore('covid', {
       this.chinaTotal = ret.data.china_data[1];
       this.cityData = ret.data.city_data;
       this.provinceData = ret.data.province_data;
+      this.sortCityData();
     },
   },
 });

@@ -27,10 +27,13 @@
         <div class="city-data-des">近期31省市区本土病例</div>
         <nut-table
           :columns="CityColumn"
-          :data="covidStore.sortCityData"
+          :data="loadmore ? covidStore.partCityData : covidStore.cityData"
           :bordered="false"
           align="center"
         ></nut-table>
+        <div class="loadmore" v-if="covidStore.cityData.length">
+          <div @click="loadmore = !loadmore">{{ loadmore ? '展开更多' : '收起数据' }}</div>
+        </div>
       </div>
     </nut-tabpane>
     <nut-tabpane title="防疫知识">Tab 2</nut-tabpane>
@@ -49,16 +52,23 @@ import { useDidShow } from '@tarojs/taro';
 
 const covidStore = useCovidStore();
 const systemStore = useSystemStore();
+systemStore.getAllInfo();
+covidStore.getCovidData();
+useDidShow(() => {});
 
 const tabValue = ref(0);
-systemStore.getAllInfo();
 const tabsTop = systemStore.getNavBarHeigtht;
-useDidShow(() => {
-  covidStore.getCovidData();
-});
+
+const loadmore = ref(true);
 </script>
 
 <style lang="scss">
+.loadmore {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 5px;
+}
 .nut-tabs {
   position: relative;
   top: v-bind(tabsTop);
