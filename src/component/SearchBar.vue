@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import Taro from '@tarojs/taro';
+import { useSystemStore } from '../../store/system';
 defineProps({
   placeholder: {
     type: String,
@@ -21,27 +21,27 @@ defineProps({
     type: String,
   },
 });
-const { statusBarHeight } = Taro.getSystemInfoSync();
-const { top, width, height, right } = Taro.getMenuButtonBoundingClientRect();
-const navTop = `${top - 9}px`; // 组件库含有9px的padding-top
-const navWidth = `${right - width}px`;
-const inputHeight = `${height}px`;
-const navHeight = `${(top - statusBarHeight) * 2 + height + statusBarHeight}px`;
+const systemStore = useSystemStore();
+systemStore.getAllInfo();
+const navBarHeight = systemStore.getNavBarHeigtht;
+const navBarTop = systemStore.getNavBarTop;
+const inputHeight = systemStore.getMenuButtonHeight;
+const searchBarWidth = systemStore.getSearchBarWidth;
 </script>
 
 <style lang="scss">
 .nut-navbar {
   position: fixed;
-  height: v-bind(navHeight);
+  height: v-bind(navBarHeight);
   top: 0;
   z-index: 1;
   width: 100%;
 }
 .nut-searchbar {
   position: fixed;
-  top: v-bind(navTop);
+  top: v-bind(navBarTop);
   left: 0;
-  width: v-bind(navWidth);
+  width: v-bind(searchBarWidth);
   .nut-searchbar__search-input {
     height: v-bind(inputHeight);
   }
