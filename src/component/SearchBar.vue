@@ -47,5 +47,8 @@ const searchBarHeight = systemStore.getSearchBarHeight;
   .nut-searchbar__search-input {
     height: v-bind(inputHeight);
   }
+  .nut-searchbar__input-bar {
+    text-align: left;
+  }
 }
 </style>
