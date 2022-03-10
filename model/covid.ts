@@ -72,7 +72,7 @@ export const CityColumn = [
     key: 'confirm',
   },
   {
-    title: '现有确诊',
+    title: '确诊',
     key: 'nowConfirm',
   },
   {
