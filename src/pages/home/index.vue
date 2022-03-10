@@ -32,7 +32,14 @@
           align="center"
         ></nut-table>
         <div class="loadmore" v-if="covidStore.cityData.length">
-          <div @click="loadmore = !loadmore">{{ loadmore ? '展开更多' : '收起数据' }}</div>
+          <div
+            @click="
+              loadmore = !loadmore;
+              loadmore ? scrollToTop() : null;
+            "
+          >
+            {{ loadmore ? '展开更多' : '收起数据' }}
+          </div>
         </div>
       </div>
     </nut-tabpane>
@@ -47,6 +54,7 @@ import SearchBar from '../../component/SearchBar.vue';
 import ChinaCovidItem from '../../component/ChinaCovidItem.vue';
 import { useCovidStore } from '../../../store/covid';
 import { useSystemStore } from '../../../store/system';
+import { scrollToTop } from '../../../hooks/useScrollToTop';
 import { CovidList, CityColumn } from '../../../model/covid';
 import { useDidShow } from '@tarojs/taro';
 
