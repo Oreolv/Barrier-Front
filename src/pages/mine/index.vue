@@ -14,7 +14,7 @@
 
     <div class="info" @click="userStore.login()" v-else>
       <div class="info-avatar">
-        <img :src="require('../../assets/avatar.png')" alt="" />
+        <img :src="require('@/assets/avatar.png')" alt="" />
       </div>
       <div class="info-user">
         <div class="info-nickName">立即登陆</div>
@@ -23,16 +23,16 @@
     </div>
     <br />
 
-    <nut-button type="primary" block plain @click="userStore.logout()" v-if="userInfo.nickName"
-      >退出登录</nut-button
-    >
+    <nut-button type="primary" block plain @click="userStore.logout()" v-if="userInfo.nickName">
+      退出登录
+    </nut-button>
     <br />
   </view>
 </template>
 
 <script setup lang="ts">
 import './index.scss';
-import { useUserStore } from '../../../store/users';
+import { useUserStore } from '@/store/users';
 import { storeToRefs } from 'pinia';
 import { useDidShow } from '@tarojs/taro';
 const userStore = useUserStore();

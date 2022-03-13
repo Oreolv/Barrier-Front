@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts" setup>
-import { useSystemStore } from '../../store/system';
+import { useSystemStore } from '@/store/system';
 defineProps({
   placeholder: {
     type: String,

@@ -18,8 +18,17 @@
     "jsx": "react-jsx",
     "allowJs": true,
     "resolveJsonModule": true,
-    "typeRoots": ["node_modules/@types"]
+    "typeRoots": ["node_modules/@types"],
+    "paths": {
+      "@/api/*": ["./src/api/*"],
+      "@/util/*": ["./src/util/*"],
+      "@/model/*": ["./src/model/*"],
+      "@/store/*": ["./src/store/*"],
+      "@/hooks/*": ["./src/hooks/*"],
+      "@/assets/*": ["./src/assets/*"],
+      "@/component/*": ["./src/component/*"]
+    }
   },
-  "include": ["./src", "global.d.ts", "api","store","type","hooks","model"],
+  "include": ["./src", "global.d.ts", "type"],
   "compileOnSave": false
 }

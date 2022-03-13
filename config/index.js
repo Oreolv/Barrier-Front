@@ -1,3 +1,4 @@
+const path = require('path');
 const config = {
   projectName: 'Barrier-Front',
   date: '2022-3-1',
@@ -18,6 +19,15 @@ const config = {
   copy: {
     patterns: [],
     options: {},
+  },
+  alias: {
+    '@/api': path.resolve(__dirname, '..', 'src/api'),
+    '@/util': path.resolve(__dirname, '..', 'src/util'),
+    '@/hooks': path.resolve(__dirname, '..', 'src/hooks'),
+    '@/store': path.resolve(__dirname, '..', 'src/store'),
+    '@/model': path.resolve(__dirname, '..', 'src/model'),
+    '@/assets': path.resolve(__dirname, '..', 'src/assets'),
+    '@/component': path.resolve(__dirname, '..', 'src/component'),
   },
   framework: 'vue3',
   mini: {

@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
-import { UserInfoProp } from '../model/user';
-import { ErrorToast } from '../hooks/useShowToast';
+import { UserInfoProp } from '@/model/user';
+import { ErrorToast } from '@/hooks/useShowToast';
 export const useWexinProfile = (): Promise<UserInfoProp> => {
   return new Promise((resolve, reject) => {
     Taro.getUserProfile({
