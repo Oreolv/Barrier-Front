@@ -5,7 +5,7 @@ let BASE_URL;
 if (process.env.NODE_ENV === 'production') {
   BASE_URL = 'http://barrier.xinyu.ink/api';
 } else {
-  BASE_URL = 'http://localhost:3000/api';
+  BASE_URL = 'http://localhost:3001/';
 }
 
 const service = axios.create({

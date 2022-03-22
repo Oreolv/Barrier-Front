@@ -8,9 +8,9 @@ export const useWexinLogin = () => {
       success: async (res) => {
         const { code } = res;
         if (code) {
-          const { data, errcode, message } = await loginApi(code);
+          const { result, errcode, message } = await loginApi(code);
           errcode === 0 ? SuccessToast('登陆成功') : ErrorToast(message);
-          resolve(data);
+          resolve(result);
         } else {
           ErrorToast('登录失败！' + res.errMsg);
           reject(res.errMsg);
