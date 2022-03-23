@@ -44,8 +44,8 @@ module.exports = {
     '@typescript-eslint/no-explicit-any': ['off'], //禁止使用any
     eqeqeq: 2, //必须使用全等
     'max-lines': ['error', 500], //限制行数 请勿修改 请优化你的代码
-    complexity: ['error', 5], // 限制复杂度
     'require-await': 'error',
     'vue/multi-word-component-names': 0,
+    'no-useless-escape': 0,
   },
 };
