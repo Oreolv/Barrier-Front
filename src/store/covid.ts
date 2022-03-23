@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
-import { CovidDataProp, ChinaDataProp, ProvinceDataProp, CityDataProp } from '@/model/covid';
-import { getCovidData } from '@/api/covid';
+import { CovidDataProp, ChinaDataProp, ProvinceDataProp, CityDataProp } from '/@/model/covid';
+import { getCovidData } from '/@/api/covid';
 export const useCovidStore = defineStore('covid', {
   state: () => {
     return {

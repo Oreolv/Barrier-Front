@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
-import { loginApi } from '@/api/users';
-import { SuccessToast, ErrorToast } from '@/hooks/useShowToast';
+import { loginApi } from '/@/api/users';
+import { SuccessToast, ErrorToast } from '/@/hooks/useShowToast';
 
 export const useWexinLogin = () => {
   return new Promise((resolve, reject) => {

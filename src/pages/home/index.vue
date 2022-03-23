@@ -50,12 +50,12 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import SearchBar from '@/component/SearchBar.vue';
-import ChinaCovidItem from '@/component/ChinaCovidItem.vue';
-import { useCovidStore } from '@/store/covid';
-import { useSystemStore } from '@/store/system';
-import { scrollToTop } from '@/hooks/useScrollToTop';
-import { CovidList, CityColumn } from '@/model/covid';
+import SearchBar from '/@/components/SearchBar.vue';
+import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
+import { useCovidStore } from '/@/store/covid';
+import { useSystemStore } from '/@/store/system';
+import { scrollToTop } from '/@/hooks/useScrollToTop';
+import { CovidList, CityColumn } from '/@/model/covid';
 import { useDidShow } from '@tarojs/taro';
 
 const covidStore = useCovidStore();

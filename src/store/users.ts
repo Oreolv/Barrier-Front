@@ -1,8 +1,8 @@
 import Taro from '@tarojs/taro';
 import { defineStore } from 'pinia';
-import { useWexinLogin } from '@/hooks/useWexinLogin';
-import { useWexinProfile } from '@/hooks/useWexinProfile';
-import { UserInfoProp, UserProfileProp } from '@/model/user';
+import { useWexinLogin } from '/@/hooks/useWexinLogin';
+import { useWexinProfile } from '/@/hooks/useWexinProfile';
+import { UserInfoProp, UserProfileProp } from '/@/model/user';
 export const useUserStore = defineStore('users', {
   state: () => {
     return {
