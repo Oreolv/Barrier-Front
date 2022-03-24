@@ -5,6 +5,10 @@ enum Api {
   GetUserInfo = '/resident/getUserInfo',
 }
 
+export function login(params: LoginParams) {
+  return defHttp.post<LoginResultModel>({ url: Api.Login, params });
+}
+
 export function getUserInfo() {
   return defHttp.get<GetUserInfoResultModel>({ url: Api.GetUserInfo });
 }

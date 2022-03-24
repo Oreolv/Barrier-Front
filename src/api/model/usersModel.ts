@@ -17,3 +17,9 @@ export interface GetUserInfoResultModel {
   company: string;
   foreignStatus: UserStatus;
 }
+
+export interface LoginResultModel {
+  userId: number;
+  token: string;
+}
+
