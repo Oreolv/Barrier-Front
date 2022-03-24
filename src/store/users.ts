@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { getUserInfo } from '/@/api/users';
+import { getUserInfo, updateUserProfile } from '/@/api/users';
 import { TOKEN_KEY, USER_INFO_KEY, USER_PROFILE_KEY } from '/@/enums/cacheEnum';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
 import { showLoading } from '/@/hooks/useShowMessage';
@@ -64,6 +64,7 @@ export const useUserStore = defineStore('users', {
       const userProfile = await useWexinProfile();
       const { token } = await useWexinLogin();
       this.setTokenAction(token);
+      await updateUserProfile(userProfile);
       this.setUserProfileAction(userProfile);
       this.getUserInfoAction();
       showLoading.hideLoading();

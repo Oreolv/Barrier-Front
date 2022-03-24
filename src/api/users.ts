@@ -1,8 +1,14 @@
 import { defHttp } from '/@/utils/axios';
-import { LoginParams, LoginResultModel, GetUserInfoResultModel } from './model/usersModel';
+import {
+  LoginParams,
+  LoginResultModel,
+  GetUserInfoResultModel,
+  UserProfile as UpdateUserProfileParams,
+} from './model/usersModel';
 enum Api {
   Login = '/resident/login',
   GetUserInfo = '/resident/getUserInfo',
+  UpdateUserProfile = '/resident/updateUserProfile',
 }
 
 export function login(params: LoginParams) {
@@ -11,4 +17,8 @@ export function login(params: LoginParams) {
 
 export function getUserInfo() {
   return defHttp.get<GetUserInfoResultModel>({ url: Api.GetUserInfo });
+}
+
+export function updateUserProfile(params: UpdateUserProfileParams) {
+  return defHttp.put<null>({ url: Api.UpdateUserProfile, params });
 }
