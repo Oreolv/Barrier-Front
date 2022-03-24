@@ -25,6 +25,12 @@ function modal(params: ModalParams) {
   });
 }
 
+function loading(title: string) {
+  Taro.showLoading({
+    title: title,
+  });
+}
+
 export const ShowToast = {
   success: function (title) {
     toast(title, 'success', 1500);
@@ -45,5 +51,14 @@ export const ShowModal = {
   confirm: function (params: ModalParams) {
     params.showCancel = true;
     modal(params);
+  },
+};
+
+export const showLoading = {
+  loading: function (title) {
+    loading(title);
+  },
+  hideLoading: function () {
+    Taro.hideLoading();
   },
 };
