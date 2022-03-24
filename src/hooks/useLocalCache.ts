@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 
-export function setLocalCache(key: string, value: string) {
+export function setLocalCache(key: string, value: any) {
   Taro.setStorageSync(key, value);
 }
 
