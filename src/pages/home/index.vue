@@ -55,7 +55,7 @@ import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { useCovidStore } from '/@/store/covid';
 import { useSystemStore } from '/@/store/system';
 import { scrollToTop } from '/@/hooks/useScrollToTop';
-import { CovidList, CityColumn } from '/@/model/covid';
+import { CovidList, CityColumn } from './data';
 import { useDidShow } from '@tarojs/taro';
 
 const covidStore = useCovidStore();

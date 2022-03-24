@@ -1,4 +1,4 @@
-interface ChinaDataItem {
+export interface ChinaDataItem {
   confirm: number;
   dead: number;
   nowConfirm: number;
@@ -7,14 +7,14 @@ interface ChinaDataItem {
   localConfirm: number;
 }
 
-interface ProvinceDataItem {
+export interface ProvinceDataItem {
   name: string;
   nowConfirm: number;
   confirm: number;
   heal: number;
   dead: number;
 }
-interface CityDataItem {
+export interface CityDataItem {
   name: string;
   nowConfirm: number;
   confirm: number;

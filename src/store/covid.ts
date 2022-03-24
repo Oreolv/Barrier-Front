@@ -1,15 +1,20 @@
 import { defineStore } from 'pinia';
-import { CovidDataProp, ChinaDataProp, ProvinceDataProp, CityDataProp } from '/@/model/covid';
+import {
+  GetCovidDataModel,
+  ChinaDataItem,
+  ProvinceDataItem,
+  CityDataItem,
+} from '/@/api/model/covidModel';
 import { getCovidData } from '/@/api/covid';
 export const useCovidStore = defineStore('covid', {
   state: () => {
     return {
+      allData: {} as GetCovidDataModel,
       lastUpdateTime: '' as string,
-      allData: {} as CovidDataProp,
-      chinaAdd: {} as ChinaDataProp,
-      chinaTotal: {} as ChinaDataProp,
-      provinceData: [] as ProvinceDataProp[],
-      cityData: [] as CityDataProp[],
+      chinaAdd: {} as ChinaDataItem,
+      chinaTotal: {} as ChinaDataItem,
+      provinceData: [] as ProvinceDataItem[],
+      cityData: [] as CityDataItem[],
     };
   },
   getters: {
