@@ -30,12 +30,12 @@ export const useCovidStore = defineStore('covid', {
     },
     async getCovidData() {
       const ret = await getCovidData();
-      this.allData = ret.result;
-      this.lastUpdateTime = ret.result.lastUpdateTime;
-      this.chinaAdd = ret.result.china_data[0];
-      this.chinaTotal = ret.result.china_data[1];
-      this.cityData = ret.result.city_data;
-      this.provinceData = ret.result.province_data;
+      this.allData = ret;
+      this.lastUpdateTime = ret.lastUpdateTime;
+      this.chinaAdd = ret.china_data[0];
+      this.chinaTotal = ret.china_data[1];
+      this.cityData = ret.city_data;
+      this.provinceData = ret.province_data;
       this.sortCityData();
     },
   },

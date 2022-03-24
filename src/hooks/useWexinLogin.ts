@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
-import { loginApi } from '/@/api/users';
-import { SuccessToast, ErrorToast } from '/@/hooks/useShowToast';
+import { login } from '/@/api/users';
+import { ShowToast } from '/@/hooks/useShowMessage';
 
 export const useWexinLogin = () => {
   return new Promise((resolve, reject) => {
@@ -8,11 +8,10 @@ export const useWexinLogin = () => {
       success: async (res) => {
         const { code } = res;
         if (code) {
-          const { result, errcode, message } = await loginApi(code);
-          errcode === 0 ? SuccessToast('登陆成功') : ErrorToast(message);
-          resolve(result);
+          const data = await login({ code });
+          resolve(data);
         } else {
-          ErrorToast('登录失败！' + res.errMsg);
+          ShowToast.success('登录失败！' + res.errMsg);
           reject(res.errMsg);
         }
       },

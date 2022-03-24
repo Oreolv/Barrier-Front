@@ -1,6 +1,6 @@
 import Taro from '@tarojs/taro';
 import { UserInfoProp } from '/@/model/user';
-import { ErrorToast } from '/@/hooks/useShowToast';
+import { ShowToast } from '/@/hooks/useShowMessage';
 export const useWexinProfile = (): Promise<UserInfoProp> => {
   return new Promise((resolve, reject) => {
     Taro.getUserProfile({
@@ -15,9 +15,9 @@ export const useWexinProfile = (): Promise<UserInfoProp> => {
       },
       fail: (res) => {
         if (res.errMsg.search(/fail auth deny/)) {
-          ErrorToast('用户取消登陆');
+          ShowToast.error('用户取消登陆');
         } else {
-          ErrorToast(res.errMsg);
+          ShowToast.error(res.errMsg);
         }
         reject(res);
       },

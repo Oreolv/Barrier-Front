@@ -1,3 +1,9 @@
-import http from '/@/utils/http';
+import { defHttp } from '/@/utils/axios';
+import { LoginParams } from './model/usersModel';
+enum Api {
+  Login = '/resident/login',
+}
 
-export const loginApi = (code) => http.post('/resident/login', { code });
+export function login(params: LoginParams) {
+  return defHttp.post<void>({ url: Api.Login, params });
+}

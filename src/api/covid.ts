@@ -1,3 +1,9 @@
-import http from '/@/utils/http';
+import { defHttp } from '/@/utils/axios';
+import { GetCovidDataModel } from './model/covidModel';
+enum Api {
+  GetCovidData = '/covid/all_data',
+}
 
-export const getCovidData = () => http.get('/covid/all_data');
+export function getCovidData() {
+  return defHttp.get<GetCovidDataModel>({ url: Api.GetCovidData });
+}
