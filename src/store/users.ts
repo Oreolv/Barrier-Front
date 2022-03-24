@@ -10,7 +10,11 @@ export const useUserStore = defineStore('users', {
       userProfile: {} as UserProfileProp,
     };
   },
-  getters: {},
+  getters: {
+    getToken: function () {
+      return this.userInfo.token;
+    },
+  },
   actions: {
     async login(): Promise<void> {
       const { nickName, avatar } = (await useWexinProfile()) as UserInfoProp;
