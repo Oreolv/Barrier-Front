@@ -5,7 +5,7 @@ export function setLocalCache(key: string, value: any) {
 }
 
 export function getLocalCache(key: string) {
-  Taro.getStorageSync(key);
+  return Taro.getStorageSync(key);
 }
 
 export function removeLocalCache(key: string) {
