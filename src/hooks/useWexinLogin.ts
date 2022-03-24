@@ -11,7 +11,7 @@ export const useWexinLogin = () => {
           const data = await login({ code });
           resolve(data);
         } else {
-          ShowToast.success('登录失败！' + res.errMsg);
+          ShowToast.error('登录失败！' + res.errMsg);
           reject(res.errMsg);
         }
       },
