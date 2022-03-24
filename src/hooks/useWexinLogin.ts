@@ -1,8 +1,9 @@
 import Taro from '@tarojs/taro';
 import { login } from '/@/api/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
+import { LoginResultModel } from '/@/api/model/usersModel';
 
-export const useWexinLogin = () => {
+export const useWexinLogin = (): Promise<LoginResultModel> => {
   return new Promise((resolve, reject) => {
     Taro.login({
       success: async (res) => {

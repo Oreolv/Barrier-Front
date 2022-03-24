@@ -23,3 +23,8 @@ export interface LoginResultModel {
   token: string;
 }
 
+// 由微信获取，头像和昵称
+export interface UserProfile {
+  avatar: string;
+  nickName: string;
+}
