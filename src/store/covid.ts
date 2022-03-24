@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia';
 import {
-  GetCovidDataModel,
+  GetCovidDataResultModel,
   ChinaDataItem,
   ProvinceDataItem,
   CityDataItem,
@@ -9,7 +9,7 @@ import { getCovidData } from '/@/api/covid';
 export const useCovidStore = defineStore('covid', {
   state: () => {
     return {
-      allData: {} as GetCovidDataModel,
+      allData: {} as GetCovidDataResultModel,
       lastUpdateTime: '' as string,
       chinaAdd: {} as ChinaDataItem,
       chinaTotal: {} as ChinaDataItem,

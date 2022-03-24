@@ -22,7 +22,7 @@ export interface CityDataItem {
   grade: string;
 }
 
-export interface GetCovidDataModel {
+export interface GetCovidDataResultModel {
   lastUpdateTime: string;
   china_data: ChinaDataItem[];
   province_data: ProvinceDataItem[];
