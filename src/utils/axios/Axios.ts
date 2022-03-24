@@ -224,9 +224,9 @@ export class VAxios {
             reject(requestCatchHook(e, opt));
             return;
           }
-          if (axios.isAxiosError(e)) {
-            // rewrite error message from axios in here
-          }
+          // if (axios.isAxiosError(e)) {
+          //   // rewrite error message from axios in here
+          // }
           reject(e);
         });
     });
