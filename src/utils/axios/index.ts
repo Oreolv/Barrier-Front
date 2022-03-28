@@ -13,7 +13,7 @@ let apiUrl;
 if (process.env.NODE_ENV === 'production') {
   apiUrl = 'http://barrier.xinyu.ink';
 } else {
-  apiUrl = 'http://localhost:3001';
+  apiUrl = 'http://192.168.0.233:3001';
 }
 const urlPrefix = '';
 const userStore = useUserStore();
