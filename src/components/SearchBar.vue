@@ -47,7 +47,7 @@ const searchBarWidth = getSearchBarWidth();
   left: 0;
   margin: 0;
   padding: 0;
-  padding: 0 20rpx;
+  padding: 0 10px;
   width: v-bind(searchBarWidth);
   height: v-bind(searchBarHeight);
   .nut-searchbar__search-input {
@@ -56,7 +56,7 @@ const searchBarWidth = getSearchBarWidth();
   }
   .nut-searchbar__input-bar {
     text-align: left;
-    font-size: 1rem;
+    font-size: 16px;
     padding-left: 26px;
   }
 }
