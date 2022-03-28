@@ -1,5 +1,6 @@
-import { createApp } from 'vue';
 import './app.scss';
+import '/@/assets/font/iconfont.css';
+import { createApp } from 'vue';
 import '@nutui/nutui-taro/dist/style.css';
 import { createPinia } from 'pinia';
 import {

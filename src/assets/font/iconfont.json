@@ -1,0 +1,44 @@
+{
+  "id": "3284248",
+  "name": "guard",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "17542062",
+      "name": "更多",
+      "font_class": "gengduo",
+      "unicode": "e62e",
+      "unicode_decimal": 58926
+    },
+    {
+      "icon_id": "17542111",
+      "name": "分享",
+      "font_class": "fenxiang",
+      "unicode": "e635",
+      "unicode_decimal": 58933
+    },
+    {
+      "icon_id": "17542135",
+      "name": "我的-个人资料",
+      "font_class": "wode-gerenziliao",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "17542185",
+      "name": "我的-绑定关系",
+      "font_class": "wode-bangdingguanxi",
+      "unicode": "e645",
+      "unicode_decimal": 58949
+    },
+    {
+      "icon_id": "17542187",
+      "name": "我的-关于我们",
+      "font_class": "wode-guanyuwomen",
+      "unicode": "e646",
+      "unicode_decimal": 58950
+    }
+  ]
+}
