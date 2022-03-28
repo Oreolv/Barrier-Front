@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia';
 import { ResultColor } from '/@/enums/colorEnum';
-import { showLoading } from '/@/hooks/useShowMessage';
 import { useWexinLogin } from '/@/hooks/useWexinLogin';
 import { useWexinProfile } from '/@/hooks/useWexinProfile';
 import { getUserInfo, updateUserProfile } from '/@/api/users';
 import { UserStatusEnum, HealthEnum } from '/@/enums/userEnum';
+import { showLoading, ShowToast } from '/@/hooks/useShowMessage';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
 import { UserProfile, GetUserInfoResultModel as UserInfo } from '/@/api/model/usersModel';
 import { TOKEN_KEY, USER_INFO_KEY, USER_PROFILE_KEY, USER_STATUS_KEY } from '/@/enums/cacheEnum';
@@ -128,13 +128,16 @@ export const useUserStore = defineStore('users', {
       this.setTokenAction(token);
       await updateUserProfile(userProfile);
       this.setUserProfileAction(userProfile);
-      this.getUserInfoAction();
+      await this.initStateAction();
       showLoading.hideLoading();
     },
     logout() {
-      this.setTokenAction(undefined);
+      this.resetStateAction();
       this.setUserInfoAction(null);
+      this.setTokenAction(undefined);
+      this.setUserStatusAction(null);
       this.setUserProfileAction(null);
+      ShowToast.success('退出成功');
     },
     resetStateAction() {
       this.userInfo = null;
