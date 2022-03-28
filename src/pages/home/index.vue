@@ -53,19 +53,17 @@ import { ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { useCovidStore } from '/@/store/covid';
-import { useSystemStore } from '/@/store/system';
+import { getNavBarHeigtht } from '/@/hooks/useGetSystemInfo';
 import { scrollToTop } from '/@/hooks/useScrollToTop';
 import { CovidList, CityColumn } from './data';
 import { useDidShow } from '@tarojs/taro';
 
 const covidStore = useCovidStore();
-const systemStore = useSystemStore();
-systemStore.getAllInfo();
 covidStore.getCovidData();
 useDidShow(() => {});
 
 const tabValue = ref(0);
-const tabsTop = systemStore.getNavBarHeigtht;
+const tabsTop = getNavBarHeigtht();
 
 const loadmore = ref(true);
 </script>

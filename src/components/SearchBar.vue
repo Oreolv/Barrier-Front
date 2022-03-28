@@ -11,7 +11,12 @@
 </template>
 
 <script lang="ts" setup>
-import { useSystemStore } from '/@/store/system';
+import {
+  getNavBarHeigtht,
+  getNavBarTop,
+  getMenuButtonHeight,
+  getSearchBarWidth,
+} from '/@/hooks/useGetSystemInfo';
 defineProps({
   placeholder: {
     type: String,
@@ -21,13 +26,11 @@ defineProps({
     type: String,
   },
 });
-const systemStore = useSystemStore();
-systemStore.getAllInfo();
-const navBarHeight = systemStore.getNavBarHeigtht;
-const navBarTop = systemStore.getNavBarTop;
-const inputHeight = systemStore.getMenuButtonHeight;
-const searchBarWidth = systemStore.getSearchBarWidth;
-const searchBarHeight = systemStore.getSearchBarHeight;
+
+const navBarTop = getNavBarTop();
+const navBarHeight = getNavBarHeigtht();
+const searchBarHeight = getMenuButtonHeight();
+const searchBarWidth = getSearchBarWidth();
 </script>
 
 <style lang="scss">
@@ -42,13 +45,19 @@ const searchBarHeight = systemStore.getSearchBarHeight;
   position: fixed;
   top: v-bind(navBarTop);
   left: 0;
+  margin: 0;
+  padding: 0;
+  padding: 0 20rpx;
   width: v-bind(searchBarWidth);
   height: v-bind(searchBarHeight);
   .nut-searchbar__search-input {
-    height: v-bind(inputHeight);
+    height: v-bind(searchBarHeight);
+    width: v-bind(searchBarWidth);
   }
   .nut-searchbar__input-bar {
     text-align: left;
+    font-size: 1rem;
+    padding-left: 26px;
   }
 }
 </style>
