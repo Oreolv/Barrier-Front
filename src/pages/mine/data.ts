@@ -1,3 +1,4 @@
+import Taro from '@tarojs/taro';
 interface SettingItem {
   title: string;
   icon: string;
@@ -7,7 +8,12 @@ export const SettingList: SettingItem[] = [
   {
     title: '个人资料',
     icon: 'wode-gerenziliao',
-    click: () => {},
+    click: () => {
+      Taro.navigateTo({
+        url: '/pages/mine/children/user/index',
+        events: {},
+      });
+    },
   },
   {
     title: '账户设置',
