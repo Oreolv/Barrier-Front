@@ -23,25 +23,24 @@
         </div>
       </div>
       <div class="user-setting">
-        <div
-          class="setting-item"
-          v-for="item in SettingList"
-          :key="item.icon"
-          @click="item.click(userStore.getUserLoginStatus)"
-        >
-          <div class="item-icon">
-            <nut-icon
-              font-class-name="iconfont"
-              class-prefix="icon"
-              :name="item.icon"
-              size="38rpx"
-            />
-          </div>
-          <div class="item-title">{{ item.title }}</div>
-          <div class="item-right">
-            <nut-icon font-class-name="iconfont" class-prefix="icon" name="jiantou" size="26rpx" />
-          </div>
-        </div>
+        <nut-cell-group>
+          <nut-cell
+            v-for="item in SettingList"
+            :key="item.icon"
+            :title="item.title"
+            @click="item.click"
+            is-link
+          >
+            <template v-slot:icon>
+              <nut-icon
+                font-class-name="iconfont"
+                class-prefix="icon"
+                :name="item.icon"
+                size="38rpx"
+              />
+            </template>
+          </nut-cell>
+        </nut-cell-group>
       </div>
     </div>
   </view>
@@ -152,23 +151,17 @@ const showBindingModal = () => {
   }
 }
 .user-setting {
-  display: flex;
-  margin-top: 24px;
-  flex-direction: column;
-  justify-content: center;
-  .setting-item {
-    display: flex;
-    padding: 18px 0;
-    margin: 0 24px;
-    align-items: center;
-    border-bottom: 1px #e4e7ed solid;
-    .item-title {
-      flex: 1;
-      margin-left: 12px;
+  padding: 24px 8px 16px 8px;
+  .nut-cell__title {
+    .iconfont {
+      margin-right: 8px;
     }
+    color: black;
   }
-}
-.user-setting :last-child {
-  border-bottom: none;
+  .nutui-iconfont {
+    color: black;
+    font-size: 10px;
+    font-weight: 800;
+  }
 }
 </style>
