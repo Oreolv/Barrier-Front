@@ -13,10 +13,24 @@ import {
   GridItem,
   Table,
   Navbar,
+  Cell,
+  CellGroup,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
-const NutComponent = [Button, SearchBar, Icon, Tabs, TabPane, Grid, GridItem, Table, Navbar];
+const NutComponent = [
+  Button,
+  SearchBar,
+  Icon,
+  Tabs,
+  TabPane,
+  Grid,
+  GridItem,
+  Table,
+  Navbar,
+  Cell,
+  CellGroup,
+];
 
 App.use(pinia);
 NutComponent.forEach((component) => {
