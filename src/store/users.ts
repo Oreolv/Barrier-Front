@@ -50,7 +50,7 @@ export const useUserStore = defineStore('users', {
       return this.lastUpdateTime;
     },
     getUserLoginStatus(): boolean {
-      return Boolean(this.token) || getLocalCache(TOKEN_KEY) || false;
+      return Boolean(this.getToken) || false;
     },
   },
   actions: {
