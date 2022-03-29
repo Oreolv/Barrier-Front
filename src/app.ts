@@ -15,19 +15,12 @@ import {
   Navbar,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
-const App = createApp({
-  onShow(options) {},
-  // 入口组件不需要实现 render 方法，即使实现了也会被 taro 所覆盖
-});
+const App = createApp({});
+const NutComponent = [Button, SearchBar, Icon, Tabs, TabPane, Grid, GridItem, Table, Navbar];
+
 App.use(pinia);
-App.use(Button)
-  .use(SearchBar)
-  .use(Icon)
-  .use(Tabs)
-  .use(TabPane)
-  .use(Grid)
-  .use(GridItem)
-  .use(Table)
-  .use(Navbar);
+NutComponent.forEach((component) => {
+  App.use(component);
+});
 
 export default App;
