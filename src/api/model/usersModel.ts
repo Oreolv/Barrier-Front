@@ -1,4 +1,4 @@
-import { UserSex, UserStatus } from '/@/enums/userEnum';
+import { UserSexEnum, UserStatusEnum } from '/@/enums/userEnum';
 
 export interface LoginParams {
   code: string;
@@ -6,7 +6,7 @@ export interface LoginParams {
 
 export interface GetUserInfoResultModel {
   uname: string;
-  usex: UserSex;
+  usex: UserSexEnum;
   uphone: number;
   cname: string;
   vname: string;
@@ -15,7 +15,7 @@ export interface GetUserInfoResultModel {
   hname: string;
   idCard: string;
   company: string;
-  foreignStatus: UserStatus;
+  foreignStatus: UserStatusEnum;
 }
 
 export interface LoginResultModel {
