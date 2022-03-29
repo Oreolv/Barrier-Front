@@ -1,10 +1,12 @@
-import { UserSexEnum, UserStatusEnum } from '/@/enums/userEnum';
+import { UserSexEnum, UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
 
 export interface LoginParams {
   code: string;
+  profile: UserProfile;
 }
 
 export interface GetUserInfoResultModel {
+  profile: UserProfile;
   uname: string;
   usex: UserSexEnum;
   uphone: number;
@@ -16,6 +18,9 @@ export interface GetUserInfoResultModel {
   idCard: string;
   company: string;
   foreignStatus: UserStatusEnum;
+  healthStatus: UserHealthEnum;
+  isolationStatus: UserStatusEnum;
+  accessStatus: UserStatusEnum;
 }
 
 export interface LoginResultModel {

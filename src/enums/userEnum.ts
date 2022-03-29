@@ -8,7 +8,7 @@ export enum UserStatusEnum {
   Yes = 1,
 }
 
-export enum HealthEnum {
+export enum UserHealthEnum {
   low = 0,
   middle = 1,
   high = 2,
