@@ -5,22 +5,27 @@
       <div class="user-profile" @click="loginAction">
         <div class="user-avatar">
           <img
-            :src="userStore.userProfile?.avatar || require('/@/assets/avatar.png')"
+            :src="userStore.getUserProfile.avatar || require('/@/assets/avatar.png')"
             alt="avatar"
           />
         </div>
         <div class="user-name">
-          {{ userStore.userProfile?.nickName || '立即登录' }}
+          {{ userStore.getUserProfile.nickName || '立即登录' }}
         </div>
       </div>
       <div class="user-info">
-        <div class="info-item" v-for="item in userStore.userStatus" :key="item.key">
+        <div class="info-item" v-for="item in userStore.getUserStatus" :key="item.key">
           <div class="item-data" :style="{ color: item.color }">{{ item.data }}</div>
           <div class="item-title">{{ item.title }}</div>
         </div>
       </div>
       <div class="user-setting">
-        <div class="setting-item" v-for="item in SettingList" :key="item.icon" @click="item.click">
+        <div
+          class="setting-item"
+          v-for="item in SettingList"
+          :key="item.icon"
+          @click="item.click(userStore.getUserLoginStatus)"
+        >
           <div class="item-icon">
             <nut-icon
               font-class-name="iconfont"

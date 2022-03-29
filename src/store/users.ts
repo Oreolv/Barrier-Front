@@ -1,9 +1,9 @@
 import { defineStore } from 'pinia';
+import { getUserInfo } from '/@/api/users';
 import { ResultColor } from '/@/enums/colorEnum';
 import { useWexinLogin } from '/@/hooks/useWexinLogin';
 import { useWexinProfile } from '/@/hooks/useWexinProfile';
-import { getUserInfo, updateUserProfile } from '/@/api/users';
-import { UserStatusEnum, HealthEnum } from '/@/enums/userEnum';
+import { UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
 import { showLoading, ShowToast } from '/@/hooks/useShowMessage';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
 import { UserProfile, GetUserInfoResultModel as UserInfo } from '/@/api/model/usersModel';
@@ -40,7 +40,7 @@ export const useUserStore = defineStore('users', {
     getUserInfo(): UserInfo {
       return this.userInfo || getLocalCache(USER_INFO_KEY) || {};
     },
-    getUserProfile(): UserInfo {
+    getUserProfile(): UserProfile {
       return this.userProfile || getLocalCache(USER_PROFILE_KEY) || {};
     },
     getUserStatus(): UserStatus[] {
@@ -71,70 +71,60 @@ export const useUserStore = defineStore('users', {
       this.userProfile = info;
       setLocalCache(USER_PROFILE_KEY, info);
     },
-    async getUserInfoAction() {
-      const userInfo = await getUserInfo();
-      this.setUserInfoAction(userInfo);
-    },
-    getUserProfileAction() {
-      this.userProfile = getLocalCache(USER_PROFILE_KEY);
-    },
-    getUserStatusAction() {
+    getUserStatusAction(userInfo: UserInfo) {
       const healthStatus = {
         key: 'healthStatus',
         title: '风险等级',
         data: '',
         color: '',
       };
-      switch (this.userInfo.healthStatus) {
-        case HealthEnum.low:
+      switch (userInfo.healthStatus) {
+        case UserHealthEnum.low:
           healthStatus.data = '低';
           healthStatus.color = ResultColor.SUCCESS;
           break;
-        case HealthEnum.middle:
+        case UserHealthEnum.middle:
           healthStatus.data = '中';
           healthStatus.color = ResultColor.WARNING;
           break;
-        case HealthEnum.high:
+        case UserHealthEnum.high:
           healthStatus.data = '高';
           healthStatus.color = ResultColor.ERROR;
           break;
         default:
-          healthStatus.data = '低';
-          healthStatus.color = ResultColor.SUCCESS;
+          healthStatus.data = '高';
+          healthStatus.color = ResultColor.ERROR;
           break;
       }
       const isolationStatus = {
         key: 'isolationStatus',
         title: '隔离状态',
-        data: this.userInfo.isolationStatus === UserStatusEnum.No ? '否' : '是',
+        data: userInfo.isolationStatus === UserStatusEnum.No ? '否' : '是',
         color:
-          this.userInfo.isolationStatus === UserStatusEnum.No
-            ? ResultColor.SUCCESS
-            : ResultColor.ERROR,
+          userInfo.isolationStatus === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
       };
       const accessStatus = {
         key: 'accessStatus',
         title: '限制出入',
-        data: this.userInfo.accessStatus === UserStatusEnum.No ? '否' : '是',
+        data: userInfo.accessStatus === UserStatusEnum.No ? '否' : '是',
         color:
-          this.userInfo.accessStatus === UserStatusEnum.No
-            ? ResultColor.SUCCESS
-            : ResultColor.ERROR,
+          userInfo.accessStatus === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
       };
-      const userStatus = [healthStatus, isolationStatus, accessStatus];
-      this.setUserStatusAction(userStatus);
+      return [healthStatus, isolationStatus, accessStatus];
     },
     async loginAction() {
       showLoading.loading('正在登陆');
       const userProfile = await useWexinProfile();
-      const { token } = await useWexinLogin();
+      const { token } = await useWexinLogin(userProfile);
       this.setTokenAction(token);
-      await updateUserProfile(userProfile);
-      this.setUserProfileAction(userProfile);
-      await this.initStateAction();
+      const userInfo = await getUserInfo();
+      const userStatus = this.getUserStatusAction(userInfo);
+      this.setUserInfoAction(userInfo);
+      this.setUserStatusAction(userStatus);
+      this.setUserProfileAction(userInfo.profile);
       showLoading.hideLoading();
     },
-    logout() {
+    logoutAction() {
       this.resetStateAction();
       this.setUserInfoAction(null);
       this.setTokenAction(undefined);
@@ -148,10 +138,13 @@ export const useUserStore = defineStore('users', {
       this.token = undefined;
     },
     async initStateAction() {
-      // 接口请求info, 从缓存获取profile和status
-      await this.getUserInfoAction();
-      this.getUserProfileAction();
-      this.getUserStatusAction();
+      // 接口请求info, 更新info, profile和status
+      const userInfo = await getUserInfo();
+      this.setUserInfoAction(userInfo);
+      this.setUserProfileAction(userInfo.profile);
+
+      const userStatus = this.getUserStatusAction(userInfo);
+      this.setUserStatusAction(userStatus);
     },
   },
   // TODO: pinia 缓存插件有些问题，暂时先使用Taro.setStorage
