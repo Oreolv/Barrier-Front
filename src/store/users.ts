@@ -49,6 +49,9 @@ export const useUserStore = defineStore('users', {
     getLastUpdateTime(): number {
       return this.lastUpdateTime;
     },
+    getUserLoginStatus(): boolean {
+      return Boolean(this.token) || getLocalCache(TOKEN_KEY) || false;
+    },
   },
   actions: {
     setTokenAction(info: string | undefined) {
