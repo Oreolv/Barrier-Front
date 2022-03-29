@@ -20,15 +20,8 @@
     "resolveJsonModule": true,
     "typeRoots": ["node_modules/@types"],
     "paths": {
-      "/#/*": ["./types/*"],
-      "/@/api/*": ["./src/api/*"],
-      "/@/utils/*": ["./src/utils/*"],
-      "/@/model/*": ["./src/model/*"],
-      "/@/store/*": ["./src/store/*"],
-      "/@/hooks/*": ["./src/hooks/*"],
-      "/@/enums/*": ["./src/enums/*"],
-      "/@/assets/*": ["./src/assets/*"],
-      "/@/components/*": ["./src/components/*"]
+      "/#/*": ["./*"],
+      "/@/*": ["./src/*"]
     }
   },
   "include": ["./src", "global.d.ts", "type"],

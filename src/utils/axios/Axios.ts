@@ -5,7 +5,7 @@ import { isFunction } from '/@/utils/is';
 import { AxiosCanceler } from './axiosCancel';
 import type { CreateAxiosOptions } from './axiosTransform';
 import { ContentTypeEnum, RequestEnum } from '/@/enums/httpEnum';
-import type { RequestOptions, Result, UploadFileParams } from '/#/axios';
+import type { RequestOptions, Result, UploadFileParams } from '/#/types/axios';
 import type { AxiosRequestConfig, AxiosInstance, AxiosResponse, AxiosError } from 'axios';
 
 /**

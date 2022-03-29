@@ -2,7 +2,7 @@ import { VAxios } from './Axios';
 import { isString } from '/@/utils/is';
 import { useUserStore } from '/@/store/users';
 import type { AxiosResponse } from 'taro-axios';
-import type { RequestOptions, Result } from '/#/axios';
+import type { RequestOptions, Result } from '/#/types/axios';
 import { joinTimestamp, formatRequestDate } from './helper';
 import { setObjToUrlParams, deepMerge } from '/@/utils/index';
 import { ShowToast, ShowModal } from '/@/hooks/useShowMessage';

@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig, AxiosResponse } from 'taro-axios';
-import type { RequestOptions, Result } from '/#/axios';
+import type { RequestOptions, Result } from '/#/types/axios';
 
 export interface CreateAxiosOptions extends AxiosRequestConfig {
   authenticationScheme?: string;

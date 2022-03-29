@@ -21,15 +21,8 @@ const config = {
     options: {},
   },
   alias: {
-    '/#/': path.resolve(__dirname, '..', 'types'),
-    '/@/api': path.resolve(__dirname, '..', 'src/api'),
-    '/@/utils': path.resolve(__dirname, '..', 'src/utils'),
-    '/@/hooks': path.resolve(__dirname, '..', 'src/hooks'),
-    '/@/store': path.resolve(__dirname, '..', 'src/store'),
-    '/@/model': path.resolve(__dirname, '..', 'src/model'),
-    '/@/enums': path.resolve(__dirname, '..', 'src/enums'),
-    '/@/assets': path.resolve(__dirname, '..', 'src/assets'),
-    '/@/components': path.resolve(__dirname, '..', 'src/components'),
+    '/#': path.resolve(__dirname, '..', '/'),
+    '/@': path.resolve(__dirname, '..', 'src/'),
   },
   framework: 'vue3',
   mini: {
