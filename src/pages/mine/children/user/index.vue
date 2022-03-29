@@ -55,5 +55,21 @@ page {
 }
 .user-info {
   margin: 0 16px;
+  .nut-cell {
+    padding-right: 8px;
+  }
+  .nut-cell__title {
+    color: black;
+    font-weight: bolder;
+  }
+  .nut-cell__value {
+    color: #909399;
+  }
+  .nutui-iconfont {
+    margin-left: 4px;
+    color: black;
+    font-size: 10px;
+    font-weight: 800;
+  }
 }
 </style>
