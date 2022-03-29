@@ -49,17 +49,16 @@ import { SettingList } from './data';
 import { useDidShow } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
 const userStore = useUserStore();
-const loginStatus = userStore.getUserLoginStatus;
 
 useDidShow(async () => {
   // 每次页面显示后初始化userStore，会请求getUserInfo接口
-  if (loginStatus) {
+  if (userStore.getUserLoginStatus) {
     await userStore.initStateAction();
   }
 });
 
 const loginAction = async () => {
-  if (!loginStatus) {
+  if (!userStore.getUserLoginStatus) {
     await userStore.loginAction();
   }
 };
