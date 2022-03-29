@@ -5,10 +5,10 @@ export interface LoginParams {
   profile: UserProfile;
 }
 
-export interface GetUserInfoResultModel {
+export interface UserInfo {
   profile: UserProfile;
   uname: string;
-  usex: UserSexEnum;
+  usex: UserSexEnum | string;
   uphone: number;
   cname: string;
   vname: string;
@@ -17,10 +17,10 @@ export interface GetUserInfoResultModel {
   hname: string;
   idCard: string;
   company: string;
-  foreignStatus: UserStatusEnum;
-  healthStatus: UserHealthEnum;
-  isolationStatus: UserStatusEnum;
-  accessStatus: UserStatusEnum;
+  foreignStatus: UserStatusEnum | string;
+  healthStatus: UserHealthEnum | string;
+  isolationStatus: UserStatusEnum | string;
+  accessStatus: UserStatusEnum | string;
 }
 
 export interface LoginResultModel {

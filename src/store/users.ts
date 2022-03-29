@@ -6,7 +6,7 @@ import { useWexinProfile } from '/@/hooks/useWexinProfile';
 import { UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
 import { showLoading, ShowModal, ShowToast } from '/@/hooks/useShowMessage';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
-import { UserProfile, GetUserInfoResultModel as UserInfo } from '/@/api/model/usersModel';
+import { UserProfile, UserInfo } from '/@/api/model/usersModel';
 import { TOKEN_KEY, USER_INFO_KEY, USER_PROFILE_KEY, USER_STATUS_KEY } from '/@/enums/cacheEnum';
 
 interface UserStatus {
