@@ -10,7 +10,10 @@
           />
         </div>
         <div class="user-name">
-          {{ userStore.getUserProfile.nickName || '立即登录' }}
+          <div class="name">{{ userStore.getUserProfile.nickName || '立即登录' }}</div>
+          <div class="tips" @click="showBindingModal" v-if="!userStore.checkUserInfoBinding">
+            <nut-icon name="ask" size="20"></nut-icon>
+          </div>
         </div>
       </div>
       <div class="user-info">
@@ -48,6 +51,7 @@
 import { SettingList } from './data';
 import { useDidShow } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
+import { ShowModal } from '/@/hooks/useShowMessage';
 const userStore = useUserStore();
 
 useDidShow(async () => {
@@ -61,6 +65,13 @@ const loginAction = async () => {
   if (!userStore.getUserLoginStatus) {
     await userStore.loginAction();
   }
+};
+
+const showBindingModal = () => {
+  ShowModal.info({
+    title: '提示',
+    content: '由于用户未绑定个人信息，默认设置为高风险用户，进出小区将会受到限制。',
+  });
 };
 </script>
 
@@ -99,10 +110,22 @@ const loginAction = async () => {
     }
   }
   .user-name {
-    text-align: center;
-    font-size: 21px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     margin-top: 10px;
-    letter-spacing: 1px;
+    .name {
+      text-align: center;
+      font-size: 21px;
+      letter-spacing: 1px;
+    }
+    .tips {
+      margin-left: 8px;
+      text {
+        vertical-align: middle;
+        color: #faad14;
+      }
+    }
   }
 }
 .user-info {

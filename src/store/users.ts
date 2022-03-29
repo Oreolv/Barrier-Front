@@ -4,7 +4,7 @@ import { ResultColor } from '/@/enums/colorEnum';
 import { useWexinLogin } from '/@/hooks/useWexinLogin';
 import { useWexinProfile } from '/@/hooks/useWexinProfile';
 import { UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
-import { showLoading, ShowToast } from '/@/hooks/useShowMessage';
+import { showLoading, ShowModal, ShowToast } from '/@/hooks/useShowMessage';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
 import { UserProfile, GetUserInfoResultModel as UserInfo } from '/@/api/model/usersModel';
 import { TOKEN_KEY, USER_INFO_KEY, USER_PROFILE_KEY, USER_STATUS_KEY } from '/@/enums/cacheEnum';
@@ -51,6 +51,10 @@ export const useUserStore = defineStore('users', {
     },
     getUserLoginStatus(): boolean {
       return Boolean(this.getToken) || false;
+    },
+    checkUserInfoBinding(): boolean {
+      // eslint-disable-next-line eqeqeq
+      return !this.getUserLoginStatus || Boolean(this.getUserInfo.accessStatus != null) || false;
     },
   },
   actions: {
@@ -123,6 +127,7 @@ export const useUserStore = defineStore('users', {
       this.setUserStatusAction(userStatus);
       this.setUserProfileAction(userInfo.profile);
       showLoading.hideLoading();
+      this.checkUserInfoBindingAction();
     },
     logoutAction() {
       this.resetStateAction();
@@ -145,6 +150,15 @@ export const useUserStore = defineStore('users', {
 
       const userStatus = this.getUserStatusAction(userInfo);
       this.setUserStatusAction(userStatus);
+    },
+    checkUserInfoBindingAction() {
+      // eslint-disable-next-line eqeqeq
+      if (!this.checkUserInfoBinding) {
+        ShowModal.info({
+          title: '提示',
+          content: '请前往社区绑定个人详细信息，否则出入小区将会受到限制。',
+        });
+      }
     },
   },
   // TODO: pinia 缓存插件有些问题，暂时先使用Taro.setStorage
