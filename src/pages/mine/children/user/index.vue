@@ -6,7 +6,7 @@
     <div class="user-info">
       <nut-cell-group>
         <nut-cell title="昵称" :desc="userInfo.profile.nickName" is-link></nut-cell>
-        <nut-cell title="性别" :desc="userInfo.usex === UserSexEnum.Male ? '男' : '女'"></nut-cell>
+        <nut-cell title="性别" :desc="userInfo.usex"></nut-cell>
         <nut-cell title="手机号" :desc="userInfo.uphone"></nut-cell>
         <nut-cell title="工作单位" :desc="userInfo.company"></nut-cell>
       </nut-cell-group>
@@ -27,7 +27,15 @@ const transformUserInfo = (info: UserInfo) => {
   const data = {} as UserInfo;
   for (const key in info) {
     // eslint-disable-next-line eqeqeq
-    data[key] = info[key] == null ? '暂无数据' : info[key];
+    if (info[key] == null) {
+      data[key] = '暂无数据';
+      continue;
+    }
+    if (key === 'usex') {
+      data[key] = info[key] === UserSexEnum.Male ? '男' : '女';
+      continue;
+    }
+    data[key] = info[key];
   }
   return data;
 };
