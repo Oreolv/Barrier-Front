@@ -33,7 +33,7 @@ const transform: AxiosTransform = {
     // 错误的时候返回
     const { data } = res;
     if (!data) {
-      throw new Error('请求失败，请稍候重试');
+      throw new Error('网络错误');
     }
     const { code, result, message } = data;
 
@@ -69,7 +69,7 @@ const transform: AxiosTransform = {
       ShowToast.error(timeoutMsg);
     }
 
-    throw new Error(timeoutMsg || '请求失败，请稍候重试');
+    throw new Error(timeoutMsg || '网络错误');
   },
 
   // 请求之前处理config
@@ -152,10 +152,10 @@ const transform: AxiosTransform = {
 
     try {
       if (code === 'ECONNABORTED' && message.indexOf('timeout') !== -1) {
-        errMessage = '请求失败，请稍候重试';
+        errMessage = '网络错误';
       }
       if (err?.includes('Network Error')) {
-        errMessage = '请求失败，请稍候重试';
+        errMessage = '网络错误';
       }
 
       if (errMessage) {
