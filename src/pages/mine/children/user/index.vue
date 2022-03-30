@@ -16,7 +16,12 @@
     </div>
     <div class="user-info">
       <nut-cell-group>
-        <nut-cell title="昵称" :desc="userInfo.profile.nickName" is-link></nut-cell>
+        <nut-cell
+          title="昵称"
+          :desc="userInfo.profile.nickName"
+          is-link
+          @click="editNickName.show = true"
+        ></nut-cell>
         <nut-cell title="性别" :desc="userInfo.usex"></nut-cell>
         <nut-cell title="手机号" :desc="userInfo.uphone"></nut-cell>
         <nut-cell title="工作单位" :desc="userInfo.company"></nut-cell>
@@ -27,6 +32,28 @@
       </nut-cell-group>
     </div>
   </view>
+  <nut-popup
+    pop-class="popclass"
+    v-model:visible="editNickName.show"
+    :z-index="100"
+    position="bottom"
+  >
+    <div class="top">
+      <div class="left" @click="editNickName.show = false">取消</div>
+      <div class="middle">修改昵称</div>
+      <div class="right">
+        <nut-button type="info" color="#303133" @click="updateNickName">保存</nut-button>
+      </div>
+    </div>
+    <div class="content">
+      <input
+        :focus="true"
+        v-model="editNickName.value"
+        placeholder="输入昵称"
+        :adjustPosition="false"
+      />
+    </div>
+  </nut-popup>
 </template>
 
 <script setup lang="ts">
@@ -71,6 +98,17 @@ const SuccessCallback = async (res) => {
 };
 const ErrorCallback = () => {
   ShowToast.error('上传失败');
+};
+
+const editNickName = reactive({
+  show: false,
+  value: userInfo.profile.nickName,
+});
+
+const updateNickName = async () => {
+  await userStore.updateUserProfile({ nickName: editNickName.value });
+  userInfo.profile.nickName = editNickName.value;
+  editNickName.show = false;
 };
 </script>
 
@@ -140,6 +178,37 @@ page {
     color: black;
     font-size: 10px;
     font-weight: 800;
+  }
+}
+.popclass {
+  height: 66.6vh;
+  box-sizing: border-box;
+  padding: 16px;
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .middle {
+      font-weight: bolder;
+      position: fixed;
+      width: 100px;
+      text-align: center;
+      left: calc(50% - 50px);
+    }
+    .right {
+      .nut-button {
+        color: white;
+      }
+    }
+  }
+  .content {
+    margin-top: 24px;
+    input {
+      font-size: 14px;
+      padding: 8px 16px;
+      background-color: #f4f4f4;
+      border-radius: 8px;
+    }
   }
 }
 </style>

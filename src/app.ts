@@ -17,6 +17,9 @@ import {
   CellGroup,
   Uploader,
   Progress,
+  Popup,
+  OverLay,
+  Input,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -34,6 +37,9 @@ const NutComponent = [
   CellGroup,
   Uploader,
   Progress,
+  Popup,
+  OverLay,
+  Input,
 ];
 
 App.use(pinia);
