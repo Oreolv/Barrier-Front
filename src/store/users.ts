@@ -1,8 +1,8 @@
 import { defineStore } from 'pinia';
-import { getUserInfo } from '/@/api/users';
 import { ResultColor } from '/@/enums/colorEnum';
 import { useWexinLogin } from '/@/hooks/useWexinLogin';
 import { useWexinProfile } from '/@/hooks/useWexinProfile';
+import { getUserInfo, updateUserProfile } from '/@/api/users';
 import { UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
 import { showLoading, ShowModal, ShowToast } from '/@/hooks/useShowMessage';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
@@ -159,6 +159,11 @@ export const useUserStore = defineStore('users', {
           content: '请前往社区绑定个人详细信息，否则出入小区将会受到限制。',
         });
       }
+    },
+    async updateUserProfile(profile: UserProfile) {
+      const userInfo = await updateUserProfile(profile);
+      this.setUserInfoAction(userInfo);
+      this.setUserProfileAction(userInfo.profile);
     },
   },
   // TODO: pinia 缓存插件有些问题，暂时先使用Taro.setStorage

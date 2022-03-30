@@ -15,6 +15,8 @@ import {
   Navbar,
   Cell,
   CellGroup,
+  Uploader,
+  Progress,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -30,6 +32,8 @@ const NutComponent = [
   Navbar,
   Cell,
   CellGroup,
+  Uploader,
+  Progress,
 ];
 
 App.use(pinia);

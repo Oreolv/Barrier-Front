@@ -1,6 +1,14 @@
 <template>
   <view class="index">
     <div class="user-avatar">
+      <nut-uploader
+        maximum="1"
+        :headers="uploadConfig.headers"
+        :url="uploadConfig.url"
+        multiple
+        @success="SuccessCallback"
+        @failure="ErrorCallback"
+      ></nut-uploader>
       <img :src="userInfo.profile.avatar" alt="avatar" />
       <div class="change-avatar">
         <nut-icon font-class-name="iconfont" class-prefix="icon" name="paizhao" />
@@ -22,9 +30,13 @@
 </template>
 
 <script setup lang="ts">
+import { reactive } from 'vue';
+import { global } from '/@/utils/global';
 import { useUserStore } from '/@/store/users';
+import { ShowToast } from '/@/hooks/useShowMessage';
 import { UserSexEnum } from '/@/enums/userEnum';
 import { UserInfo } from '/@/api/model/usersModel';
+
 const userStore = useUserStore();
 const transformUserInfo = (info: UserInfo) => {
   const data = {} as UserInfo;
@@ -42,7 +54,24 @@ const transformUserInfo = (info: UserInfo) => {
   }
   return data;
 };
-const userInfo = transformUserInfo(userStore.getUserInfo);
+const userInfo = reactive(transformUserInfo(userStore.getUserInfo));
+
+const uploadConfig = {
+  url: `${global.apiUrl}/upload`,
+  headers: { Authorization: `Bearer ${userStore.getToken}` },
+};
+const SuccessCallback = async (res) => {
+  const data = JSON.parse(res.data.data);
+  if (data.code !== 0) {
+    ShowToast.error('上传失败');
+    return;
+  }
+  await userStore.updateUserProfile({ avatar: data.result });
+  userInfo.profile.avatar = data.result;
+};
+const ErrorCallback = () => {
+  ShowToast.error('上传失败');
+};
 </script>
 
 <style lang="scss">
@@ -57,6 +86,20 @@ page {
 }
 .user-avatar {
   text-align: center;
+  .nut-uploader {
+    position: absolute;
+    top: 36px;
+    left: calc(50% - 40px);
+    width: 90px;
+    height: 90px;
+    opacity: 0;
+    .nut-uploader__upload {
+      height: 80px;
+      button {
+        padding: 0;
+      }
+    }
+  }
   img {
     width: 80px;
     height: 80px;
