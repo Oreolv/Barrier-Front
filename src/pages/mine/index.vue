@@ -36,7 +36,7 @@
                 font-class-name="iconfont"
                 class-prefix="icon"
                 :name="item.icon"
-                size="38rpx"
+                size="20"
               />
             </template>
           </nut-cell>
