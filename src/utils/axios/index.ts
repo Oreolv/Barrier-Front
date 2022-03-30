@@ -1,4 +1,5 @@
 import { VAxios } from './Axios';
+import { global } from '/@/utils/global';
 import { isString } from '/@/utils/is';
 import { useUserStore } from '/@/store/users';
 import type { AxiosResponse } from 'taro-axios';
@@ -9,13 +10,8 @@ import { ShowToast, ShowModal } from '/@/hooks/useShowMessage';
 import type { AxiosTransform, CreateAxiosOptions } from './axiosTransform';
 import { RequestEnum, ResultEnum, ContentTypeEnum } from '/@/enums/httpEnum';
 
-let apiUrl;
-if (process.env.NODE_ENV === 'production') {
-  apiUrl = 'http://barrier.xinyu.ink';
-} else {
-  apiUrl = 'http://192.168.0.233:3001';
-}
 const urlPrefix = '';
+const apiUrl = global.apiUrl;
 const userStore = useUserStore();
 /**
  * @description: 数据处理，方便区分多种处理方式
