@@ -45,7 +45,7 @@
         <nut-button type="info" color="#303133" @click="updateNickName">保存</nut-button>
       </div>
     </div>
-    <div class="content">
+    <div class="content" v-if="editNickName.show">
       <input
         :focus="true"
         v-model="editNickName.value"
@@ -145,7 +145,7 @@ page {
     margin: 36px 0 24px 0;
   }
   .change-avatar {
-    position: fixed;
+    position: absolute;
     top: 93px;
     left: calc(50% + 18px);
     width: max-content;
