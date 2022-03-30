@@ -9,7 +9,7 @@ export enum UserStatusEnum {
 }
 
 export enum UserHealthEnum {
-  low = 0,
-  middle = 1,
-  high = 2,
+  Low = 0,
+  Middle = 1,
+  High = 2,
 }

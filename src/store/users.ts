@@ -83,15 +83,15 @@ export const useUserStore = defineStore('users', {
         color: '',
       };
       switch (userInfo.healthStatus) {
-        case UserHealthEnum.low:
+        case UserHealthEnum.Low:
           healthStatus.data = '低';
           healthStatus.color = ResultColor.SUCCESS;
           break;
-        case UserHealthEnum.middle:
+        case UserHealthEnum.Middle:
           healthStatus.data = '中';
           healthStatus.color = ResultColor.WARNING;
           break;
-        case UserHealthEnum.high:
+        case UserHealthEnum.High:
           healthStatus.data = '高';
           healthStatus.color = ResultColor.ERROR;
           break;
