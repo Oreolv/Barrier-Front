@@ -2,6 +2,9 @@
   <view class="index">
     <div class="user-avatar">
       <img :src="userInfo.profile.avatar" alt="avatar" />
+      <div class="change-avatar">
+        <nut-icon font-class-name="iconfont" class-prefix="icon" name="paizhao" />
+      </div>
     </div>
     <div class="user-info">
       <nut-cell-group>
@@ -59,6 +62,22 @@ page {
     height: 80px;
     border-radius: 50%;
     margin: 36px 0 24px 0;
+  }
+  .change-avatar {
+    position: fixed;
+    top: 93px;
+    left: calc(50% + 18px);
+    width: max-content;
+    height: max-content;
+    text {
+      font-size: 20px;
+      padding: 2px 2px 3px 2px;
+      color: white;
+      border-radius: 50%;
+      border: 1px solid white;
+      background-color: black;
+      vertical-align: middle;
+    }
   }
 }
 .user-info {
