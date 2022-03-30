@@ -20,5 +20,5 @@ export function getUserInfo() {
 }
 
 export function updateUserProfile(params: UpdateUserProfileParams) {
-  return defHttp.put<null>({ url: Api.UpdateUserProfile, params });
+  return defHttp.put<GetUserInfoResultModel>({ url: Api.UpdateUserProfile, params });
 }
