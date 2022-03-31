@@ -4,8 +4,9 @@ import {
   ChinaDataItem,
   ProvinceDataItem,
   CityDataItem,
+  GetRiskAreaResultModel,
 } from '/@/api/model/covidModel';
-import { getCovidData } from '/@/api/covid';
+import { getCovidData, getRiskArea } from '/@/api/covid';
 export const useCovidStore = defineStore('covid', {
   state: () => {
     return {
@@ -15,6 +16,7 @@ export const useCovidStore = defineStore('covid', {
       chinaTotal: {} as ChinaDataItem,
       provinceData: [] as ProvinceDataItem[],
       cityData: [] as CityDataItem[],
+      riskArea: {} as GetRiskAreaResultModel,
     };
   },
   getters: {
@@ -42,6 +44,10 @@ export const useCovidStore = defineStore('covid', {
       this.cityData = ret.city_data;
       this.provinceData = ret.province_data;
       this.sortCityData();
+    },
+    async getRiskArea() {
+      const ret = await getRiskArea();
+      this.riskArea = ret;
     },
   },
 });

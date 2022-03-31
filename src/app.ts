@@ -21,6 +21,7 @@ import {
   OverLay,
   Input,
   Empty,
+  Divider,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -42,6 +43,7 @@ const NutComponent = [
   OverLay,
   Input,
   Empty,
+  Divider,
 ];
 
 App.use(pinia);
