@@ -28,3 +28,20 @@ export interface GetCovidDataResultModel {
   province_data: ProvinceDataItem[];
   city_data: CityDataItem[];
 }
+
+interface RiskAreaItem {
+  type: string;
+  province: string;
+  city: string;
+  county: string;
+  area_name: string;
+  communitys: string[];
+}
+
+export interface GetRiskAreaResultModel {
+  end_update_time: string;
+  hcount: number;
+  mcount: number;
+  highlist: RiskAreaItem[];
+  middlelist: RiskAreaItem[];
+}
