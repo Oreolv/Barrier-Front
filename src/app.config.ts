@@ -4,6 +4,7 @@ export default defineAppConfig({
     'pages/serve/index',
     'pages/mine/index',
     'pages/mine/children/user/index',
+    'pages/home/children/risk/index',
   ],
   window: {
     backgroundTextStyle: 'light',
