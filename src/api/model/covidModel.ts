@@ -30,11 +30,13 @@ export interface GetCovidDataResultModel {
 }
 
 interface ProvinceRiskItem {
+  id: number;
   province: string;
   children: CityRiskItem[];
 }
 
 interface CityRiskItem {
+  id: number;
   city: string;
   county: string;
   area_name: string;
