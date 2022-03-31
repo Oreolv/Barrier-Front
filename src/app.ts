@@ -20,6 +20,7 @@ import {
   Popup,
   OverLay,
   Input,
+  Empty,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -40,6 +41,7 @@ const NutComponent = [
   Popup,
   OverLay,
   Input,
+  Empty,
 ];
 
 App.use(pinia);
