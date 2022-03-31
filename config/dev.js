@@ -1,4 +1,4 @@
-const path = require('path');
+// const path = require('path');
 
 module.exports = {
   env: {
@@ -7,5 +7,5 @@ module.exports = {
   defineConstants: {},
   mini: {},
   h5: {},
-  plugins: [path.resolve(__dirname, 'plugins/minifyMainPackage.js')],
+  // plugins: [path.resolve(__dirname, 'plugins/minifyMainPackage.js')],
 };
