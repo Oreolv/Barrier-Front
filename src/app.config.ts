@@ -5,6 +5,7 @@ export default defineAppConfig({
     'pages/mine/index',
     'pages/mine/children/user/index',
     'pages/home/children/risk/index',
+    'pages/home/children/risk_merge/index',
   ],
   window: {
     backgroundTextStyle: 'light',

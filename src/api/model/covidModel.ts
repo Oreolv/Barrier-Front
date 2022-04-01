@@ -29,26 +29,26 @@ export interface GetCovidDataResultModel {
   city_data: CityDataItem[];
 }
 
-// interface ProvinceRiskItem {
-//   id: number;
-//   province: string;
-//   children: CityRiskItem[];
-// }
+interface ProvinceRiskItem {
+  id: number;
+  province: string;
+  children: CityRiskItem[];
+}
 
-// interface CityRiskItem {
-//   id: number;
-//   city: string;
-//   county: string;
-//   area_name: string;
-//   communitys: string[];
-// }
-// export interface GetRiskAreaResultModel {
-//   end_update_time: string;
-//   hcount: number;
-//   mcount: number;
-//   highlist: ProvinceRiskItem[];
-//   middlelist: ProvinceRiskItem[];
-// }
+interface CityRiskItem {
+  id: number;
+  city: string;
+  county: string;
+  area_name: string;
+  communitys: string[];
+}
+export interface GetRiskAreaMergeResultModel {
+  end_update_time: string;
+  hcount: number;
+  mcount: number;
+  highlist: ProvinceRiskItem[];
+  middlelist: ProvinceRiskItem[];
+}
 
 interface RiskAreaItem {
   id: number;

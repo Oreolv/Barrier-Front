@@ -22,6 +22,8 @@ import {
   Input,
   Empty,
   Divider,
+  Collapse,
+  CollapseItem,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -44,6 +46,8 @@ const NutComponent = [
   Input,
   Empty,
   Divider,
+  Collapse,
+  CollapseItem,
 ];
 
 App.use(pinia);

@@ -5,8 +5,9 @@ import {
   ProvinceDataItem,
   CityDataItem,
   GetRiskAreaResultModel,
+  GetRiskAreaMergeResultModel,
 } from '/@/api/model/covidModel';
-import { getCovidData, getRiskArea } from '/@/api/covid';
+import { getCovidData, getRiskArea, getRiskAreaMerge } from '/@/api/covid';
 export const useCovidStore = defineStore('covid', {
   state: () => {
     return {
@@ -17,6 +18,7 @@ export const useCovidStore = defineStore('covid', {
       provinceData: [] as ProvinceDataItem[],
       cityData: [] as CityDataItem[],
       riskArea: {} as GetRiskAreaResultModel,
+      riskAreaMerge: {} as GetRiskAreaMergeResultModel,
     };
   },
   getters: {
@@ -48,6 +50,10 @@ export const useCovidStore = defineStore('covid', {
     async getRiskArea() {
       const ret = await getRiskArea();
       this.riskArea = ret;
+    },
+    async getRiskAreaMerge() {
+      const ret = await getRiskAreaMerge();
+      this.riskAreaMerge = ret;
     },
   },
 });
