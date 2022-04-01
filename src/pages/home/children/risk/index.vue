@@ -1,17 +1,13 @@
 <template>
-  <nut-empty
-    image="empty"
-    description="无内容"
-    v-if="!covidStore.riskArea.end_update_time"
-  ></nut-empty>
+  <nut-empty image="empty" description="无内容" v-if="!state.risk.end_update_time"></nut-empty>
   <div class="index" v-else>
     <div class="total">
-      <div class="head">截至 {{ covidStore.riskArea.end_update_time }}数据：</div>
+      <div class="head">截至 {{ state.risk.end_update_time }}数据：</div>
       <div class="content">
         <div class="grade">
           <div class="data">
             <div id="high">
-              {{ covidStore.riskArea.hcount }}
+              {{ state.risk.hcount }}
               <span class="item">个</span>
             </div>
           </div>
@@ -20,7 +16,7 @@
         <div class="grade">
           <div class="data">
             <div id="middle">
-              {{ covidStore.riskArea.mcount }}
+              {{ state.risk.mcount }}
               <span class="item">个</span>
             </div>
           </div>
@@ -36,7 +32,7 @@
       <div>高风险地区</div>
     </div>
     <div class="grade-list">
-      <nut-cell-group v-for="i in covidStore.riskArea.highlist" :key="i.id" :title="i.area_name">
+      <nut-cell-group v-for="i in state.risk.highlist" :key="i.id" :title="i.area_name">
         <nut-cell v-for="c in i.communitys" :key="c" :title="c">
           <template #link>
             <div id="high">高风险</div>
@@ -49,7 +45,7 @@
       <div>中风险地区</div>
     </div>
     <div class="grade-list">
-      <nut-cell-group v-for="i in covidStore.riskArea.middlelist" :key="i.id" :title="i.area_name">
+      <nut-cell-group v-for="i in state.risk.middlelist" :key="i.id" :title="i.area_name">
         <nut-cell v-for="c in i.communitys" :key="c" :title="c">
           <template #link>
             <div id="middle">中风险</div>
@@ -61,9 +57,15 @@
 </template>
 
 <script lang="ts" setup>
-import { useCovidStore } from '/@/store/covid';
-const covidStore = useCovidStore();
-covidStore.getRiskArea();
+import { GetRiskAreaResultModel } from '/@/api/model/covidModel';
+import { getRiskArea } from '/@/api/covid';
+import { onBeforeMount, reactive } from 'vue';
+const state = reactive({
+  risk: {} as GetRiskAreaResultModel,
+});
+onBeforeMount(async () => {
+  state.risk = await getRiskArea();
+});
 </script>
 
 <style lang="scss">
