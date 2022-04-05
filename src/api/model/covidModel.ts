@@ -50,7 +50,7 @@ export interface GetCovidDataResultModel {
 //   middlelist: ProvinceRiskItem[];
 // }
 
-interface RiskAreaItem {
+export interface RiskAreaItem {
   id: number;
   type: string;
   province: string;
@@ -64,6 +64,8 @@ export interface GetRiskAreaResultModel {
   end_update_time: string;
   hcount: number;
   mcount: number;
+  last_hcount: number;
+  last_mcount: number;
   highlist: RiskAreaItem[];
   middlelist: RiskAreaItem[];
 }
