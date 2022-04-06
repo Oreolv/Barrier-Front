@@ -4,7 +4,7 @@
       <nut-icon size="14" name="search2"></nut-icon>
     </template>
   </nut-searchbar>
-  <nut-tabs v-model="tabList.tabValue" type="none">
+  <nut-tabs v-model="tabList.tabValue" type="none" v-show="!state.searchValue.length">
     <template v-slot:titles>
       <nut-button
         type="default"
@@ -18,15 +18,9 @@
       </nut-button>
     </template>
     <nut-tabpane pane-key="t1">
-      <div class="data">
-        <div class="header">
-          <div class="top">
-            <div class="time">{{ state.risk.end_update_time }}</div>
-            <nut-icon name="ask" @click="showRiskAreaModal"></nut-icon>
-          </div>
-          <div class="title">风险地区数量</div>
-        </div>
-        <div class="content">
+      <Card id="count" :description="state.risk.end_update_time" title="风险地区数量">
+        <template #icon><nut-icon name="ask" @click="showRiskAreaModal"></nut-icon></template>
+        <template #content>
           <nut-skeleton
             width="250px"
             height="15px"
@@ -35,28 +29,28 @@
             avatar-size="32"
             :loading="showSkeletonLoading"
           >
-            <div class="list">
-              <div class="icon">
+            <div class="count-list">
+              <div class="count-list__left">
                 <nut-icon
-                  id="middle"
+                  id="count-list__left-middle"
                   font-class-name="iconfont"
                   class-prefix="icon"
                   name="error-fill"
                 />
               </div>
-              <div class="merge" id="first">
-                <div class="title">
-                  <div class="name">中风险地区</div>
+              <div class="count-list__middle" id="count-list__first">
+                <div class="count-list__middle-top">
+                  <div class="clmt-name">中风险地区</div>
                   <div
-                    class="increase"
-                    :style="{ color: state.hincrease.count > 0 ? '#E84840' : '#6FCC4E' }"
+                    class="clmt-increase"
+                    :style="{ color: state.mincrease.count > 0 ? '#E84840' : '#6FCC4E' }"
                   >
-                    <div class="count">{{ state.mincrease.count }}</div>
-                    <div class="per">({{ state.mincrease.per }})</div>
+                    <div class="clmt-increase__count">{{ state.mincrease.count }}</div>
+                    <div class="clmt-increase__per">({{ state.mincrease.per }})</div>
                   </div>
                 </div>
-                <div class="right">
-                  <div class="uu">{{ state.risk.mcount }}</div>
+                <div class="count-list__right">
+                  {{ state.risk.mcount }}
                 </div>
               </div>
             </div>
@@ -69,83 +63,93 @@
             avatar-size="32"
             :loading="showSkeletonLoading"
           >
-            <div class="list">
-              <div class="icon">
-                <nut-icon id="high" font-class-name="iconfont" class-prefix="icon" name="error" />
+            <div class="count-list">
+              <div class="count-list__left">
+                <nut-icon
+                  id="count-list__left-high"
+                  font-class-name="iconfont"
+                  class-prefix="icon"
+                  name="error"
+                />
               </div>
-              <div class="merge">
-                <div class="title">
-                  <div class="name">高风险地区</div>
+              <div class="count-list__middle" id="count-list__second">
+                <div class="count-list__middle-top">
+                  <div class="clmt-name">高风险地区</div>
                   <div
-                    class="increase"
+                    class="clmt-increase"
                     :style="{ color: state.hincrease.count > 0 ? '#E84840' : '#6FCC4E' }"
                   >
-                    <div class="count">{{ state.hincrease.count }}</div>
-                    <div class="per">({{ state.hincrease.per }})</div>
+                    <div class="clmt-increase__count">{{ state.hincrease.count }}</div>
+                    <div class="clmt-increase__per">({{ state.hincrease.per }})</div>
                   </div>
                 </div>
-                <div class="right">
-                  <div class="uu">{{ state.risk.hcount }}</div>
+                <div class="count-list__right">
+                  {{ state.risk.hcount }}
                 </div>
               </div>
             </div>
           </nut-skeleton>
-        </div>
-      </div>
-      <div class="description">
-        <div class="title">风险区说明</div>
-        <div class="list" v-for="item in areaRemarkList" :key="item.name">
-          <div class="left" :style="{ backgroundColor: item.color }"></div>
-          <div class="right">
-            <div class="name">{{ item.name }}</div>
-            <div class="remark">{{ item.remark }}</div>
+        </template>
+      </Card>
+      <Card id="description" title="风险区说明" marginTop="8">
+        <template #content>
+          <div class="description-list" v-for="item in areaRemarkList" :key="item.name">
+            <div class="description-list__left" :style="{ backgroundColor: item.color }"></div>
+            <div class="description-list__right">
+              <div class="description-list__right-name">{{ item.name }}</div>
+              <div class="description-list__right-remark">{{ item.remark }}</div>
+            </div>
           </div>
-        </div>
-      </div>
+        </template>
+      </Card>
     </nut-tabpane>
     <nut-tabpane pane-key="t2">
-      <div class="infiniteLoading" id="scroll">
+      <div id="infiniteLoading">
         <nut-infiniteloading
-          containerId="scroll"
+          containerId="infiniteLoading"
           :use-window="false"
           :has-more="state.hasMoreMiddleList"
           @load-more="loadMoreMiddleList"
           load-more-txt="没有更多数据了"
           pull-icon="loading"
         >
-          <div class="box" v-for="item in state.middlelist" :key="item.id">
-            <div v-for="(i, idx) in item.communitys" :key="idx" class="area-list">
-              {{ i }}
-            </div>
-            <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
-            <div class="footer">
-              <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
-              <div class="area-name">{{ item.area_name }}</div>
-            </div>
-          </div>
+          <Card id="arealist" v-for="item in state.middlelist" :key="item.id" :show-divider="false">
+            <template #content>
+              <div v-for="(i, idx) in item.communitys" :key="idx" class="arealist-communitys">
+                {{ i }}
+              </div>
+              <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
+              <div class="arealist-footer">
+                <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
+                <div class="arealist-footer__name">{{ item.area_name }}</div>
+              </div>
+            </template>
+          </Card>
         </nut-infiniteloading>
       </div>
     </nut-tabpane>
     <nut-tabpane pane-key="t3">
-      <div class="infiniteLoading" id="scroll">
+      <div id="infiniteLoading">
         <nut-infiniteloading
-          containerId="scroll"
+          containerId="infiniteLoading"
           :use-window="false"
           :has-more="state.hasMoreHighList"
           @load-more="loadMoreHighList"
           load-more-txt="没有更多数据了"
           pull-icon="loading"
         >
-          <div class="box" v-for="item in state.highlist" :key="item.id">
-            <div v-for="(i, idx) in item.communitys" :key="idx" class="area-list">
-              {{ i }}
-            </div>
-            <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
-            <div class="footer">
-              <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
-              <div class="area-name">{{ item.area_name }}</div>
-            </div>
-          </div>
+          <Card id="arealist" v-for="item in state.highlist" :key="item.id" :show-divider="false">
+            <template #content>
+              <div v-for="(i, idx) in item.communitys" :key="idx" class="arealist-communitys">
+                {{ i }}
+              </div>
+              <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
+              <div class="arealist-footer">
+                <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
+                <div class="arealist-footer__name">{{ item.area_name }}</div>
+              </div>
+            </template>
+          </Card>
         </nut-infiniteloading>
       </div>
     </nut-tabpane>
@@ -153,13 +157,14 @@
 </template>
 
 <script lang="ts" setup>
+import Card from '/@/components/Card.vue';
 import { getRiskArea } from '/@/api/covid';
-import { onBeforeMount, reactive, ref } from 'vue';
-import { GetRiskAreaResultModel, RiskAreaItem } from '/@/api/model/covidModel';
 import { tabList, areaRemarkList } from './data';
-import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
-import { addPlusAndMinus } from '/@/hooks/useTransformData';
+import { onBeforeMount, reactive, ref } from 'vue';
 import { ShowModal } from '/@/hooks/useShowMessage';
+import { addPlusAndMinus } from '/@/hooks/useTransformData';
+import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
+import { GetRiskAreaResultModel, RiskAreaItem } from '/@/api/model/covidModel';
 interface RiskIncrease {
   per: string;
   count: number | string;
@@ -252,140 +257,105 @@ page {
   color: transparent;
 }
 
-.data {
-  border-radius: 8px;
-  padding: 16px;
-  margin-top: 8px;
-  background-color: white;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  .header {
-    .top {
-      display: flex;
-      justify-content: space-between;
-      .title {
-        font-weight: 600;
-        font-size: 18px;
+#count {
+  .count-list {
+    display: flex;
+    align-items: center;
+    .count-list__left {
+      box-sizing: border-box;
+      // border: 1px #f4f4f4 solid;
+      border-radius: 8px;
+      height: 40px;
+      width: 40px;
+      text-align: center;
+      line-height: 40px;
+      padding: 4px;
+      margin-right: 12px;
+      #count-list__left-middle {
+        color: #e57631;
+      }
+      #count-list__left-high {
+        color: #e61c1d;
+      }
+      .nut-icon {
+        font-size: 32px;
       }
     }
-    .time {
-      font-size: 14px;
-      color: #909399;
-      margin-bottom: 8px;
-    }
-  }
-  .content {
-    .list {
+    .count-list__middle {
       display: flex;
-      align-items: center;
-      margin-top: 16px;
-      .icon {
-        box-sizing: border-box;
-        // border: 1px #f4f4f4 solid;
-        border-radius: 8px;
-        height: 40px;
-        width: 40px;
-        text-align: center;
-        line-height: 40px;
-        padding: 4px;
-        margin-right: 12px;
-        #middle {
-          color: #e57631;
-        }
-        #high {
-          color: #e61c1d;
-        }
-        .nut-icon {
-          font-size: 32px;
-        }
-      }
-      .merge {
-        display: flex;
+      flex: 1;
+      padding-bottom: 8px;
+      .count-list__middle-top {
         flex: 1;
-
-        padding-bottom: 8px;
-        .title {
-          flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 40px;
+        .clmt-increase {
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-          height: 40px;
-          .increase {
-            display: flex;
-            font-size: 12px;
-          }
-        }
-        .right {
-          display: flex;
-          align-items: center;
-          font-size: 22px;
-          font-weight: 600;
-          border-radius: 32px;
+          font-size: 12px;
         }
       }
+      .count-list__right {
+        font-size: 22px;
+        font-weight: 600;
+      }
+    }
+    #count-list__first {
+      margin-top: 16px;
+      padding-bottom: 16px;
+      border-bottom: #efefef 1px solid;
+    }
+    #count-list__second {
+      margin-top: 16px;
     }
   }
 }
 
-#first {
-  border-bottom: #efefef 1px solid;
-}
-
-.description {
-  border-radius: 8px;
-  background-color: white;
-  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
-  padding: 16px;
-  margin-top: 16px;
-  .title {
-    font-size: 18px;
-    font-weight: 600;
-  }
-  .list {
+#description {
+  .description-list {
     display: flex;
     border-bottom: #efefef 1px solid;
     margin-top: 16px;
-    .left {
+    .description-list__left {
       height: 20px;
       width: 20px;
       flex-shrink: 0;
       border-radius: 50%;
       margin: 0 16px 0 4px;
     }
-    .right {
+    .description-list__right {
       display: flex;
       flex-direction: column;
       font-size: 14px;
-      .remark {
+      .description-list__right-remark {
         margin: 8px 0;
         color: #949494;
       }
     }
   }
-  .list:last-child {
+  .description-list:last-child {
     border-bottom: none;
   }
 }
-.infiniteLoading {
+
+#infiniteLoading {
   height: v-bind(loadmoreHeight);
-  .box {
+  #arealist {
     font-size: 14px;
+    margin-top: 8px !important;
+  }
+  .arealist-communitys {
     margin-top: 8px;
-    border-radius: 8px;
-    padding: 16px;
-    background-color: white;
-    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
-    .area-list {
-      margin-top: 8px;
-    }
-    .area-list:first-child {
-      margin-top: 0;
-    }
-    .footer {
-      display: flex;
-      .area-name {
-        color: #949494;
-        margin-left: 8px;
-      }
+  }
+  .arealist-communitys:first-child {
+    margin-top: 0;
+  }
+  .arealist-footer {
+    display: flex;
+    .arealist-footer__name {
+      color: #949494;
+      margin-left: 8px;
     }
   }
 }
