@@ -154,6 +154,42 @@
       </div>
     </nut-tabpane>
   </nut-tabs>
+  <div id="search" v-show="state.searchValue.length">
+    <div v-if="state.searchMiddleList.length > 0 || state.searchHighList.length > 0">
+      <div v-if="state.searchMiddleList.length > 0" class="search-type">中风险地区：</div>
+      <Card
+        id="arealist"
+        v-for="item in state.searchMiddleList"
+        :key="item.id"
+        :show-divider="false"
+      >
+        <template #content>
+          <div v-for="(i, idx) in item.communitys" :key="idx" class="arealist-communitys">
+            {{ i }}
+          </div>
+          <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
+          <div class="arealist-footer">
+            <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
+            <div class="arealist-footer__name">{{ item.area_name }}</div>
+          </div>
+        </template>
+      </Card>
+      <div v-if="state.searchHighList.length > 0" class="search-type">高风险地区：</div>
+      <Card id="arealist" v-for="item in state.searchHighList" :key="item.id" :show-divider="false">
+        <template #content>
+          <div v-for="(i, idx) in item.communitys" :key="idx" class="arealist-communitys">
+            {{ i }}
+          </div>
+          <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
+          <div class="arealist-footer">
+            <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
+            <div class="arealist-footer__name">{{ item.area_name }}</div>
+          </div>
+        </template>
+      </Card>
+    </div>
+    <nut-empty v-else image="error" description="无中高风险地区"></nut-empty>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -175,6 +211,8 @@ const showSkeletonLoading = ref(true);
 
 const state = reactive({
   searchValue: '',
+  searchMiddleList: [] as RiskAreaItem[],
+  searchHighList: [] as RiskAreaItem[],
   hasMoreMiddleList: true,
   hasMoreHighList: true,
   hincrease: {} as RiskIncrease,
@@ -235,7 +273,8 @@ const loadMoreHighList = (done) => {
 };
 
 const handleSearch = (val) => {
-  console.log(val);
+  state.searchMiddleList = state.risk.middlelist.filter((item) => item.area_name.includes(val));
+  state.searchHighList = state.risk.highlist.filter((item) => item.area_name.includes(val));
 };
 
 const showRiskAreaModal = () => {
@@ -344,6 +383,30 @@ page {
   #arealist {
     font-size: 14px;
     margin-top: 8px !important;
+  }
+  .arealist-communitys {
+    margin-top: 8px;
+  }
+  .arealist-communitys:first-child {
+    margin-top: 0;
+  }
+  .arealist-footer {
+    display: flex;
+    .arealist-footer__name {
+      color: #949494;
+      margin-left: 8px;
+    }
+  }
+}
+
+#search {
+  #arealist {
+    margin: 0 16px 8px 16px;
+    font-size: 14px;
+  }
+  .search-type {
+    margin: 8px 0 8px 16px;
+    font-weight: 600;
   }
   .arealist-communitys {
     margin-top: 8px;
