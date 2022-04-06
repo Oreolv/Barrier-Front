@@ -20,56 +20,76 @@
     <nut-tabpane pane-key="t1">
       <div class="data">
         <div class="header">
-          <div class="time">{{ state.end_update_time }}</div>
+          <div class="top">
+            <div class="time">{{ state.risk.end_update_time }}</div>
+            <nut-icon name="ask" @click="showRiskAreaModal"></nut-icon>
+          </div>
           <div class="title">风险地区数量</div>
         </div>
         <div class="content">
-          <div class="list">
-            <div class="icon">
-              <nut-icon
-                id="middle"
-                font-class-name="iconfont"
-                class-prefix="icon"
-                name="error-fill"
-              />
-            </div>
-            <div class="merge" id="first">
-              <div class="title">
-                <div class="name">中风险地区</div>
-                <div
-                  class="increase"
-                  :style="{ color: state.hincrease.count > 0 ? '#E84840' : '#6FCC4E' }"
-                >
-                  <div class="count">{{ state.mincrease.count }}</div>
-                  <div class="per">({{ state.mincrease.per }})</div>
+          <nut-skeleton
+            width="250px"
+            height="15px"
+            animated
+            avatar
+            avatar-size="32"
+            :loading="showSkeletonLoading"
+          >
+            <div class="list">
+              <div class="icon">
+                <nut-icon
+                  id="middle"
+                  font-class-name="iconfont"
+                  class-prefix="icon"
+                  name="error-fill"
+                />
+              </div>
+              <div class="merge" id="first">
+                <div class="title">
+                  <div class="name">中风险地区</div>
+                  <div
+                    class="increase"
+                    :style="{ color: state.hincrease.count > 0 ? '#E84840' : '#6FCC4E' }"
+                  >
+                    <div class="count">{{ state.mincrease.count }}</div>
+                    <div class="per">({{ state.mincrease.per }})</div>
+                  </div>
+                </div>
+                <div class="right">
+                  <div class="uu">{{ state.risk.mcount }}</div>
                 </div>
               </div>
-              <div class="right">
-                <div class="uu">{{ state.mcount }}</div>
+            </div>
+          </nut-skeleton>
+          <nut-skeleton
+            width="250px"
+            height="15px"
+            animated
+            avatar
+            avatar-size="32"
+            :loading="showSkeletonLoading"
+          >
+            <div class="list">
+              <div class="icon">
+                <nut-icon id="high" font-class-name="iconfont" class-prefix="icon" name="error" />
               </div>
-            </div>
-          </div>
-
-          <div class="list">
-            <div class="icon">
-              <nut-icon id="high" font-class-name="iconfont" class-prefix="icon" name="error" />
-            </div>
-            <div class="merge">
-              <div class="title">
-                <div class="name">高风险地区</div>
-                <div
-                  class="increase"
-                  :style="{ color: state.hincrease.count > 0 ? '#E84840' : '#6FCC4E' }"
-                >
-                  <div class="count">{{ state.hincrease.count }}</div>
-                  <div class="per">({{ state.hincrease.per }})</div>
+              <div class="merge">
+                <div class="title">
+                  <div class="name">高风险地区</div>
+                  <div
+                    class="increase"
+                    :style="{ color: state.hincrease.count > 0 ? '#E84840' : '#6FCC4E' }"
+                  >
+                    <div class="count">{{ state.hincrease.count }}</div>
+                    <div class="per">({{ state.hincrease.per }})</div>
+                  </div>
+                </div>
+                <div class="right">
+                  <div class="uu">{{ state.risk.hcount }}</div>
                 </div>
               </div>
-              <div class="right">
-                <div class="uu">{{ state.hcount }}</div>
-              </div>
             </div>
-          </div>
+          </nut-skeleton>
         </div>
       </div>
       <div class="description">
@@ -84,92 +104,145 @@
       </div>
     </nut-tabpane>
     <nut-tabpane pane-key="t2">
-      <!-- TODO 此处nutui的滚动加载组件存在找不到scroll-view的bug，先不做 -->
+      <div class="infiniteLoading" id="scroll">
+        <nut-infiniteloading
+          containerId="scroll"
+          :use-window="false"
+          :has-more="state.hasMoreMiddleList"
+          @load-more="loadMoreMiddleList"
+          load-more-txt="没有更多数据了"
+          pull-icon="loading"
+        >
+          <div class="box" v-for="item in state.middlelist" :key="item.id">
+            <div v-for="(i, idx) in item.communitys" :key="idx" class="area-list">
+              {{ i }}
+            </div>
+            <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
+            <div class="footer">
+              <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
+              <div class="area-name">{{ item.area_name }}</div>
+            </div>
+          </div>
+        </nut-infiniteloading>
+      </div>
     </nut-tabpane>
-    <nut-tabpane pane-key="t3">t3</nut-tabpane>
+    <nut-tabpane pane-key="t3">
+      <div class="infiniteLoading" id="scroll">
+        <nut-infiniteloading
+          containerId="scroll"
+          :use-window="false"
+          :has-more="state.hasMoreHighList"
+          @load-more="loadMoreHighList"
+          load-more-txt="没有更多数据了"
+          pull-icon="loading"
+        >
+          <div class="box" v-for="item in state.highlist" :key="item.id">
+            <div v-for="(i, idx) in item.communitys" :key="idx" class="area-list">
+              {{ i }}
+            </div>
+            <nut-divider :style="{ color: '#f4f4f4' }"></nut-divider>
+            <div class="footer">
+              <nut-icon font-class-name="iconfont" class-prefix="icon" name="location-fill" />
+              <div class="area-name">{{ item.area_name }}</div>
+            </div>
+          </div>
+        </nut-infiniteloading>
+      </div>
+    </nut-tabpane>
   </nut-tabs>
 </template>
 
 <script lang="ts" setup>
 import { getRiskArea } from '/@/api/covid';
-import { onBeforeMount, reactive } from 'vue';
+import { onBeforeMount, reactive, ref } from 'vue';
 import { GetRiskAreaResultModel, RiskAreaItem } from '/@/api/model/covidModel';
 import { tabList, areaRemarkList } from './data';
+import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
+import { addPlusAndMinus } from '/@/hooks/useTransformData';
+import { ShowModal } from '/@/hooks/useShowMessage';
 interface RiskIncrease {
   per: string;
   count: number | string;
 }
+const tabnineHeight = ref('80vh');
+const loadmoreHeight = ref('80vh');
+const showSkeletonLoading = ref(true);
+
 const state = reactive({
   searchValue: '',
-  hcount: 0 as number,
-  mcount: 0 as number,
+  hasMoreMiddleList: true,
+  hasMoreHighList: true,
   hincrease: {} as RiskIncrease,
   mincrease: {} as RiskIncrease,
   highlist: [] as RiskAreaItem[],
   middlelist: [] as RiskAreaItem[],
-  end_update_time: '' as string,
   risk: {} as GetRiskAreaResultModel,
 });
 
 onBeforeMount(async () => {
   state.risk = await getRiskArea();
-  state.end_update_time = state.risk.end_update_time.slice(0, 10);
-  state.hcount = state.risk.hcount;
-  state.mcount = state.risk.mcount;
+  showSkeletonLoading.value = false;
+  state.risk.end_update_time = state.risk.end_update_time.slice(0, 10);
   state.hincrease = {
-    count: state.risk.hcount - state.risk.last_hcount || '+0',
+    count: addPlusAndMinus(state.risk.hcount - state.risk.last_hcount),
     per:
-      (Math.round(((state.risk.hcount - state.risk.last_hcount) / state.risk.last_hcount) * 10000) /
-        100 || '+0') + '%',
+      addPlusAndMinus(
+        Math.round(
+          ((state.risk.hcount - state.risk.last_hcount) / state.risk.last_hcount) * 10000
+        ) / 100
+      ) + '%',
   };
   state.mincrease = {
-    count: state.risk.mcount - state.risk.last_mcount || '+0',
+    count: addPlusAndMinus(state.risk.mcount - state.risk.last_mcount),
     per:
-      (Math.round(((state.risk.mcount - state.risk.last_mcount) / state.risk.last_mcount) * 10000) /
-        100 || '+0') + '%',
+      addPlusAndMinus(
+        Math.round(
+          ((state.risk.mcount - state.risk.last_mcount) / state.risk.last_mcount) * 10000
+        ) / 100
+      ) + '%',
   };
+  state.highlist.push(...state.risk.highlist.slice(0, 15));
+  state.middlelist.push(...state.risk.middlelist.slice(0, 15));
+  tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
+  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 16}px)`;
 });
+
+const loadMoreMiddleList = (done) => {
+  setTimeout(() => {
+    const len = state.middlelist.length;
+    state.middlelist.push(...state.risk.middlelist.slice(len, len + 15));
+    if (state.risk.middlelist.length === state.middlelist.length) {
+      state.hasMoreMiddleList = false;
+    }
+    done();
+  }, 500);
+};
+
+const loadMoreHighList = (done) => {
+  setTimeout(() => {
+    const len = state.highlist.length;
+    state.highlist.push(...state.risk.highlist.slice(len, len + 15));
+    if (state.risk.highlist.length === state.highlist.length) {
+      state.hasMoreHighList = false;
+    }
+    done();
+  }, 500);
+};
 
 const handleSearch = (val) => {
   console.log(val);
+};
+
+const showRiskAreaModal = () => {
+  ShowModal.info({
+    title: '说明',
+    content: '数据来源：由国家卫生健康委每天汇总各地报送疫情风险等级数据',
+  });
 };
 </script>
 
 <style lang="scss">
 page {
-  background-color: #f5f5f5;
-}
-.nut-searchbar {
-  background-color: #f5f5f5;
-  box-shadow: none;
-  margin-top: 8px;
-}
-.nut-tabs__titles {
-  padding: 0 16px;
-  margin-top: 8px;
-  .active {
-    font-weight: 500;
-    background-color: #333333 !important;
-    color: white !important;
-  }
-  button {
-    font-size: 14px;
-    flex: 0 0 80px;
-    margin-right: 8px;
-    color: #949494;
-    border: 1px #f5f5f5 solid;
-    padding: 0 8px;
-  }
-}
-
-.nut-searchbar__search-input {
-  padding: 4px 0 4px 13px;
-  background: white;
-}
-
-.nut-tabpane {
-  padding: 16px;
-  padding-top: 0;
   background-color: #f5f5f5;
 }
 // 隐藏滚动条
@@ -186,9 +259,13 @@ page {
   background-color: white;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
   .header {
-    font-weight: 600;
-    .title {
-      font-size: 18px;
+    .top {
+      display: flex;
+      justify-content: space-between;
+      .title {
+        font-weight: 600;
+        font-size: 18px;
+      }
     }
     .time {
       font-size: 14px;
@@ -287,5 +364,72 @@ page {
   .list:last-child {
     border-bottom: none;
   }
+}
+.infiniteLoading {
+  height: v-bind(loadmoreHeight);
+  .box {
+    font-size: 14px;
+    margin-top: 8px;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: white;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    .area-list {
+      margin-top: 8px;
+    }
+    .area-list:first-child {
+      margin-top: 0;
+    }
+    .footer {
+      display: flex;
+      .area-name {
+        color: #949494;
+        margin-left: 8px;
+      }
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+.nut-searchbar {
+  background-color: #f5f5f5;
+  box-shadow: none;
+  margin-top: 8px;
+}
+.nut-tabs__titles {
+  padding: 0 16px;
+  margin-top: 8px;
+  .active {
+    font-weight: 500;
+    background-color: #333333 !important;
+    color: white !important;
+  }
+  button {
+    font-size: 14px;
+    flex: 0 0 80px;
+    margin-right: 8px;
+    color: #949494;
+    border: 1px #f5f5f5 solid;
+    padding: 0 8px;
+  }
+}
+
+.nut-searchbar__search-input {
+  padding: 4px 0 4px 13px;
+  background: white;
+}
+
+.nut-tabpane {
+  height: v-bind(tabnineHeight);
+  padding: 16px;
+  padding-top: 0;
+  background-color: #f5f5f5;
+}
+.nut-divider {
+  margin: 8px 0;
+}
+.skeleton {
+  margin-top: 16px;
 }
 </style>

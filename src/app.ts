@@ -22,6 +22,9 @@ import {
   Input,
   Empty,
   Divider,
+  InfiniteLoading,
+  Skeleton,
+  Avatar,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -44,6 +47,9 @@ const NutComponent = [
   Input,
   Empty,
   Divider,
+  InfiniteLoading,
+  Skeleton,
+  Avatar,
 ];
 
 App.use(pinia);

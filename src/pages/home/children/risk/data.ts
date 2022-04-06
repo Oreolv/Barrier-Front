@@ -8,11 +8,11 @@ export const tabList = reactive({
       paneKey: 't1',
     },
     {
-      title: '高风险',
+      title: '中风险',
       paneKey: 't2',
     },
     {
-      title: '低风险',
+      title: '高风险',
       paneKey: 't3',
     },
   ],
