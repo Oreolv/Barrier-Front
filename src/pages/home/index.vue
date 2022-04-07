@@ -2,20 +2,20 @@
   <SearchBar></SearchBar>
   <nut-tabs v-model="tabValue" background="#FFF" title-gutter="15">
     <nut-tabpane title="疫情资讯">
-      <nut-empty description="无数据" v-if="!Object.keys(covidStore.allData).length"></nut-empty>
+      <nut-empty description="无数据" v-if="!Object.keys(state.allData).length"></nut-empty>
       <div class="data" v-else>
         <!-- 国内疫情数据 -->
         <div class="china-data">
           <div class="update-time">
             <div class="update-time-des">统计数据截至</div>
-            <div class="update-time-text">{{ covidStore.lastUpdateTime }}</div>
+            <div class="update-time-text">{{ state.allData.lastUpdateTime }}</div>
           </div>
           <Card title="全国疫情数据">
             <template #content>
               <div class="china-item" v-for="item in CovidList" :key="item.name">
                 <ChinaCovidItem
-                  :add="covidStore.chinaAdd[item.name]"
-                  :today="covidStore.chinaTotal[item.name]"
+                  :add="chinaAdd[item.name]"
+                  :today="chinaTotal[item.name]"
                   :type="item.name"
                 >
                   {{ item.des }}
@@ -27,13 +27,8 @@
         <!-- 城市疫情数据 -->
         <div class="city-data">
           <div class="city-data-des">近期31省市区本土病例</div>
-          <nut-table
-            :columns="CityColumn"
-            :data="loadmore ? covidStore.partCityData : covidStore.cityData"
-            :border="false"
-            center
-          ></nut-table>
-          <div class="loadmore" v-if="covidStore.cityData.length">
+          <nut-table :columns="CityColumn" :data="cityData" :border="false" center></nut-table>
+          <div class="loadmore" v-if="state.allData.city_data.length">
             <div
               @click="
                 loadmore = !loadmore;
@@ -56,19 +51,41 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import SearchBar from '/@/components/SearchBar.vue';
-import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
-import { useCovidStore } from '/@/store/covid';
-import { getNavBarHeigtht } from '/@/hooks/useGetSystemInfo';
-import { scrollToTop } from '/@/hooks/useScrollToTop';
-import { CovidList, CityColumn } from './data';
 import { useDidShow } from '@tarojs/taro';
+import { getCovidData } from '/@/api/covid';
 import Card from '../../components/Card.vue';
+import { CovidList, CityColumn } from './data';
+import { computed, onBeforeMount, reactive, ref } from 'vue';
+import SearchBar from '/@/components/SearchBar.vue';
+import { scrollToTop } from '/@/hooks/useScrollToTop';
+import { addPlusAndMinus } from '/@/hooks/useTransformData';
+import { getNavBarHeigtht } from '/@/hooks/useGetSystemInfo';
+import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
+import { GetCovidDataResultModel } from '/@/api/model/covidModel';
 
-const covidStore = useCovidStore();
-covidStore.getCovidData();
+const state = reactive({
+  allData: {} as GetCovidDataResultModel,
+});
+
 useDidShow(() => {});
+
+onBeforeMount(async () => {
+  state.allData = await getCovidData();
+});
+
+const chinaAdd = computed(() => {
+  return addPlusAndMinus(state.allData.china_data[0]);
+});
+
+const chinaTotal = computed(() => {
+  return addPlusAndMinus(state.allData.china_data[1]);
+});
+
+const cityData = computed(() => {
+  return loadmore.value
+    ? state.allData.city_data.filter((c) => c.confirm > 0)
+    : state.allData.city_data;
+});
 
 const tabValue = ref(0);
 const tabsTop = getNavBarHeigtht();

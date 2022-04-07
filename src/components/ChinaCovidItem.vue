@@ -12,7 +12,7 @@
 <script lang="ts" setup>
 const props = defineProps({
   type: String,
-  add: Number,
+  add: String,
   today: Number,
 });
 
@@ -56,7 +56,7 @@ const textColor = style[props.type!].text;
   // padding: 5px;
   .item-add {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     color: #7c7c7c;
     font-size: 12px;
     .item-add-text {
