@@ -26,7 +26,12 @@
         </div>
         <!-- 城市疫情数据 -->
         <div class="city-data">
-          <div class="city-data-des">近期31省市区本土病例</div>
+          <div class="city-data-des">
+            <div class="left">近期31省市区本土病例</div>
+            <nut-button type="primary" size="mini" plain @click="navigateToRiskArea">
+              风险地区查询
+            </nut-button>
+          </div>
           <nut-table :columns="CityColumn" :data="cityData" striped></nut-table>
           <div class="loadmore" v-if="state.allData.city_data.length">
             <div
@@ -62,6 +67,7 @@ import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { GetCovidDataResultModel } from '/@/api/model/covidModel';
+import Taro from '@tarojs/taro';
 
 const state = reactive({
   allData: {} as GetCovidDataResultModel,
@@ -96,6 +102,13 @@ const cityData = computed(() => {
     ? state.allData.city_data.filter((c) => c.confirm > 0)
     : state.allData.city_data;
 });
+
+const navigateToRiskArea = () => {
+  Taro.navigateTo({
+    url: '/pages/home/children/risk/index',
+    events: {},
+  });
+};
 </script>
 
 <style lang="scss">
@@ -123,6 +136,11 @@ const cityData = computed(() => {
   font-size: 14px;
   font-weight: bold;
   margin: 10px 0;
+  display: flex;
+  align-items: center;
+  .left {
+    flex: 1;
+  }
 }
 .card-content {
   display: flex;
