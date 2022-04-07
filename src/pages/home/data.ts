@@ -27,7 +27,7 @@ export const CovidList = [
 
 export const CityColumn = [
   {
-    title: '城市',
+    title: '城市(区)',
     key: 'name',
     align: 'center',
   },

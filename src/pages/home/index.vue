@@ -147,11 +147,6 @@ const cityData = computed(() => {
   white-space: nowrap;
   text-align: center;
 }
-.nut-table__main__body__tr {
-  :nth-child(3) {
-    color: #ff7f7f;
-  }
-}
 .nut-tabs {
   position: relative;
   top: v-bind(tabsTop);
