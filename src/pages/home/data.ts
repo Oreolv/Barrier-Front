@@ -27,11 +27,11 @@ export const CovidList = [
 
 export const CityColumn = [
   {
-    title: '城市(区)',
+    title: '城市',
     key: 'name',
   },
   {
-    title: '省市区',
+    title: '省市',
     key: 'province',
   },
   {
@@ -41,9 +41,5 @@ export const CityColumn = [
   {
     title: '确诊',
     key: 'nowConfirm',
-  },
-  {
-    title: '区域风险',
-    key: 'grade',
   },
 ];

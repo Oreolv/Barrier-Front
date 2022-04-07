@@ -10,9 +10,9 @@
             <div class="update-time-des">统计数据截至</div>
             <div class="update-time-text">{{ covidStore.lastUpdateTime }}</div>
           </div>
-          <nut-grid :column-num="3" gutter="4">
-            <nut-grid-item v-for="item in CovidList" :key="item.name">
-              <template #default>
+          <Card title="全国疫情数据">
+            <template #content>
+              <div class="china-item" v-for="item in CovidList" :key="item.name">
                 <ChinaCovidItem
                   :add="covidStore.chinaAdd[item.name]"
                   :today="covidStore.chinaTotal[item.name]"
@@ -20,9 +20,9 @@
                 >
                   {{ item.des }}
                 </ChinaCovidItem>
-              </template>
-            </nut-grid-item>
-          </nut-grid>
+              </div>
+            </template>
+          </Card>
         </div>
         <!-- 城市疫情数据 -->
         <div class="city-data">
@@ -30,8 +30,8 @@
           <nut-table
             :columns="CityColumn"
             :data="loadmore ? covidStore.partCityData : covidStore.cityData"
-            :bordered="false"
-            align="center"
+            :border="false"
+            center
           ></nut-table>
           <div class="loadmore" v-if="covidStore.cityData.length">
             <div
@@ -64,6 +64,7 @@ import { getNavBarHeigtht } from '/@/hooks/useGetSystemInfo';
 import { scrollToTop } from '/@/hooks/useScrollToTop';
 import { CovidList, CityColumn } from './data';
 import { useDidShow } from '@tarojs/taro';
+import Card from '../../components/Card.vue';
 
 const covidStore = useCovidStore();
 covidStore.getCovidData();
@@ -81,6 +82,63 @@ const loadmore = ref(true);
   align-items: center;
   justify-content: center;
   margin-top: 5px;
+}
+
+.update-time {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  margin-bottom: 8px;
+  .update-time-des {
+    margin-right: 8px;
+    color: #7c7c7c;
+  }
+  .update-time-text {
+    color: #222;
+  }
+}
+.city-data-des {
+  font-size: 14px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+.card-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.china-item {
+  margin-top: 4px;
+  flex-basis: 33.3%;
+}
+.china-item:nth-child(-n + 3) {
+  margin: 8px 0;
+}
+</style>
+
+<style lang="scss">
+.nut-table__main__head__tr__td,
+.nut-table__main__head__tr__th,
+.nut-table__main__body__tr__td,
+.nut-table__main__body__tr__th {
+  text-align: center;
+  padding: 8px;
+}
+.nut-table__main__head__tr {
+  background-color: #eef4ff;
+  color: #4180f1;
+  white-space: nowrap;
+  text-align: center;
+}
+.nut-table__main__body__tr__td {
+  white-space: nowrap;
+  text-align: center;
+}
+
+.nut-table__main__body__tr {
+  :nth-child(3) {
+    color: #ff7f7f;
+  }
 }
 .nut-tabs {
   position: relative;
@@ -111,62 +169,7 @@ const loadmore = ref(true);
   flex: 0 1 auto;
 }
 
-.nut-grid-item__content {
-  padding: 0;
-  border: none;
-}
-
 .nut-tabpane {
   padding-top: 10px;
-}
-
-.nut-grid {
-  padding: 0;
-}
-
-.update-time {
-  display: flex;
-  align-items: center;
-  font-size: 3.5vw;
-  margin-bottom: 5px;
-  .update-time-des {
-    margin-right: 8px;
-    color: #7c7c7c;
-  }
-  .update-time-text {
-    color: #222;
-  }
-}
-.city-data-des {
-  font-size: 3.5vw;
-  font-weight: bold;
-  margin: 10px 0;
-}
-
-.nut-table__main__head__tr__td,
-.nut-table__main__head__tr__th,
-.nut-table__main__body__tr__td,
-.nut-table__main__body__tr__th {
-  text-align: center;
-  padding: 8px;
-}
-.nut-table__main__head__tr {
-  background-color: #eef4ff;
-  color: #4180f1;
-  white-space: nowrap;
-  text-align: center;
-}
-.nut-table__main__body__tr__td {
-  white-space: nowrap;
-  text-align: center;
-}
-
-.nut-table__main__body__tr {
-  :nth-child(3) {
-    color: #ff7f7f;
-  }
-  :nth-child(5) {
-    text-align: right;
-  }
 }
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="card" :style="{ marginTop: props.marginTop + 'px' }">
     <div class="card-head">
-      <div class="card-head__description">
+      <div class="card-head__description" v-if="props.description">
         <div class="card-head__description-name">
           {{ props.description }}
         </div>
@@ -55,6 +55,7 @@ const props = withDefaults(defineProps<CardProps>(), {
     .card-head__title {
       font-weight: 600;
       font-size: 18px;
+      margin-bottom: 8px;
     }
   }
 }

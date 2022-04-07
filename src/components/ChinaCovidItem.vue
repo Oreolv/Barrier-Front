@@ -1,7 +1,7 @@
 <template>
   <div class="item">
     <div class="item-add">
-      <div class="item-add-des">较上日+</div>
+      <div class="item-add-des">较上日</div>
       <div class="item-add-text">{{ add }}</div>
     </div>
     <div class="item-today">{{ today }}</div>
@@ -44,7 +44,7 @@ const style = {
 };
 
 const textColor = style[props.type!].text;
-const backgroundColor = style[props.type!].background;
+// const backgroundColor = style[props.type!].background;
 </script>
 
 <style lang="scss">
@@ -53,14 +53,12 @@ const backgroundColor = style[props.type!].background;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 92%;
-  padding: 5px;
-  background-color: v-bind(backgroundColor);
+  // padding: 5px;
   .item-add {
     display: flex;
     align-items: flex-end;
     color: #7c7c7c;
-    font-size: 3vw;
+    font-size: 12px;
     .item-add-text {
       color: v-bind(textColor);
     }
@@ -68,11 +66,12 @@ const backgroundColor = style[props.type!].background;
   .item-today {
     color: v-bind(textColor);
     font-weight: bold;
-    font-size: 6vw;
+    font-size: 24px;
+    margin: 4px 0;
   }
   .item-des {
     color: #222;
-    font-size: 3.5vw;
+    font-size: 14px;
   }
 }
 </style>
