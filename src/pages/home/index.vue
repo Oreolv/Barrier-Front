@@ -27,7 +27,7 @@
         <!-- 城市疫情数据 -->
         <div class="city-data">
           <div class="city-data-des">近期31省市区本土病例</div>
-          <nut-table :columns="CityColumn" :data="cityData" :border="false" center></nut-table>
+          <nut-table :columns="CityColumn" :data="cityData" striped></nut-table>
           <div class="loadmore" v-if="state.allData.city_data.length">
             <div
               @click="
@@ -138,24 +138,11 @@ const cityData = computed(() => {
 .nut-navbar {
   box-shadow: none;
 }
-.nut-table__main__head__tr__td,
-.nut-table__main__head__tr__th,
-.nut-table__main__body__tr__td,
-.nut-table__main__body__tr__th {
-  text-align: center;
-  padding: 8px;
-}
 .nut-table__main__head__tr {
-  background-color: #eef4ff;
-  color: #4180f1;
+  font-weight: 600;
   white-space: nowrap;
   text-align: center;
 }
-.nut-table__main__body__tr__td {
-  white-space: nowrap;
-  text-align: center;
-}
-
 .nut-table__main__body__tr {
   :nth-child(3) {
     color: #ff7f7f;
@@ -165,7 +152,6 @@ const cityData = computed(() => {
   position: relative;
   top: v-bind(tabsTop);
 }
-
 .nut-tabs__titles-item.active {
   font-size: 16px !important;
   .nut-tabs__titles-item__line {
@@ -175,13 +161,11 @@ const cityData = computed(() => {
     border-radius: 10px;
   }
 }
-
 .nut-tabs__titles-item {
   width: auto;
   min-width: 0;
   flex: 0 1 auto;
 }
-
 .nut-tabpane {
   height: v-bind(tabnineHeight);
   padding-top: 10px;

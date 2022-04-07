@@ -29,17 +29,21 @@ export const CityColumn = [
   {
     title: '城市',
     key: 'name',
+    align: 'center',
   },
   {
     title: '省市',
     key: 'province',
+    align: 'center',
   },
   {
     title: '新增',
     key: 'confirm',
+    align: 'center',
   },
   {
     title: '确诊',
     key: 'nowConfirm',
+    align: 'center',
   },
 ];
