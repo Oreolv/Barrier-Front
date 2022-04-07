@@ -7,6 +7,7 @@ import {
   GetRiskAreaResultModel,
 } from '/@/api/model/covidModel';
 import { getCovidData, getRiskArea } from '/@/api/covid';
+import { addPlusAndMinus } from '/@/hooks/useTransformData';
 export const useCovidStore = defineStore('covid', {
   state: () => {
     return {
@@ -43,6 +44,9 @@ export const useCovidStore = defineStore('covid', {
       this.chinaTotal = ret.china_data[1];
       this.cityData = ret.city_data;
       this.provinceData = ret.province_data;
+      for (const i in this.chinaAdd) {
+        this.chinaAdd[i] = addPlusAndMinus(this.chinaAdd[i]);
+      }
       this.sortCityData();
     },
     async getRiskArea() {
