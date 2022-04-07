@@ -76,6 +76,10 @@ useDidShow(() => {});
 
 onBeforeMount(async () => {
   state.allData = await getCovidData();
+  state.allData.city_data = state.allData.city_data.sort((a, b) => {
+    return b.confirm - a.confirm;
+  });
+
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
