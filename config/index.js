@@ -12,8 +12,9 @@ const config = {
   sourceRoot: 'src',
   outputRoot: 'dist',
   plugins: ['@tarojs/plugin-html', 'taro-plugin-pinia'],
-  scss: {
-    data: `@import "/src/assets/css/custom_theme.scss";`,
+  sass: {
+    resource: [path.resolve(__dirname, '..', 'src/assets/styles/custom_theme.scss')],
+    data: `@import "@nutui/nutui-taro/dist/styles/variables.scss";`,
   },
   defineConstants: {},
   copy: {

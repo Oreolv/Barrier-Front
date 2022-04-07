@@ -1,7 +1,7 @@
 import './app.scss';
 import '/@/assets/font/iconfont.css';
 import { createApp } from 'vue';
-import '@nutui/nutui-taro/dist/style.css';
+import '@nutui/nutui-taro/dist/styles/themes/default.scss';
 import { createPinia } from 'pinia';
 import {
   Button,
