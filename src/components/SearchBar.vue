@@ -56,7 +56,7 @@ const searchBarWidth = getSearchBarWidth();
   }
   .nut-searchbar__input-bar {
     text-align: left;
-    font-size: 16px;
+    font-size: 14px;
     padding-left: 26px;
   }
 }

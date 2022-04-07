@@ -59,7 +59,7 @@ import { computed, onBeforeMount, reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
 import { scrollToTop } from '/@/hooks/useScrollToTop';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
-import { getNavBarHeigtht } from '/@/hooks/useGetSystemInfo';
+import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { GetCovidDataResultModel } from '/@/api/model/covidModel';
 
@@ -67,10 +67,16 @@ const state = reactive({
   allData: {} as GetCovidDataResultModel,
 });
 
+const tabValue = ref(0);
+const tabsTop = getNavBarHeigtht();
+const tabnineHeight = ref('80vh');
+const loadmore = ref(true);
+
 useDidShow(() => {});
 
 onBeforeMount(async () => {
   state.allData = await getCovidData();
+  tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
 const chinaAdd = computed(() => {
@@ -78,7 +84,7 @@ const chinaAdd = computed(() => {
 });
 
 const chinaTotal = computed(() => {
-  return addPlusAndMinus(state.allData.china_data[1]);
+  return state.allData.china_data[1];
 });
 
 const cityData = computed(() => {
@@ -86,11 +92,6 @@ const cityData = computed(() => {
     ? state.allData.city_data.filter((c) => c.confirm > 0)
     : state.allData.city_data;
 });
-
-const tabValue = ref(0);
-const tabsTop = getNavBarHeigtht();
-
-const loadmore = ref(true);
 </script>
 
 <style lang="scss">
@@ -134,6 +135,9 @@ const loadmore = ref(true);
 </style>
 
 <style lang="scss">
+.nut-navbar {
+  box-shadow: none;
+}
 .nut-table__main__head__tr__td,
 .nut-table__main__head__tr__th,
 .nut-table__main__body__tr__td,
@@ -160,22 +164,14 @@ const loadmore = ref(true);
 .nut-tabs {
   position: relative;
   top: v-bind(tabsTop);
-  .nut-tabs__titles {
-    width: 100%;
-    position: fixed;
-    z-index: 1;
-  }
-  .nut-tabs__content {
-    margin-top: 46px; // 先写死
-  }
 }
 
 .nut-tabs__titles-item.active {
   font-size: 16px !important;
   .nut-tabs__titles-item__line {
     background: #000;
-    width: 60%;
-    bottom: 10%;
+    width: 40%;
+    bottom: 8%;
     border-radius: 10px;
   }
 }
@@ -187,6 +183,7 @@ const loadmore = ref(true);
 }
 
 .nut-tabpane {
+  height: v-bind(tabnineHeight);
   padding-top: 10px;
 }
 </style>
