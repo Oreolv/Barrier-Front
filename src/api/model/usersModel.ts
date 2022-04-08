@@ -2,6 +2,7 @@ import { UserSexEnum, UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
 
 export interface LoginParams {
   code: string;
+  uphone: string;
   profile: UserProfile;
 }
 
