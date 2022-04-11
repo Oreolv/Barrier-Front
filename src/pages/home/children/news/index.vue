@@ -65,7 +65,6 @@ page {
   .media-content {
     display: flex;
     flex-direction: column;
-    align-items: center;
     margin-top: 16px;
     .media-content__title {
       font-weight: 600;
@@ -86,6 +85,9 @@ page {
         font-size: 12px;
         color: #999999;
         margin-top: -16px;
+      }
+      .title {
+        font-weight: bold;
       }
     }
     .section {
