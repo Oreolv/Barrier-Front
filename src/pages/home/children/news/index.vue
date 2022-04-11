@@ -1,6 +1,6 @@
 <template>
   <div class="media">
-    <div class="media-header">
+    <div class="media-header" v-if="params.mediaInfo.avatar">
       <div class="media-header__avatar">
         <img :src="params.mediaInfo.avatar" alt="" />
       </div>

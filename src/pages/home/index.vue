@@ -103,17 +103,11 @@
           pull-txt=""
           load-icon="loading"
         >
-          <div class="news" v-for="(i, idx) in state.tipsList" :key="i.id">
-            <div class="news-header">
-              <div class="news-header__left"></div>
-              <div class="news-header__time">{{ i.publishTime }}</div>
-            </div>
-            <div class="news-content" @click="navigateToTipsInfo(idx)">
-              <div class="news-content__title">{{ i.title }}</div>
-              <div class="news-content__footer">
-                <div class="news-content__info">{{ i.summary }}</div>
-                <!-- <div class="news-content__source">{{ i?.mediaInfo.name || i.source }}</div> -->
-              </div>
+          <div class="tips" v-for="(i, idx) in state.tipsList" :key="i.id">
+            <div class="tips-content" @click="navigateToTipsInfo(idx)">
+              <div class="tips-content__title">{{ i.title }}</div>
+              <div class="tips-content__info">{{ i.summary }}</div>
+              <!-- <div class="news-content__source">{{ i?.mediaInfo.name || i.source }}</div> -->
             </div>
           </div>
         </nut-infiniteloading>
@@ -164,8 +158,8 @@ onBeforeMount(async () => {
   const tips = await getTipsList({ page: state.page, pageSize: state.pageSize });
   state.tipsList.push(...tips.rows);
 
-  // 34px 为tabnine的上下padding之和
-  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 34}px)`;
+  // 20px 为tabnine的上下padding之和
+  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 20}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
@@ -330,6 +324,28 @@ const refreshTips = async (done) => {
     }
   }
 }
+.tips {
+  .tips-content {
+    margin-bottom: 16px;
+    padding-bottom: 16px;
+    border-bottom: 1px #f1f1f1 solid;
+    .tips-content__title {
+      font-weight: 600;
+    }
+    .tips-content__info {
+      justify-content: space-between;
+      margin-top: 8px;
+      font-size: 14px;
+      color: #7c7c7c;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      overflow: hidden;
+      -webkit-box-orient: vertical;
+    }
+  }
+}
 </style>
 
 <style lang="scss">
@@ -366,7 +382,7 @@ const refreshTips = async (done) => {
 }
 .nut-tabpane {
   height: v-bind(tabnineHeight);
-  padding-top: 10px;
+  padding: 10px 16px;
   // overflow: hidden;
 }
 
