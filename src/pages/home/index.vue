@@ -45,7 +45,7 @@
             </nut-button>
           </div>
           <nut-table :columns="CityColumn" :data="cityData" striped></nut-table>
-          <div class="loadmore" v-if="state.allData.city_data.length">
+          <!-- <div class="loadmore" v-if="state.allData.city_data.length">
             <div
               @click="
                 loadmore = !loadmore;
@@ -54,7 +54,7 @@
             >
               {{ loadmore ? '展开更多' : '收起数据' }}
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </nut-tabpane>
@@ -101,7 +101,6 @@ import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
 import { computed, onBeforeMount, reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
-import { scrollToTop } from '/@/hooks/useScrollToTop';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
