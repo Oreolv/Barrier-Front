@@ -25,6 +25,7 @@ import {
   InfiniteLoading,
   Skeleton,
   Avatar,
+  Tag,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -50,6 +51,7 @@ const NutComponent = [
   InfiniteLoading,
   Skeleton,
   Avatar,
+  Tag,
 ];
 
 App.use(pinia);

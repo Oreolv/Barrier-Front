@@ -13,7 +13,22 @@
         <span class="nut-tabs__titles-item__line"></span>
       </div>
     </template>
-    <nut-tabpane pane-key="0">123</nut-tabpane>
+    <nut-tabpane pane-key="0">
+      <div class="news" v-for="(i, idx) in state.newsList.rows" :key="i.id">
+        <div class="news-header">
+          <div class="news-header__left"></div>
+          <div class="news-header__time">{{ i.publishTime }}</div>
+          <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
+        </div>
+        <div class="news-content">
+          <div class="news-content__title">{{ i.title }}</div>
+          <div class="news-content__footer">
+            <div class="news-content__info">点击查看详细报道 >></div>
+            <div class="news-content__source">{{ i.infoSource }}</div>
+          </div>
+        </div>
+      </div>
+    </nut-tabpane>
     <nut-tabpane pane-key="1">
       <nut-empty description="无数据" v-if="!Object.keys(state.allData).length"></nut-empty>
       <div class="data" v-else>
@@ -75,14 +90,15 @@ import { scrollToTop } from '/@/hooks/useScrollToTop';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
-import { GetCovidDataResultModel } from '/@/api/model/covidModel';
-import Taro from '@tarojs/taro';
+import { GetCovidDataResultModel, GetNewsListResultModel } from '/@/api/system/model/covidModel';
+import { navigateTo } from '@tarojs/taro';
+import { getNewsList } from '/@/api/covid';
 
 const state = reactive({
   allData: {} as GetCovidDataResultModel,
+  newsList: {} as GetNewsListResultModel,
 });
 
-const tabValue = ref(0);
 const tabsTop = getNavBarHeigtht();
 const tabnineHeight = ref('80vh');
 const loadmore = ref(true);
@@ -94,6 +110,7 @@ onBeforeMount(async () => {
   state.allData.city_data = state.allData.city_data.sort((a, b) => {
     return b.confirm - a.confirm;
   });
+  state.newsList = await getNewsList({ page: 1, pageSize: 10 });
 
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
@@ -113,7 +130,7 @@ const cityData = computed(() => {
 });
 
 const navigateToRiskArea = () => {
-  Taro.navigateTo({
+  navigateTo({
     url: '/pages/home/children/risk/index',
     events: {},
   });
@@ -162,6 +179,38 @@ const navigateToRiskArea = () => {
 }
 .china-item:nth-child(-n + 3) {
   margin: 8px 0;
+}
+.news {
+  margin-bottom: 16px;
+  .news-header {
+    display: flex;
+    align-items: center;
+    .news-header__time {
+      color: #666666;
+      margin: 0 8px;
+    }
+    .news-header__left {
+      width: 8px;
+      height: 8px;
+      background-color: #1a1a1a;
+    }
+    margin-bottom: 8px;
+  }
+  .news-content {
+    background-color: #f4f4f4;
+    padding: 16px;
+    border-radius: 8px;
+    .news-content__title {
+      font-weight: 600;
+    }
+    .news-content__footer {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 16px;
+      font-size: 14px;
+      color: #7c7c7c;
+    }
+  }
 }
 </style>
 
