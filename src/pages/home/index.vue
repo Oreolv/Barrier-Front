@@ -78,11 +78,11 @@
               <div class="news-header__time">{{ i.publishTime }}</div>
               <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
             </div>
-            <div class="news-content">
+            <div class="news-content" @click="navigateToNewsInfo(idx)">
               <div class="news-content__title">{{ i.title }}</div>
               <div class="news-content__footer">
                 <div class="news-content__info">点击查看详细报道 >></div>
-                <div class="news-content__source">{{ i.infoSource }}</div>
+                <div class="news-content__source">{{ i.mediaInfo.name }}</div>
               </div>
             </div>
           </div>
@@ -160,6 +160,13 @@ const navigateToRiskArea = () => {
   navigateTo({
     url: '/pages/home/children/risk/index',
     events: {},
+  });
+};
+
+const navigateToNewsInfo = (index) => {
+  const params = JSON.stringify(state.newsList[index]);
+  navigateTo({
+    url: `/pages/home/children/news/index?data=${encodeURIComponent(params)}`,
   });
 };
 
