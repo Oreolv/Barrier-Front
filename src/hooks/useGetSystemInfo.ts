@@ -1,7 +1,12 @@
-import Taro, { NodesRef } from '@tarojs/taro';
+import {
+  NodesRef,
+  getSystemInfoSync,
+  getMenuButtonBoundingClientRect,
+  createSelectorQuery,
+} from '@tarojs/taro';
 
-const systemInfo = Taro.getSystemInfoSync();
-const menuButtonInfo = Taro.getMenuButtonBoundingClientRect();
+const systemInfo = getSystemInfoSync();
+const menuButtonInfo = getMenuButtonBoundingClientRect();
 
 export function getNavBarHeigtht() {
   return `${
@@ -28,7 +33,7 @@ export function getSearchBarHeight() {
  * @param node 传入元素选择器, 如#id .class
  */
 export function getNodePositionInfo(node: string) {
-  const query = Taro.createSelectorQuery().select(node).boundingClientRect();
+  const query = createSelectorQuery().select(node).boundingClientRect();
   return new Promise<NodesRef.BoundingClientRectCallbackResult>((resolve) => {
     query.exec((res) => {
       resolve(res[0]);

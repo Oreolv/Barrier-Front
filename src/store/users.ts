@@ -6,7 +6,7 @@ import { getUserInfo, updateUserProfile } from '/@/api/users';
 import { UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
 import { showLoading, ShowModal, ShowToast } from '/@/hooks/useShowMessage';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
-import { UserProfile, UserInfo } from '/@/api/model/usersModel';
+import { UserProfile, UserInfo } from '/@/api/system/model/usersModel';
 import { TOKEN_KEY, USER_INFO_KEY, USER_PROFILE_KEY, USER_STATUS_KEY } from '/@/enums/cacheEnum';
 
 interface UserStatus {

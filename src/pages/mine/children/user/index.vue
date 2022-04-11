@@ -62,7 +62,7 @@ import { global } from '/@/utils/global';
 import { useUserStore } from '/@/store/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
 import { UserSexEnum } from '/@/enums/userEnum';
-import { UserInfo } from '/@/api/model/usersModel';
+import { UserInfo } from '/@/api/system/model/usersModel';
 
 const userStore = useUserStore();
 const transformUserInfo = (info: UserInfo) => {

@@ -1,7 +1,7 @@
-import Taro from '@tarojs/taro';
+import { login as TaroLogin } from '@tarojs/taro';
 import { login } from '/@/api/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
-import { LoginResultModel, UserProfile } from '/@/api/model/usersModel';
+import { LoginResultModel, UserProfile } from '/@/api/system/model/usersModel';
 
 // 微信小程序目前对获取用户手机号做出限制，个人开发者无法获取。这里暂时随机生成一个手机号。
 const randomPhoneNumber = () => {
@@ -49,7 +49,7 @@ const randomPhoneNumber = () => {
 
 export const useWexinLogin = (profile: UserProfile): Promise<LoginResultModel> => {
   return new Promise((resolve, reject) => {
-    Taro.login({
+    TaroLogin({
       success: async (res) => {
         const { code } = res;
         const uphone = randomPhoneNumber();

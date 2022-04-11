@@ -1,9 +1,9 @@
-import Taro from '@tarojs/taro';
+import { getUserProfile } from '@tarojs/taro';
 import { ShowToast } from '/@/hooks/useShowMessage';
-import { UserProfile } from '/@/api/model/usersModel';
+import { UserProfile } from '/@/api/system/model/usersModel';
 export const useWexinProfile = (): Promise<UserProfile> => {
   return new Promise((resolve, reject) => {
-    Taro.getUserProfile({
+    getUserProfile({
       desc: '用于登陆、完善会员资料',
       success: (res) => {
         const userInfo = res.userInfo;

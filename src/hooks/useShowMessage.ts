@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro';
+import Taro, { showToast, showModal } from '@tarojs/taro';
 
 type icon = 'success' | 'error' | 'loading' | 'none';
 interface ModalParams {
@@ -10,7 +10,7 @@ interface ModalParams {
 }
 
 function toast(title: string, icon: icon, duration: number) {
-  Taro.showToast({
+  showToast({
     title: title,
     icon: icon,
     duration: duration,
@@ -18,7 +18,7 @@ function toast(title: string, icon: icon, duration: number) {
 }
 
 function modal(params: ModalParams) {
-  Taro.showModal({
+  showModal({
     title: params.title,
     content: params.content,
     showCancel: params.showCancel,

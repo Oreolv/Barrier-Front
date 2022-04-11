@@ -1,4 +1,4 @@
-import Taro from '@tarojs/taro';
+import { navigateTo } from '@tarojs/taro';
 import { ShowToast } from '/@/hooks/useShowMessage';
 interface SettingItem {
   title: string;
@@ -11,7 +11,7 @@ export const SettingList: SettingItem[] = [
     icon: 'wode-gerenziliao',
     click: (loginStatus) => {
       if (loginStatus) {
-        Taro.navigateTo({
+        navigateTo({
           url: '/pages/mine/children/user/index',
           events: {},
         });

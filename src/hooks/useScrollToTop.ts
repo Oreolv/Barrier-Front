@@ -1,7 +1,7 @@
-import Taro from '@tarojs/taro';
+import { pageScrollTo } from '@tarojs/taro';
 
 export const scrollToTop = () => {
-  Taro.pageScrollTo({
+  pageScrollTo({
     scrollTop: 0,
     duration: 300,
   });

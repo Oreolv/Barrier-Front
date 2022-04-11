@@ -1,17 +1,17 @@
-import Taro from '@tarojs/taro';
+import { setStorageSync, getStorageSync, removeStorageSync, clearStorageSync } from '@tarojs/taro';
 
 export function setLocalCache(key: string, value: any) {
-  Taro.setStorageSync(key, value);
+  setStorageSync(key, value);
 }
 
 export function getLocalCache(key: string) {
-  return Taro.getStorageSync(key);
+  return getStorageSync(key);
 }
 
 export function removeLocalCache(key: string) {
-  Taro.removeStorageSync(key);
+  removeStorageSync(key);
 }
 
 export function clearLocalCache() {
-  Taro.clearStorageSync();
+  clearStorageSync();
 }

@@ -200,7 +200,7 @@ import { onBeforeMount, reactive, ref } from 'vue';
 import { ShowModal } from '/@/hooks/useShowMessage';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
-import { GetRiskAreaResultModel, RiskAreaItem } from '/@/api/model/covidModel';
+import { GetRiskAreaResultModel, RiskAreaItem } from '/@/api/system/model/covidModel';
 interface RiskIncrease {
   per: string;
   count: number | string;
