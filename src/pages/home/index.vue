@@ -138,7 +138,8 @@ onBeforeMount(async () => {
   const news = await getNewsList({ page: state.page, pageSize: state.pageSize });
   state.newsList.push(...news.rows);
 
-  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 16}px)`;
+  // 34px 为tabnine的上下padding之和
+  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 34}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
@@ -285,6 +286,10 @@ const refreshNews = async (done) => {
   position: relative;
   top: v-bind(tabsTop);
 }
+.nut-tabs__titles {
+  padding-left: 16px;
+}
+
 .nut-tabs__titles-item.active {
   font-size: 16px !important;
   .nut-tabs__titles-item__line {
@@ -303,6 +308,12 @@ const refreshNews = async (done) => {
 .nut-tabpane {
   height: v-bind(tabnineHeight);
   padding-top: 10px;
-  overflow: hidden;
+  // overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
 }
 </style>
