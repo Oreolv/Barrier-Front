@@ -137,6 +137,8 @@
           @load-more="loadMoreHighList"
           load-more-txt="没有更多数据了"
           pull-icon="loading"
+          pull-txt=""
+          load-icon="loading"
         >
           <Card id="arealist" v-for="item in state.highlist" :key="item.id" :show-divider="false">
             <template #content>
