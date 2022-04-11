@@ -1,3 +1,5 @@
+import { BasicFetchResult, BasicPageParams } from '/@/api/model/baseModel';
+
 export interface ChinaDataItem {
   confirm: number;
   dead: number;
@@ -29,27 +31,6 @@ export interface GetCovidDataResultModel {
   city_data: CityDataItem[];
 }
 
-// interface ProvinceRiskItem {
-//   id: number;
-//   province: string;
-//   children: CityRiskItem[];
-// }
-
-// interface CityRiskItem {
-//   id: number;
-//   city: string;
-//   county: string;
-//   area_name: string;
-//   communitys: string[];
-// }
-// export interface GetRiskAreaResultModel {
-//   end_update_time: string;
-//   hcount: number;
-//   mcount: number;
-//   highlist: ProvinceRiskItem[];
-//   middlelist: ProvinceRiskItem[];
-// }
-
 export interface RiskAreaItem {
   id: number;
   type: string;
@@ -69,3 +50,17 @@ export interface GetRiskAreaResultModel {
   highlist: RiskAreaItem[];
   middlelist: RiskAreaItem[];
 }
+
+export interface NewsItem {
+  id: number;
+  title: string;
+  content: string;
+  cover: string;
+  infoSource: string;
+  sourceURL: string;
+  publishTime: string;
+}
+
+export type GetNewsListResultModel = BasicFetchResult<NewsItem>;
+
+export type GetNewsListParams = BasicPageParams;
