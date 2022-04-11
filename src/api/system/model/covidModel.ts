@@ -60,8 +60,10 @@ export interface NewsItem {
   id: number;
   title: string;
   content: string;
-  cover: string;
-  mediaInfo: mediaInfo;
+  summary?: string;
+  source?: string;
+  cover?: string;
+  mediaInfo?: mediaInfo;
   sourceURL: string;
   publishTime: string;
 }
