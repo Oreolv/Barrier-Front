@@ -51,12 +51,17 @@ export interface GetRiskAreaResultModel {
   middlelist: RiskAreaItem[];
 }
 
+export interface mediaInfo {
+  name: string;
+  avatar: string;
+  description: string;
+}
 export interface NewsItem {
   id: number;
   title: string;
   content: string;
   cover: string;
-  infoSource: string;
+  mediaInfo: mediaInfo;
   sourceURL: string;
   publishTime: string;
 }
