@@ -9,6 +9,7 @@ enum Api {
   GetCovidData = '/covid/all_data',
   GetRiskArea = '/covid/risk_area',
   GetNewsList = '/news/getNewsList',
+  GetTipsList = '/tips/getTipsList',
 }
 
 export function getCovidData() {
@@ -21,4 +22,8 @@ export function getRiskArea() {
 
 export function getNewsList(params: GetNewsListParams) {
   return defHttp.get<GetNewsListResultModel>({ url: Api.GetNewsList, params: params });
+}
+
+export function getTipsList(params: GetNewsListParams) {
+  return defHttp.get<GetNewsListResultModel>({ url: Api.GetTipsList, params: params });
 }

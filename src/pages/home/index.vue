@@ -89,14 +89,43 @@
         </nut-infiniteloading>
       </div>
     </nut-tabpane>
-    <nut-tabpane pane-key="2"><nut-empty description="无数据"></nut-empty></nut-tabpane>
+    <nut-tabpane pane-key="2">
+      <div id="infiniteLoading">
+        <nut-infiniteloading
+          is-open-refresh
+          containerId="infiniteLoading"
+          :use-window="false"
+          :has-more="state.hasMoreTips"
+          @load-more="loadMoreTips"
+          @refresh="refreshTips"
+          load-more-txt="没有更多数据了"
+          pull-icon="loading"
+          pull-txt=""
+          load-icon="loading"
+        >
+          <div class="news" v-for="(i, idx) in state.tipsList" :key="i.id">
+            <div class="news-header">
+              <div class="news-header__left"></div>
+              <div class="news-header__time">{{ i.publishTime }}</div>
+            </div>
+            <div class="news-content" @click="navigateToTipsInfo(idx)">
+              <div class="news-content__title">{{ i.title }}</div>
+              <div class="news-content__footer">
+                <div class="news-content__info">{{ i.summary }}</div>
+                <!-- <div class="news-content__source">{{ i?.mediaInfo.name || i.source }}</div> -->
+              </div>
+            </div>
+          </div>
+        </nut-infiniteloading>
+      </div>
+    </nut-tabpane>
     <nut-tabpane pane-key="3"><nut-empty description="无数据"></nut-empty></nut-tabpane>
   </nut-tabs>
 </template>
 
 <script lang="ts" setup>
 import { useDidShow } from '@tarojs/taro';
-import { getCovidData } from '/@/api/covid';
+import { getCovidData, getTipsList, getNewsList } from '/@/api/covid';
 import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
 import { computed, onBeforeMount, reactive, ref } from 'vue';
@@ -104,20 +133,16 @@ import SearchBar from '/@/components/SearchBar.vue';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
-import {
-  GetCovidDataResultModel,
-  GetNewsListResultModel,
-  NewsItem,
-} from '/@/api/system/model/covidModel';
+import { GetCovidDataResultModel, NewsItem } from '/@/api/system/model/covidModel';
 import { navigateTo } from '@tarojs/taro';
-import { getNewsList } from '/@/api/covid';
 import { ShowToast } from '/@/hooks/useShowMessage';
 
 const state = reactive({
   allData: {} as GetCovidDataResultModel,
-  allNews: {} as GetNewsListResultModel,
   newsList: [] as NewsItem[],
+  tipsList: [] as NewsItem[],
   hasMoreNews: true,
+  hasMoreTips: true,
   page: 1,
   pageSize: 15,
 });
@@ -136,6 +161,8 @@ onBeforeMount(async () => {
   });
   const news = await getNewsList({ page: state.page, pageSize: state.pageSize });
   state.newsList.push(...news.rows);
+  const tips = await getTipsList({ page: state.page, pageSize: state.pageSize });
+  state.tipsList.push(...tips.rows);
 
   // 34px 为tabnine的上下padding之和
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 34}px)`;
@@ -170,6 +197,19 @@ const navigateToNewsInfo = (index) => {
   });
 };
 
+const navigateToTipsInfo = (index) => {
+  const data = state.tipsList[index];
+  data.mediaInfo = {
+    name: data.source,
+    avatar: '',
+    description: '',
+  };
+  const params = JSON.stringify(data);
+  navigateTo({
+    url: `/pages/home/children/news/index?data=${encodeURIComponent(params)}`,
+  });
+};
+
 const loadMoreNews = async (done) => {
   state.page = state.page + 1;
   const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
@@ -184,6 +224,26 @@ const refreshNews = async (done) => {
   state.newsList.length = 0;
   const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
   state.newsList.push(...data.rows);
+  if (data.rows.length > 0) {
+    ShowToast.success('刷新成功');
+  }
+  done();
+};
+
+const loadMoreTips = async (done) => {
+  state.page = state.page + 1;
+  const data = await getTipsList({ page: state.page, pageSize: state.pageSize });
+  state.tipsList.push(...data.rows);
+  if (data.rows.length === 0) {
+    state.hasMoreTips = false;
+  }
+  done();
+};
+const refreshTips = async (done) => {
+  state.page = 1;
+  state.tipsList.length = 0;
+  const data = await getTipsList({ page: state.page, pageSize: state.pageSize });
+  state.tipsList.push(...data.rows);
   if (data.rows.length > 0) {
     ShowToast.success('刷新成功');
   }
