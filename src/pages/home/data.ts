@@ -54,11 +54,11 @@ export const TabList = reactive({
   tabValue: '0',
   list: [
     {
-      title: '疫情新闻',
+      title: '疫情数据',
       paneKey: '0',
     },
     {
-      title: '疫情数据',
+      title: '疫情新闻',
       paneKey: '1',
     },
     {

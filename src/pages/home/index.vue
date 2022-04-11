@@ -14,33 +14,6 @@
       </div>
     </template>
     <nut-tabpane pane-key="0">
-      <div id="infiniteLoading">
-        <nut-infiniteloading
-          containerId="infiniteLoading"
-          :use-window="false"
-          :has-more="state.hasMoreNews"
-          @load-more="loadMoreNews"
-          load-more-txt="没有更多数据了"
-          pull-icon="loading"
-        >
-          <div class="news" v-for="(i, idx) in state.newsList" :key="i.id">
-            <div class="news-header">
-              <div class="news-header__left"></div>
-              <div class="news-header__time">{{ i.publishTime }}</div>
-              <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
-            </div>
-            <div class="news-content">
-              <div class="news-content__title">{{ i.title }}</div>
-              <div class="news-content__footer">
-                <div class="news-content__info">点击查看详细报道 >></div>
-                <div class="news-content__source">{{ i.infoSource }}</div>
-              </div>
-            </div>
-          </div>
-        </nut-infiniteloading>
-      </div>
-    </nut-tabpane>
-    <nut-tabpane pane-key="1">
       <nut-empty description="无数据" v-if="!Object.keys(state.allData).length"></nut-empty>
       <div class="data" v-else>
         <!-- 国内疫情数据 -->
@@ -83,6 +56,33 @@
             </div>
           </div>
         </div>
+      </div>
+    </nut-tabpane>
+    <nut-tabpane pane-key="1">
+      <div id="infiniteLoading">
+        <nut-infiniteloading
+          containerId="infiniteLoading"
+          :use-window="false"
+          :has-more="state.hasMoreNews"
+          @load-more="loadMoreNews"
+          load-more-txt="没有更多数据了"
+          pull-icon="loading"
+        >
+          <div class="news" v-for="(i, idx) in state.newsList" :key="i.id">
+            <div class="news-header">
+              <div class="news-header__left"></div>
+              <div class="news-header__time">{{ i.publishTime }}</div>
+              <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
+            </div>
+            <div class="news-content">
+              <div class="news-content__title">{{ i.title }}</div>
+              <div class="news-content__footer">
+                <div class="news-content__info">点击查看详细报道 >></div>
+                <div class="news-content__source">{{ i.infoSource }}</div>
+              </div>
+            </div>
+          </div>
+        </nut-infiniteloading>
       </div>
     </nut-tabpane>
     <nut-tabpane pane-key="2"><nut-empty description="无数据"></nut-empty></nut-tabpane>
