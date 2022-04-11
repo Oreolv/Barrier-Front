@@ -14,19 +14,30 @@
       </div>
     </template>
     <nut-tabpane pane-key="0">
-      <div class="news" v-for="(i, idx) in state.newsList.rows" :key="i.id">
-        <div class="news-header">
-          <div class="news-header__left"></div>
-          <div class="news-header__time">{{ i.publishTime }}</div>
-          <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
-        </div>
-        <div class="news-content">
-          <div class="news-content__title">{{ i.title }}</div>
-          <div class="news-content__footer">
-            <div class="news-content__info">点击查看详细报道 >></div>
-            <div class="news-content__source">{{ i.infoSource }}</div>
+      <div id="infiniteLoading">
+        <nut-infiniteloading
+          containerId="infiniteLoading"
+          :use-window="false"
+          :has-more="state.hasMoreNews"
+          @load-more="loadMoreNews"
+          load-more-txt="没有更多数据了"
+          pull-icon="loading"
+        >
+          <div class="news" v-for="(i, idx) in state.newsList" :key="i.id">
+            <div class="news-header">
+              <div class="news-header__left"></div>
+              <div class="news-header__time">{{ i.publishTime }}</div>
+              <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
+            </div>
+            <div class="news-content">
+              <div class="news-content__title">{{ i.title }}</div>
+              <div class="news-content__footer">
+                <div class="news-content__info">点击查看详细报道 >></div>
+                <div class="news-content__source">{{ i.infoSource }}</div>
+              </div>
+            </div>
           </div>
-        </div>
+        </nut-infiniteloading>
       </div>
     </nut-tabpane>
     <nut-tabpane pane-key="1">
@@ -90,17 +101,26 @@ import { scrollToTop } from '/@/hooks/useScrollToTop';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
-import { GetCovidDataResultModel, GetNewsListResultModel } from '/@/api/system/model/covidModel';
+import {
+  GetCovidDataResultModel,
+  GetNewsListResultModel,
+  NewsItem,
+} from '/@/api/system/model/covidModel';
 import { navigateTo } from '@tarojs/taro';
 import { getNewsList } from '/@/api/covid';
 
 const state = reactive({
   allData: {} as GetCovidDataResultModel,
-  newsList: {} as GetNewsListResultModel,
+  allNews: {} as GetNewsListResultModel,
+  newsList: [] as NewsItem[],
+  hasMoreNews: true,
+  page: 1,
+  pageSize: 15,
 });
 
 const tabsTop = getNavBarHeigtht();
 const tabnineHeight = ref('80vh');
+const loadmoreHeight = ref('80vh');
 const loadmore = ref(true);
 
 useDidShow(() => {});
@@ -110,8 +130,10 @@ onBeforeMount(async () => {
   state.allData.city_data = state.allData.city_data.sort((a, b) => {
     return b.confirm - a.confirm;
   });
-  state.newsList = await getNewsList({ page: 1, pageSize: 10 });
+  const news = await getNewsList({ page: state.page, pageSize: state.pageSize });
+  state.newsList.push(...news.rows);
 
+  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 16}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
@@ -135,6 +157,18 @@ const navigateToRiskArea = () => {
     events: {},
   });
 };
+
+const loadMoreNews = (done) => {
+  setTimeout(async () => {
+    state.page = state.page + 1;
+    const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
+    state.newsList.push(...data.rows);
+    if (data.rows.length === 0) {
+      state.hasMoreNews = false;
+    }
+    done();
+  }, 100);
+};
 </script>
 
 <style lang="scss">
@@ -143,6 +177,10 @@ const navigateToRiskArea = () => {
   align-items: center;
   justify-content: center;
   margin-top: 5px;
+}
+
+#infiniteLoading {
+  height: v-bind(loadmoreHeight);
 }
 
 .update-time {
@@ -245,5 +283,6 @@ const navigateToRiskArea = () => {
 .nut-tabpane {
   height: v-bind(tabnineHeight);
   padding-top: 10px;
+  overflow: hidden;
 }
 </style>
