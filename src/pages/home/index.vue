@@ -1,7 +1,20 @@
 <template>
   <SearchBar></SearchBar>
-  <nut-tabs v-model="tabValue" background="#FFF" title-gutter="15">
-    <nut-tabpane title="疫情资讯">
+  <nut-tabs v-model="TabList.tabValue" background="#FFF" title-gutter="15">
+    <template v-slot:titles>
+      <div
+        class="nut-tabs__titles-item"
+        @click="TabList.tabValue = item.paneKey"
+        :class="{ active: TabList.tabValue == item.paneKey }"
+        :key="item.paneKey"
+        v-for="item in TabList.list"
+      >
+        <span class="nut-tabs__titles-item__text">{{ item.title }}</span>
+        <span class="nut-tabs__titles-item__line"></span>
+      </div>
+    </template>
+    <nut-tabpane pane-key="0">123</nut-tabpane>
+    <nut-tabpane pane-key="1">
       <nut-empty description="无数据" v-if="!Object.keys(state.allData).length"></nut-empty>
       <div class="data" v-else>
         <!-- 国内疫情数据 -->
@@ -46,12 +59,8 @@
         </div>
       </div>
     </nut-tabpane>
-    <nut-tabpane title="防疫知识">
-      <nut-empty description="无数据"></nut-empty>
-    </nut-tabpane>
-    <nut-tabpane title="社区公告">
-      <nut-empty description="无数据"></nut-empty>
-    </nut-tabpane>
+    <nut-tabpane pane-key="2"><nut-empty description="无数据"></nut-empty></nut-tabpane>
+    <nut-tabpane pane-key="3"><nut-empty description="无数据"></nut-empty></nut-tabpane>
   </nut-tabs>
 </template>
 
@@ -59,7 +68,7 @@
 import { useDidShow } from '@tarojs/taro';
 import { getCovidData } from '/@/api/covid';
 import Card from '../../components/Card.vue';
-import { CovidList, CityColumn } from './data';
+import { CovidList, CityColumn, TabList } from './data';
 import { computed, onBeforeMount, reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
 import { scrollToTop } from '/@/hooks/useScrollToTop';
@@ -182,6 +191,7 @@ const navigateToRiskArea = () => {
   width: auto;
   min-width: 0;
   flex: 0 1 auto;
+  margin-right: 16px;
 }
 .nut-tabpane {
   height: v-bind(tabnineHeight);

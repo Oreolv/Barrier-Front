@@ -1,3 +1,5 @@
+import { reactive } from 'vue';
+
 export const CovidList = [
   {
     name: 'localConfirm',
@@ -47,3 +49,25 @@ export const CityColumn = [
     align: 'center',
   },
 ];
+
+export const TabList = reactive({
+  tabValue: '0',
+  list: [
+    {
+      title: '疫情新闻',
+      paneKey: '0',
+    },
+    {
+      title: '疫情数据',
+      paneKey: '1',
+    },
+    {
+      title: '防疫知识',
+      paneKey: '2',
+    },
+    {
+      title: '社区公告',
+      paneKey: '3',
+    },
+  ],
+});
