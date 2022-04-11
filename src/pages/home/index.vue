@@ -61,12 +61,16 @@
     <nut-tabpane pane-key="1">
       <div id="infiniteLoading">
         <nut-infiniteloading
+          is-open-refresh
           containerId="infiniteLoading"
           :use-window="false"
           :has-more="state.hasMoreNews"
           @load-more="loadMoreNews"
+          @refresh="refreshNews"
           load-more-txt="没有更多数据了"
           pull-icon="loading"
+          pull-txt=""
+          load-icon="loading"
         >
           <div class="news" v-for="(i, idx) in state.newsList" :key="i.id">
             <div class="news-header">
@@ -108,6 +112,7 @@ import {
 } from '/@/api/system/model/covidModel';
 import { navigateTo } from '@tarojs/taro';
 import { getNewsList } from '/@/api/covid';
+import { ShowToast } from '/@/hooks/useShowMessage';
 
 const state = reactive({
   allData: {} as GetCovidDataResultModel,
@@ -158,16 +163,24 @@ const navigateToRiskArea = () => {
   });
 };
 
-const loadMoreNews = (done) => {
-  setTimeout(async () => {
-    state.page = state.page + 1;
-    const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
-    state.newsList.push(...data.rows);
-    if (data.rows.length === 0) {
-      state.hasMoreNews = false;
-    }
-    done();
-  }, 100);
+const loadMoreNews = async (done) => {
+  state.page = state.page + 1;
+  const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
+  state.newsList.push(...data.rows);
+  if (data.rows.length === 0) {
+    state.hasMoreNews = false;
+  }
+  done();
+};
+const refreshNews = async (done) => {
+  state.page = 1;
+  state.newsList.length = 0;
+  const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
+  state.newsList.push(...data.rows);
+  if (data.rows.length > 0) {
+    ShowToast.success('刷新成功');
+  }
+  done();
 };
 </script>
 
