@@ -23,7 +23,16 @@ export const SettingList: SettingItem[] = [
   {
     title: '账户设置',
     icon: 'wode-bangdingguanxi',
-    click: (loginStatus) => {},
+    click: (loginStatus) => {
+      if (loginStatus) {
+        navigateTo({
+          url: '/pages/mine/children/setting/index',
+          events: {},
+        });
+      } else {
+        ShowToast.info('请先登陆');
+      }
+    },
   },
   {
     title: '分享应用',
