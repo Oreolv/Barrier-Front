@@ -1,8 +1,14 @@
 import { defHttp } from '/@/utils/axios';
-import { GetNewsListResultModel, GetNewsListParams } from './system/model/informationModel';
+import {
+  GetNewsListResultModel,
+  GetNewsListParams,
+  GetNoticeListResultModel,
+  GetNoticeListParams,
+} from './system/model/informationModel';
 enum Api {
   GetNewsList = '/news/getNewsList',
   GetTipsList = '/tips/getTipsList',
+  GetNoticeList = '/notice/getNoticeList',
 }
 
 export function getNewsList(params: GetNewsListParams) {
@@ -11,4 +17,8 @@ export function getNewsList(params: GetNewsListParams) {
 
 export function getTipsList(params: GetNewsListParams) {
   return defHttp.get<GetNewsListResultModel>({ url: Api.GetTipsList, params: params });
+}
+
+export function getNoticeList(params: GetNoticeListParams) {
+  return defHttp.get<GetNoticeListResultModel>({ url: Api.GetNoticeList, params: params });
 }
