@@ -20,7 +20,7 @@
           <div class="update-time">
             <div class="update-time-des">统计数据截至</div>
             <nut-skeleton width="60vw" height="16px" animated :loading="loading">
-            <div class="update-time-text">{{ dataList.allData.lastUpdateTime }}</div>
+              <div class="update-time-text">{{ dataList.allData.lastUpdateTime }}</div>
             </nut-skeleton>
           </div>
           <Card title="全国疫情数据">
@@ -34,13 +34,13 @@
                   animated
                   :loading="loading"
                 >
-                <ChinaCovidItem
-                  :add="dataList.allData.china_add[item.name]"
-                  :today="dataList.allData.china_total[item.name]"
-                  :type="item.name"
-                >
-                  {{ item.des }}
-                </ChinaCovidItem>
+                  <ChinaCovidItem
+                    :add="dataList.allData.china_add[item.name]"
+                    :today="dataList.allData.china_total[item.name]"
+                    :type="item.name"
+                  >
+                    {{ item.des }}
+                  </ChinaCovidItem>
                 </nut-skeleton>
               </div>
             </template>
@@ -61,7 +61,7 @@
     <nut-tabpane pane-key="1">
       <InfiniteLoading
         name="news"
-        pageSize="5"
+        :pageSize="5"
         :api="getNewsList"
         @load="loadMore"
         @refresh="refresh"
@@ -77,7 +77,7 @@
               <div class="news-content__title">{{ i.title }}</div>
               <div class="news-content__footer">
                 <div class="news-content__info">点击查看详细报道 >></div>
-                <div class="news-content__source">{{ i.mediaInfo.name }}</div>
+                <div class="news-content__source">{{ i.mediaInfo!.name }}</div>
               </div>
             </div>
           </div>
@@ -87,7 +87,7 @@
     <nut-tabpane pane-key="2">
       <InfiniteLoading
         name="tips"
-        pageSize="10"
+        :pageSize="10"
         :api="getTipsList"
         @load="loadMore"
         @refresh="refresh"
@@ -103,7 +103,34 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="3"><nut-empty description="无数据"></nut-empty></nut-tabpane>
+    <nut-tabpane pane-key="3">
+      <InfiniteLoading
+        name="notice"
+        :pageSize="10"
+        :api="getNoticeList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <div class="notice" v-for="i in dataList.noticeList" :key="i.id">
+            <div class="notice-header">
+              <div class="notice-header__avatar">
+                <img :src="i.publisherInfo.avatar" />
+              </div>
+              <div class="notice-header__realName">
+                {{ i.publisherInfo.realName }}
+              </div>
+            </div>
+            <div class="notice-content">
+              {{ i.content }}
+            </div>
+            <div class="notice-footer">
+              <div class="notice-footer__time">{{ transformDate(i.createdAt) }}</div>
+            </div>
+          </div>
+        </template>
+      </InfiniteLoading>
+    </nut-tabpane>
   </nut-tabs>
 </template>
 
@@ -116,7 +143,7 @@ import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
 import { onBeforeMount, reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
-import { addPlusAndMinus } from '/@/hooks/useTransformData';
+import { addPlusAndMinus, transformDate } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { GetCovidDataResultModel } from '/@/api/system/model/covidModel';
@@ -293,6 +320,35 @@ const navigateToTipsInfo = (index) => {
       overflow: hidden;
       -webkit-box-orient: vertical;
     }
+  }
+}
+.notice {
+  padding: 16px 0;
+  border-bottom: 1px solid #f1f1f1;
+  .notice-header {
+    display: flex;
+    align-items: center;
+    .notice-header__avatar {
+      img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+      }
+    }
+    .notice-header__realName {
+      margin-left: 14px;
+      font-weight: bold;
+      vertical-align: center;
+    }
+  }
+  .notice-content {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .notice-footer {
+    margin-top: 12px;
+    font-size: 12px;
+    color: #7c7c7c;
   }
 }
 </style>
