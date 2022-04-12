@@ -5,7 +5,7 @@ export interface MediaInfo {
   avatar: string;
   description: string;
 }
-export interface NewsItem {
+export interface NewsItem extends BasicTimeResult {
   id: number;
   title: string;
   content: string;
