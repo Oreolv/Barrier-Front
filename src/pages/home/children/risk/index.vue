@@ -424,6 +424,9 @@ page {
     }
   }
 }
+.card {
+  box-shadow: none;
+}
 </style>
 
 <style lang="scss">
