@@ -119,7 +119,8 @@
 
 <script lang="ts" setup>
 import { useDidShow } from '@tarojs/taro';
-import { getCovidData, getTipsList, getNewsList } from '/@/api/covid';
+import { getTipsList, getNewsList } from '/@/api/information';
+import { getCovidData } from '/@/api/covid';
 import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
 import { computed, onBeforeMount, reactive, ref } from 'vue';
@@ -127,7 +128,8 @@ import SearchBar from '/@/components/SearchBar.vue';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
-import { GetCovidDataResultModel, NewsItem } from '/@/api/system/model/covidModel';
+import { GetCovidDataResultModel } from '/@/api/system/model/covidModel';
+import { NewsItem } from '/@/api/system/model/informationModel';
 import { navigateTo } from '@tarojs/taro';
 import { ShowToast } from '/@/hooks/useShowMessage';
 
