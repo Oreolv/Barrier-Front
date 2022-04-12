@@ -117,14 +117,22 @@
               <div class="notice-header__avatar">
                 <img :src="i.publisherInfo.avatar" />
               </div>
-              <div class="notice-header__realName">
-                {{ i.publisherInfo.realName }}
+              <div class="notice-header__info">
+                <div class="notice-info__name">{{ i.publisherInfo.realName }}</div>
+                <div class="notice-info__description">
+                  {{ i.publisherInfo.roles.roleName }}
+                </div>
               </div>
             </div>
             <div class="notice-content">
               {{ i.content }}
             </div>
             <div class="notice-footer">
+              <div class="notice-footer__type">
+                <nut-tag v-if="i.grade === 0" type="success">安全</nut-tag>
+                <nut-tag v-if="i.grade === 1" type="warning ">重要</nut-tag>
+                <nut-tag v-if="i.grade === 2" type="danger ">紧急</nut-tag>
+              </div>
               <div class="notice-footer__time">{{ transformDate(i.createdAt) }}</div>
             </div>
           </div>
@@ -331,26 +339,41 @@ const navigateToTipsInfo = (index) => {
     display: flex;
     align-items: center;
     .notice-header__avatar {
+      margin-right: 16px;
       img {
         width: 36px;
         height: 36px;
         border-radius: 50%;
       }
     }
-    .notice-header__realName {
-      margin-left: 14px;
-      font-weight: bold;
-      vertical-align: center;
+    .notice-header__info {
+      display: flex;
+      flex-direction: column;
+      font-size: 13px;
+      box-sizing: border-box;
+      justify-content: space-around;
+      .notice-info__name {
+        color: #1a1a1a;
+        font-weight: bolder;
+      }
+      .notice-info__description {
+        color: #666666;
+      }
     }
   }
-  .notice-content {
-    margin-top: 16px;
-    font-size: 14px;
-  }
-  .notice-footer {
-    margin-top: 12px;
-    font-size: 12px;
-    color: #7c7c7c;
+}
+.notice-content {
+  margin-top: 16px;
+  font-size: 14px;
+}
+.notice-footer {
+  margin-top: 12px;
+  font-size: 12px;
+  color: #7c7c7c;
+  display: flex;
+  .notice-footer__time {
+    flex: 1;
+    text-align: end;
   }
 }
 </style>

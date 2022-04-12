@@ -21,6 +21,13 @@ export interface PublisherInfo {
   username: string;
   realName: string;
   avatar: string;
+  roles: Roles;
+}
+
+export interface Roles {
+  id: number;
+  roleValue: string;
+  roleName: string;
 }
 
 export interface NoticeItem extends BasicTimeResult {
