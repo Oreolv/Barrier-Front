@@ -14,17 +14,26 @@
       </div>
     </template>
     <nut-tabpane pane-key="0">
-      <nut-empty description="无数据" v-if="!Object.keys(dataList.allData).length"></nut-empty>
-      <div class="data" v-else>
+      <div class="data">
         <!-- 国内疫情数据 -->
         <div class="china-data">
           <div class="update-time">
             <div class="update-time-des">统计数据截至</div>
+            <nut-skeleton width="60vw" height="16px" animated :loading="loading">
             <div class="update-time-text">{{ dataList.allData.lastUpdateTime }}</div>
+            </nut-skeleton>
           </div>
           <Card title="全国疫情数据">
             <template #content>
               <div class="china-item" v-for="item in CovidList" :key="item.name">
+                <nut-skeleton
+                  height="15px"
+                  width="25vw"
+                  :title="false"
+                  row="3"
+                  animated
+                  :loading="loading"
+                >
                 <ChinaCovidItem
                   :add="dataList.allData.china_add[item.name]"
                   :today="dataList.allData.china_total[item.name]"
@@ -32,6 +41,7 @@
                 >
                   {{ item.des }}
                 </ChinaCovidItem>
+                </nut-skeleton>
               </div>
             </template>
           </Card>
@@ -121,6 +131,7 @@ const dataList = reactive({
 });
 
 const tabsTop = getNavBarHeigtht();
+const loading = ref(true);
 const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');
 
@@ -129,6 +140,7 @@ useDidShow(() => {});
 onBeforeMount(async () => {
   dataList.allData = await getCovidData();
   dataList.allData = transformAllData(dataList.allData);
+  loading.value = false;
   // 20px 为tabnine的上下padding之和
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 20}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
