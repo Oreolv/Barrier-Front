@@ -14,20 +14,20 @@
       </div>
     </template>
     <nut-tabpane pane-key="0">
-      <nut-empty description="无数据" v-if="!Object.keys(dataList).length"></nut-empty>
+      <nut-empty description="无数据" v-if="!Object.keys(dataList.allData).length"></nut-empty>
       <div class="data" v-else>
         <!-- 国内疫情数据 -->
         <div class="china-data">
           <div class="update-time">
             <div class="update-time-des">统计数据截至</div>
-            <div class="update-time-text">{{ dataList.lastUpdateTime }}</div>
+            <div class="update-time-text">{{ dataList.allData.lastUpdateTime }}</div>
           </div>
           <Card title="全国疫情数据">
             <template #content>
               <div class="china-item" v-for="item in CovidList" :key="item.name">
                 <ChinaCovidItem
-                  :add="chinaAdd[item.name]"
-                  :today="chinaTotal[item.name]"
+                  :add="dataList.allData.china_add[item.name]"
+                  :today="dataList.allData.china_total[item.name]"
                   :type="item.name"
                 >
                   {{ item.des }}
@@ -44,17 +44,7 @@
               风险地区查询
             </nut-button>
           </div>
-          <nut-table :columns="CityColumn" :data="cityData" striped></nut-table>
-          <!-- <div class="loadmore" v-if="dataList.city_data.length">
-            <div
-              @click="
-                loadmore = !loadmore;
-                loadmore ? scrollToTop() : null;
-              "
-            >
-              {{ loadmore ? '展开更多' : '收起数据' }}
-            </div>
-          </div> -->
+          <nut-table :columns="CityColumn" :data="dataList.allData.city_data" striped></nut-table>
         </div>
       </div>
     </nut-tabpane>
@@ -114,7 +104,7 @@ import { getTipsList, getNewsList, getNoticeList } from '/@/api/information';
 import { getCovidData } from '/@/api/covid';
 import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
-import { computed, onBeforeMount, reactive, ref } from 'vue';
+import { onBeforeMount, reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
@@ -138,16 +128,21 @@ useDidShow(() => {});
 
 onBeforeMount(async () => {
   dataList.allData = await getCovidData();
-  dataList.allData.city_data = dataList.allData.city_data.sort((a, b) => {
-    return b.confirm - a.confirm;
-  });
+  dataList.allData = transformAllData(dataList.allData);
   // 20px 为tabnine的上下padding之和
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 20}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
-const chinaAdd = [];
-const chinaTotal = [];
+const transformAllData = (data) => {
+  data.city_data = data.city_data
+    .sort((a, b) => {
+      return b.confirm - a.confirm;
+    })
+    .filter((i) => i.confirm > 0);
+  data.china_add = addPlusAndMinus(data.china_add);
+  return data;
+};
 
 const loadMore = (name, data) => {
   dataList[`${name}List`].push(...data.rows);

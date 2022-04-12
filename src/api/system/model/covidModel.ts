@@ -24,7 +24,8 @@ export interface CityDataItem {
 
 export interface GetCovidDataResultModel {
   lastUpdateTime: string;
-  china_data: ChinaDataItem[];
+  china_add: ChinaDataItem[];
+  china_total: ChinaDataItem[];
   province_data: ProvinceDataItem[];
   city_data: CityDataItem[];
 }
