@@ -168,8 +168,7 @@ onBeforeMount(async () => {
   dataList.allData = await getCovidData();
   dataList.allData = transformAllData(dataList.allData);
   loading.value = false;
-  // 20px 为tabnine的上下padding之和
-  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 20}px)`;
+  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
@@ -228,8 +227,11 @@ const navigateToTipsInfo = (index) => {
   justify-content: center;
   margin-top: 5px;
 }
-
+.data {
+  padding: 10px 0;
+}
 #infiniteLoading {
+  padding: 10px 0;
   height: v-bind(loadmoreHeight);
 }
 
@@ -387,7 +389,7 @@ const navigateToTipsInfo = (index) => {
 }
 .nut-tabpane {
   height: v-bind(tabnineHeight);
-  padding: 10px 16px;
+  padding: 0 16px;
   // overflow: hidden;
 }
 
