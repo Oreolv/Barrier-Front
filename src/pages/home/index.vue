@@ -119,7 +119,7 @@
 
 <script lang="ts" setup>
 import { useDidShow } from '@tarojs/taro';
-import { getTipsList, getNewsList } from '/@/api/information';
+import { getTipsList, getNewsList, getNoticeList } from '/@/api/information';
 import { getCovidData } from '/@/api/covid';
 import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
@@ -129,7 +129,7 @@ import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { GetCovidDataResultModel } from '/@/api/system/model/covidModel';
-import { NewsItem } from '/@/api/system/model/informationModel';
+import { NewsItem, NoticeItem } from '/@/api/system/model/informationModel';
 import { navigateTo } from '@tarojs/taro';
 import { ShowToast } from '/@/hooks/useShowMessage';
 
@@ -137,8 +137,10 @@ const state = reactive({
   allData: {} as GetCovidDataResultModel,
   newsList: [] as NewsItem[],
   tipsList: [] as NewsItem[],
+  noticeList: [] as NoticeItem[],
   hasMoreNews: true,
   hasMoreTips: true,
+  hasMoreNotice: true,
   page: 1,
   pageSize: 15,
 });
@@ -160,6 +162,8 @@ onBeforeMount(async () => {
   const tips = await getTipsList({ page: state.page, pageSize: state.pageSize });
   state.tipsList.push(...tips.rows);
 
+  const notice = await getNoticeList({ page: state.page, pageSize: state.pageSize });
+  state.noticeList.push(...notice.rows);
   // 20px 为tabnine的上下padding之和
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 20}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
@@ -206,6 +210,7 @@ const navigateToTipsInfo = (index) => {
   });
 };
 
+// FIX: 公用同一个page会导致切换tab后异常
 const loadMoreNews = async (done) => {
   state.page = state.page + 1;
   const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
