@@ -194,7 +194,7 @@ const navigateToNewsInfo = (index) => {
 const navigateToTipsInfo = (index) => {
   const data = state.tipsList[index];
   data.mediaInfo = {
-    name: data.source,
+    name: data.source!,
     avatar: '',
     description: '',
   };

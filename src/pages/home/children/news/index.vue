@@ -1,7 +1,7 @@
 <template>
   <div class="media">
-    <div class="media-header" v-if="params.mediaInfo.avatar">
-      <div class="media-header__avatar">
+    <div class="media-header">
+      <div class="media-header__avatar" v-if="params.mediaInfo.avatar">
         <img :src="params.mediaInfo.avatar" alt="" />
       </div>
       <div class="media-header__info">
@@ -39,6 +39,7 @@ page {
   .media-header {
     display: flex;
     .media-header__avatar {
+      margin-right: 16px;
       img {
         width: 36px;
         height: 36px;
@@ -50,7 +51,6 @@ page {
       display: flex;
       flex-direction: column;
       font-size: 13px;
-      margin-left: 16px;
       box-sizing: border-box;
       justify-content: space-around;
       .media-info__name {
