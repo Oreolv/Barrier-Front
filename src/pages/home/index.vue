@@ -14,13 +14,13 @@
       </div>
     </template>
     <nut-tabpane pane-key="0">
-      <nut-empty description="无数据" v-if="!Object.keys(state.allData).length"></nut-empty>
+      <nut-empty description="无数据" v-if="!Object.keys(dataList).length"></nut-empty>
       <div class="data" v-else>
         <!-- 国内疫情数据 -->
         <div class="china-data">
           <div class="update-time">
             <div class="update-time-des">统计数据截至</div>
-            <div class="update-time-text">{{ state.allData.lastUpdateTime }}</div>
+            <div class="update-time-text">{{ dataList.lastUpdateTime }}</div>
           </div>
           <Card title="全国疫情数据">
             <template #content>
@@ -45,7 +45,7 @@
             </nut-button>
           </div>
           <nut-table :columns="CityColumn" :data="cityData" striped></nut-table>
-          <!-- <div class="loadmore" v-if="state.allData.city_data.length">
+          <!-- <div class="loadmore" v-if="dataList.city_data.length">
             <div
               @click="
                 loadmore = !loadmore;
@@ -59,20 +59,15 @@
       </div>
     </nut-tabpane>
     <nut-tabpane pane-key="1">
-      <div id="infiniteLoading">
-        <nut-infiniteloading
-          is-open-refresh
-          containerId="infiniteLoading"
-          :use-window="false"
-          :has-more="state.hasMoreNews"
-          @load-more="loadMoreNews"
-          @refresh="refreshNews"
-          load-more-txt="没有更多数据了"
-          pull-icon="loading"
-          pull-txt=""
-          load-icon="loading"
-        >
-          <div class="news" v-for="(i, idx) in state.newsList" :key="i.id">
+      <InfiniteLoading
+        name="news"
+        pageSize="5"
+        :api="getNewsList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <div class="news" v-for="(i, idx) in dataList.newsList" :key="i.id">
             <div class="news-header">
               <div class="news-header__left"></div>
               <div class="news-header__time">{{ i.publishTime }}</div>
@@ -86,32 +81,27 @@
               </div>
             </div>
           </div>
-        </nut-infiniteloading>
-      </div>
+        </template>
+      </InfiniteLoading>
     </nut-tabpane>
     <nut-tabpane pane-key="2">
-      <div id="infiniteLoading">
-        <nut-infiniteloading
-          is-open-refresh
-          containerId="infiniteLoading"
-          :use-window="false"
-          :has-more="state.hasMoreTips"
-          @load-more="loadMoreTips"
-          @refresh="refreshTips"
-          load-more-txt="没有更多数据了"
-          pull-icon="loading"
-          pull-txt=""
-          load-icon="loading"
-        >
-          <div class="tips" v-for="(i, idx) in state.tipsList" :key="i.id">
+      <InfiniteLoading
+        name="tips"
+        pageSize="10"
+        :api="getTipsList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <div class="tips" v-for="(i, idx) in dataList.tipsList" :key="i.id">
             <div class="tips-content" @click="navigateToTipsInfo(idx)">
               <div class="tips-content__title">{{ i.title }}</div>
               <div class="tips-content__info">{{ i.summary }}</div>
               <!-- <div class="news-content__source">{{ i?.mediaInfo.name || i.source }}</div> -->
             </div>
           </div>
-        </nut-infiniteloading>
-      </div>
+        </template>
+      </InfiniteLoading>
     </nut-tabpane>
     <nut-tabpane pane-key="3"><nut-empty description="无数据"></nut-empty></nut-tabpane>
   </nut-tabs>
@@ -119,6 +109,7 @@
 
 <script lang="ts" setup>
 import { useDidShow } from '@tarojs/taro';
+import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 import { getTipsList, getNewsList, getNoticeList } from '/@/api/information';
 import { getCovidData } from '/@/api/covid';
 import Card from '../../components/Card.vue';
@@ -131,57 +122,42 @@ import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { GetCovidDataResultModel } from '/@/api/system/model/covidModel';
 import { NewsItem, NoticeItem } from '/@/api/system/model/informationModel';
 import { navigateTo } from '@tarojs/taro';
-import { ShowToast } from '/@/hooks/useShowMessage';
 
-const state = reactive({
+const dataList = reactive({
   allData: {} as GetCovidDataResultModel,
   newsList: [] as NewsItem[],
   tipsList: [] as NewsItem[],
   noticeList: [] as NoticeItem[],
-  hasMoreNews: true,
-  hasMoreTips: true,
-  hasMoreNotice: true,
-  page: 1,
-  pageSize: 15,
 });
 
 const tabsTop = getNavBarHeigtht();
 const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');
-const loadmore = ref(true);
 
 useDidShow(() => {});
 
 onBeforeMount(async () => {
-  state.allData = await getCovidData();
-  state.allData.city_data = state.allData.city_data.sort((a, b) => {
+  dataList.allData = await getCovidData();
+  dataList.allData.city_data = dataList.allData.city_data.sort((a, b) => {
     return b.confirm - a.confirm;
   });
-  const news = await getNewsList({ page: state.page, pageSize: state.pageSize });
-  state.newsList.push(...news.rows);
-  const tips = await getTipsList({ page: state.page, pageSize: state.pageSize });
-  state.tipsList.push(...tips.rows);
-
-  const notice = await getNoticeList({ page: state.page, pageSize: state.pageSize });
-  state.noticeList.push(...notice.rows);
   // 20px 为tabnine的上下padding之和
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top + 20}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
-const chinaAdd = computed(() => {
-  return addPlusAndMinus(state.allData.china_data[0]);
-});
+const chinaAdd = [];
+const chinaTotal = [];
 
-const chinaTotal = computed(() => {
-  return state.allData.china_data[1];
-});
+const loadMore = (name, data) => {
+  dataList[`${name}List`].push(...data.rows);
+};
 
-const cityData = computed(() => {
-  return loadmore.value
-    ? state.allData.city_data.filter((c) => c.confirm > 0)
-    : state.allData.city_data;
-});
+const refresh = async (name, api, pageSize) => {
+  dataList[`${name}List`].length = 0;
+  const data = await api({ page: 1, pageSize });
+  dataList[`${name}List`].push(...data.rows);
+};
 
 const navigateToRiskArea = () => {
   navigateTo({
@@ -191,14 +167,14 @@ const navigateToRiskArea = () => {
 };
 
 const navigateToNewsInfo = (index) => {
-  const params = JSON.stringify(state.newsList[index]);
+  const params = JSON.stringify(dataList.newsList[index]);
   navigateTo({
     url: `/pages/home/children/news/index?data=${encodeURIComponent(params)}`,
   });
 };
 
 const navigateToTipsInfo = (index) => {
-  const data = state.tipsList[index];
+  const data = dataList.tipsList[index];
   data.mediaInfo = {
     name: data.source!,
     avatar: '',
@@ -208,47 +184,6 @@ const navigateToTipsInfo = (index) => {
   navigateTo({
     url: `/pages/home/children/news/index?data=${encodeURIComponent(params)}`,
   });
-};
-
-// FIX: 公用同一个page会导致切换tab后异常
-const loadMoreNews = async (done) => {
-  state.page = state.page + 1;
-  const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
-  state.newsList.push(...data.rows);
-  if (data.rows.length === 0) {
-    state.hasMoreNews = false;
-  }
-  done();
-};
-const refreshNews = async (done) => {
-  state.page = 1;
-  state.newsList.length = 0;
-  const data = await getNewsList({ page: state.page, pageSize: state.pageSize });
-  state.newsList.push(...data.rows);
-  if (data.rows.length > 0) {
-    ShowToast.success('刷新成功');
-  }
-  done();
-};
-
-const loadMoreTips = async (done) => {
-  state.page = state.page + 1;
-  const data = await getTipsList({ page: state.page, pageSize: state.pageSize });
-  state.tipsList.push(...data.rows);
-  if (data.rows.length === 0) {
-    state.hasMoreTips = false;
-  }
-  done();
-};
-const refreshTips = async (done) => {
-  state.page = 1;
-  state.tipsList.length = 0;
-  const data = await getTipsList({ page: state.page, pageSize: state.pageSize });
-  state.tipsList.push(...data.rows);
-  if (data.rows.length > 0) {
-    ShowToast.success('刷新成功');
-  }
-  done();
 };
 </script>
 

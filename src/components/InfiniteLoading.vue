@@ -38,6 +38,9 @@ const props = defineProps({
 
 const emit = defineEmits(['load', 'refresh']);
 
+// 在组件中初始化数据
+emit('refresh', props.name, props.api, props.pageSize);
+
 const state = reactive({
   page: 1,
   pageSize: props.pageSize,
