@@ -10,7 +10,7 @@ export const addPlusAndMinus = (data) => {
 
 export const transformDate = (time: string) => {
   const timestamp = Number(new Date());
-  const last_timestamp = Number(new Date(time));
+  const last_timestamp = Number(new Date(time.replace(/-/g, '/')).getTime());
   const timer = (timestamp - last_timestamp) / 1000;
   let tips = '';
   switch (true) {
