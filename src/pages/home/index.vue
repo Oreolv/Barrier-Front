@@ -128,10 +128,17 @@
               {{ i.content }}
             </div>
             <div class="notice-footer">
-              <div class="notice-footer__type">
-                <nut-tag v-if="i.grade === 0" type="success">安全</nut-tag>
-                <nut-tag v-if="i.grade === 1" type="warning ">重要</nut-tag>
-                <nut-tag v-if="i.grade === 2" type="danger ">紧急</nut-tag>
+              <div class="notice-footer__tag" v-if="i.grade == 0">
+                <nut-icon name="check-checked"></nut-icon>
+                <div class="notice-footer__tag-name">安全</div>
+              </div>
+              <div class="notice-footer__tag" v-if="i.grade == 1">
+                <nut-icon name="check-checked"></nut-icon>
+                <div class="notice-footer__tag-name">重要</div>
+              </div>
+              <div class="notice-footer__tag" v-if="i.grade == 2">
+                <nut-icon name="check-checked"></nut-icon>
+                <div class="notice-footer__tag-name">紧急</div>
               </div>
               <div class="notice-footer__time">{{ transformDate(i.createdAt) }}</div>
             </div>
@@ -332,6 +339,9 @@ const navigateToTipsInfo = (index) => {
     }
   }
 }
+.notice:first-child {
+  padding-top: 0;
+}
 .notice {
   padding: 16px 0;
   border-bottom: 1px solid #f1f1f1;
@@ -353,6 +363,7 @@ const navigateToTipsInfo = (index) => {
       box-sizing: border-box;
       justify-content: space-around;
       .notice-info__name {
+        margin-bottom: 4px;
         color: #1a1a1a;
         font-weight: bolder;
       }
@@ -361,19 +372,31 @@ const navigateToTipsInfo = (index) => {
       }
     }
   }
-}
-.notice-content {
-  margin-top: 16px;
-  font-size: 14px;
-}
-.notice-footer {
-  margin-top: 12px;
-  font-size: 12px;
-  color: #7c7c7c;
-  display: flex;
-  .notice-footer__time {
-    flex: 1;
-    text-align: end;
+  .notice-content {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+  .notice-footer {
+    margin-top: 12px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    .notice-footer__time {
+      color: #7c7c7c;
+      flex: 1;
+      text-align: end;
+    }
+    .notice-footer__tag {
+      display: flex;
+      align-items: center;
+      border: 1px solid #f1f1f1;
+      border-radius: 16px;
+      padding: 2px 8px 2px 6px;
+      .notice-footer__tag-name {
+        color: #7c7c7c;
+        margin-left: 4px;
+      }
+    }
   }
 }
 </style>
