@@ -391,7 +391,7 @@ const navigateToTipsInfo = (index) => {
       align-items: center;
       border: 1px solid #f1f1f1;
       border-radius: 16px;
-      padding: 2px 8px 2px 6px;
+      padding: 2px 8px 3px 6px;
       .notice-footer__tag-name {
         color: #7c7c7c;
         margin-left: 4px;
