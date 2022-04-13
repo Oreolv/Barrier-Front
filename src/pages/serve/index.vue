@@ -1,6 +1,6 @@
 <template>
   <div class="top-img">
-    <img src="https://img.xinyu.ink//默认文件1649833707488.png" mode="widthFix" />
+    <img src="https://img.xinyu.ink//serve-back.png" mode="widthFix" />
   </div>
   <div class="serve">
     <div class="serve-header">日常防疫</div>
