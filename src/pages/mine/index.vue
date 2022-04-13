@@ -87,7 +87,7 @@ const showBindingModal = () => {
 }
 .mine-back {
   height: 40vh;
-  background-image: url('https://img.xinyu.ink//E2CEA33874A5BAE3CD39750AEAA63173.png');
+  background-image: url('https://img.xinyu.ink//847c34361e45170999586818469b2e67.jpg');
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
