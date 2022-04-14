@@ -129,15 +129,15 @@
             </div>
             <div class="notice-footer">
               <div class="notice-footer__tag" v-if="i.grade == 0">
-                <nut-icon name="check-checked"></nut-icon>
+                <nut-icon name="check-checked" color="#4FC08D"></nut-icon>
                 <div class="notice-footer__tag-name">安全</div>
               </div>
               <div class="notice-footer__tag" v-if="i.grade == 1">
-                <nut-icon name="check-checked"></nut-icon>
+                <nut-icon name="check-checked" color="#F3812E"></nut-icon>
                 <div class="notice-footer__tag-name">重要</div>
               </div>
               <div class="notice-footer__tag" v-if="i.grade == 2">
-                <nut-icon name="check-checked"></nut-icon>
+                <nut-icon name="check-checked" color="#EA290E"></nut-icon>
                 <div class="notice-footer__tag-name">紧急</div>
               </div>
               <div class="notice-footer__time">{{ transformDate(i.createdAt) }}</div>
@@ -373,6 +373,8 @@ const navigateToTipsInfo = (index) => {
     }
   }
   .notice-content {
+    white-space: pre-line;
+    line-height: 24px;
     margin-top: 16px;
     font-size: 14px;
   }
