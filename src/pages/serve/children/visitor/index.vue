@@ -47,17 +47,20 @@
   </nut-tabs>
 </template>
 <script lang="ts" setup>
-import { reactive, onBeforeMount } from 'vue';
 import { navigateTo } from '@tarojs/taro';
+import { reactive, onBeforeMount, ref } from 'vue';
 import ApplyCardVue from '/@/components/ApplyCard.vue';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { GetVisitorListResultModel } from '/@/api/serve/visitor/model';
+import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 
 const state = reactive({
   tabValue: '0',
   currentList: [] as GetVisitorListResultModel,
   historyList: [] as GetVisitorListResultModel,
 });
+
+const tabnineHeight = ref('80vh');
 
 const createApply = () => {
   navigateTo({
@@ -70,6 +73,10 @@ onBeforeMount(async () => {
   const currentTime = new Date().getTime();
   state.currentList = data.filter((i) => Date.parse(i.endTime) > currentTime);
   state.historyList = data.filter((i) => Date.parse(i.endTime) <= currentTime);
+
+  tabnineHeight.value = `calc(100vh - ${
+    (await getNodePositionInfo('.nut-tabs__titles')).height
+  }px)`;
 });
 </script>
 
@@ -100,6 +107,7 @@ page {
   justify-content: center;
 }
 .nut-tabpane {
+  height: v-bind(tabnineHeight);
   background: #f5f5f5;
 }
 .apply {
