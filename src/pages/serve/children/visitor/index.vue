@@ -71,8 +71,8 @@ const createApply = () => {
 onBeforeMount(async () => {
   const data = await getVisitorList();
   const currentTime = new Date().getTime();
-  state.currentList = data.filter((i) => Date.parse(i.endTime) > currentTime);
-  state.historyList = data.filter((i) => Date.parse(i.endTime) <= currentTime);
+  state.currentList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) > currentTime);
+  state.historyList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) <= currentTime);
 
   tabnineHeight.value = `calc(100vh - ${
     (await getNodePositionInfo('.nut-tabs__titles')).height
