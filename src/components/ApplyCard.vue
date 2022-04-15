@@ -8,20 +8,20 @@
         <div class="apply-header__type-name">{{ props.type }}</div>
       </div>
       <div class="apply-header__apply">
-        <div class="apply-header__apply-name" v-if="props.apply === ApplyStatusEnum.underReview">
+        <div class="apply-header__apply-name" v-if="props.status === ApplyStatusEnum.underReview">
           审核中
         </div>
         <div
           class="apply-header__apply-name"
           style="color: #ea290e"
-          v-if="props.apply === ApplyStatusEnum.reject"
+          v-if="props.status === ApplyStatusEnum.reject"
         >
           已拒绝
         </div>
         <div
           class="apply-header__apply-name"
           style="color: #4fc08d"
-          v-if="props.apply === ApplyStatusEnum.approval"
+          v-if="props.status === ApplyStatusEnum.approval"
         >
           已通过
         </div>
@@ -52,7 +52,7 @@ interface ApplyCardProps {
 }
 const props = withDefaults(defineProps<ApplyCardProps>(), {
   type: '',
-  apply: ApplyStatusEnum.underReview,
+  status: ApplyStatusEnum.underReview,
   title: '',
   startTime: '',
   endTime: '',

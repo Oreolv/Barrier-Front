@@ -20,15 +20,43 @@
         <!-- <span class="nut-tabs__titles-item__line"></span> -->
       </div>
     </template>
-    <nut-tabpane pane-key="0">正在进行</nut-tabpane>
-    <nut-tabpane pane-key="2">历史记录</nut-tabpane>
+    <nut-tabpane pane-key="0">
+      <nut-empty description="无数据" v-if="!state.currentList.length"></nut-empty>
+      <ApplyCardVue
+        v-for="item in state.currentList"
+        :key="item.id"
+        type="访客申请"
+        :status="item.status"
+        :title="`${item.visitor}访客申请`"
+        :startTime="item.startTime"
+        :endTime="item.endTime"
+      ></ApplyCardVue>
+    </nut-tabpane>
+    <nut-tabpane pane-key="2">
+      <nut-empty description="无数据" v-if="!state.historyList.length"></nut-empty>
+      <ApplyCardVue
+        v-for="item in state.historyList"
+        :key="item.id"
+        type="访客申请"
+        :status="item.status"
+        :title="`${item.visitor}访客申请`"
+        :startTime="item.startTime"
+        :endTime="item.endTime"
+      ></ApplyCardVue>
+    </nut-tabpane>
   </nut-tabs>
 </template>
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, onBeforeMount } from 'vue';
 import { navigateTo } from '@tarojs/taro';
+import ApplyCardVue from '/@/components/ApplyCard.vue';
+import { getVisitorList } from '/@/api/serve/visitor';
+import { GetVisitorListResultModel } from '/@/api/serve/visitor/model';
+
 const state = reactive({
   tabValue: '0',
+  currentList: [] as GetVisitorListResultModel,
+  historyList: [] as GetVisitorListResultModel,
 });
 
 const createApply = () => {
@@ -36,6 +64,13 @@ const createApply = () => {
     url: '/pages/serve/children/visitor/create/index',
   });
 };
+
+onBeforeMount(async () => {
+  const data = await getVisitorList();
+  const currentTime = new Date().getTime();
+  state.currentList = data.filter((i) => Date.parse(i.endTime) > currentTime);
+  state.historyList = data.filter((i) => Date.parse(i.endTime) <= currentTime);
+});
 </script>
 
 <style lang="scss">
@@ -64,10 +99,13 @@ page {
   width: 100px;
   justify-content: center;
 }
-.nut-tabs__titles-item.active {
-  // border-bottom: 5px solid #1a1a1a;
-}
 .nut-tabpane {
   background: #f5f5f5;
+}
+.apply {
+  margin-top: 16px;
+}
+.apply:first-child {
+  margin-top: 0;
 }
 </style>
