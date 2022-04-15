@@ -4,7 +4,7 @@ import {
   GetNewsListParams,
   GetNoticeListResultModel,
   GetNoticeListParams,
-} from './system/model/informationModel';
+} from '/@/api/index/model/informationModel';
 enum Api {
   GetNewsList = '/news/getNewsList',
   GetTipsList = '/tips/getTipsList',

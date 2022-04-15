@@ -196,13 +196,13 @@
 
 <script lang="ts" setup>
 import Card from '/@/components/Card.vue';
-import { getRiskArea } from '/@/api/covid';
+import { getRiskArea } from '/@/api/index/covid';
 import { tabList, areaRemarkList } from './data';
 import { onBeforeMount, reactive, ref } from 'vue';
 import { ShowModal } from '/@/hooks/useShowMessage';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
-import { GetRiskAreaResultModel, RiskAreaItem } from '/@/api/system/model/covidModel';
+import { GetRiskAreaResultModel, RiskAreaItem } from '/@/api/index/model/covidModel';
 interface RiskIncrease {
   per: string;
   count: number | string;

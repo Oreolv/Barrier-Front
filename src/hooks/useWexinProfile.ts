@@ -1,6 +1,6 @@
 import { getUserProfile } from '@tarojs/taro';
 import { ShowToast } from '/@/hooks/useShowMessage';
-import { UserProfile } from '/@/api/system/model/usersModel';
+import { UserProfile } from '/@/api/mine/model/usersModel';
 export const useWexinProfile = (): Promise<UserProfile> => {
   return new Promise((resolve, reject) => {
     getUserProfile({

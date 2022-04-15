@@ -152,8 +152,8 @@
 <script lang="ts" setup>
 import { useDidShow } from '@tarojs/taro';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import { getTipsList, getNewsList, getNoticeList } from '/@/api/information';
-import { getCovidData } from '/@/api/covid';
+import { getTipsList, getNewsList, getNoticeList } from '/@/api/index/information';
+import { getCovidData } from '/@/api/index/covid';
 import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
 import { onBeforeMount, reactive, ref } from 'vue';
@@ -161,8 +161,8 @@ import SearchBar from '/@/components/SearchBar.vue';
 import { addPlusAndMinus, transformDate } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
-import { GetCovidDataResultModel } from '/@/api/system/model/covidModel';
-import { NewsItem, NoticeItem } from '/@/api/system/model/informationModel';
+import { GetCovidDataResultModel } from '/@/api/index/model/covidModel';
+import { NewsItem, NoticeItem } from '/@/api/index/model/informationModel';
 import { navigateTo } from '@tarojs/taro';
 
 const dataList = reactive({

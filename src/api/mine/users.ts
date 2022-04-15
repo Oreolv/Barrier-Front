@@ -4,7 +4,7 @@ import {
   LoginResultModel,
   UserInfo as GetUserInfoResultModel,
   UserProfile as UpdateUserProfileParams,
-} from './system/model/usersModel';
+} from '/@/api/mine/model/usersModel';
 enum Api {
   Login = '/resident/login',
   GetUserInfo = '/resident/getUserInfo',

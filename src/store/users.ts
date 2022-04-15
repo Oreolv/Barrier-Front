@@ -2,11 +2,11 @@ import { defineStore } from 'pinia';
 import { ResultColor } from '/@/enums/colorEnum';
 import { useWexinLogin } from '/@/hooks/useWexinLogin';
 import { useWexinProfile } from '/@/hooks/useWexinProfile';
-import { getUserInfo, updateUserProfile } from '/@/api/users';
+import { getUserInfo, updateUserProfile } from '/@/api/mine/users';
 import { UserStatusEnum, UserHealthEnum } from '/@/enums/userEnum';
 import { showLoading, ShowModal, ShowToast } from '/@/hooks/useShowMessage';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
-import { UserProfile, UserInfo } from '/@/api/system/model/usersModel';
+import { UserProfile, UserInfo } from '/@/api/mine/model/usersModel';
 import { TOKEN_KEY, USER_INFO_KEY, USER_PROFILE_KEY, USER_STATUS_KEY } from '/@/enums/cacheEnum';
 
 interface UserStatus {

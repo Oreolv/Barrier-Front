@@ -1,7 +1,7 @@
 import { login as TaroLogin } from '@tarojs/taro';
-import { login } from '/@/api/users';
+import { login } from '/@/api/mine/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
-import { LoginResultModel, UserProfile } from '/@/api/system/model/usersModel';
+import { LoginResultModel, UserProfile } from '/@/api/mine/model/usersModel';
 
 // 微信小程序目前对获取用户手机号做出限制，个人开发者无法获取。这里暂时随机生成一个手机号。
 const randomPhoneNumber = () => {
