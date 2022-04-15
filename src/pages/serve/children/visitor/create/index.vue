@@ -129,9 +129,9 @@ const submitFormValues = () => {
     flex: 0 1 auto;
     width: 100px;
   }
+}
   .nut-cell__value {
     color: #808080;
-  }
 }
 .footer {
   padding: 16px;
