@@ -122,9 +122,11 @@ const submitFormValues = async () => {
     return;
   }
   await createVisitor(formValues);
-  redirectTo({
-    url: '/pages/serve/children/visitor/index',
-  });
+  setTimeout(() => {
+    redirectTo({
+      url: '/pages/serve/children/visitor/index',
+    });
+  }, 1000);
 };
 </script>
 
