@@ -26,6 +26,13 @@ import {
   Skeleton,
   Avatar,
   Tag,
+  Form,
+  FormItem,
+  Radio,
+  RadioGroup,
+  Calendar,
+  Checkbox,
+  CheckboxGroup,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -52,6 +59,13 @@ const NutComponent = [
   Skeleton,
   Avatar,
   Tag,
+  Form,
+  FormItem,
+  Calendar,
+  Radio,
+  RadioGroup,
+  Checkbox,
+  CheckboxGroup,
 ];
 
 App.use(pinia);

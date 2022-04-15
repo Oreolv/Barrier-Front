@@ -13,6 +13,7 @@ export default defineAppConfig({
       root: 'pages/serve/children',
       pages: [
         'visitor/index',
+        'visitor/create/index',
         'trip/index',
         'back/index',
         'abnormal/index',
