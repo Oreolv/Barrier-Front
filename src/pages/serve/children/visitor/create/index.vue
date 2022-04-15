@@ -12,9 +12,7 @@
       class="calendar"
       title="访问时间"
       :desc="
-        formValues.rangeDateList.length
-          ? `${formValues.rangeDateList[0]}至${formValues.rangeDateList[1]}`
-          : '请选择访问时间'
+        formValues.startTime ? `${formValues.startTime}至${formValues.endTime}` : '请选择访问时间'
       "
       @click="state.showCalendar = true"
     ></nut-cell>
@@ -63,8 +61,10 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import { global } from '/@/utils/global';
+import { redirectTo } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
+import { createVisitor } from '/@/api/serve/visitor';
 
 const userStore = useUserStore();
 
@@ -80,13 +80,14 @@ const formValues = reactive({
   visitor: '',
   foreign: 0,
   address: '',
-  rangeDateList: [] as string[],
-  healthCodeList: [] as string[],
+  startTime: '',
+  endTime: '',
+  healthCode: [] as string[],
 });
 
 const setChooseValue = (param) => {
-  formValues.rangeDateList[0] = param[0][3];
-  formValues.rangeDateList[1] = param[1][3];
+  formValues.startTime = param[0][3];
+  formValues.endTime = param[1][3];
 };
 
 const SuccessCallback = (res) => {
@@ -95,20 +96,20 @@ const SuccessCallback = (res) => {
     ShowToast.error('上传失败');
     return;
   }
-  formValues.healthCodeList.push(data.result);
+  formValues.healthCode.push(data.result);
 };
 
 const ErrorCallback = () => {
   ShowToast.error('上传失败');
 };
 
-const submitFormValues = () => {
+const submitFormValues = async () => {
   // 组件自带的实在是难用，还不如自己写
   if (!formValues.visitor) {
     ShowToast.info('请填写访客姓名');
     return;
   }
-  if (!formValues.rangeDateList.length) {
+  if (!formValues.startTime && !formValues.endTime) {
     ShowToast.info('请填写访问时间');
     return;
   }
@@ -116,10 +117,14 @@ const submitFormValues = () => {
     ShowToast.info('请填写访客家庭住址');
     return;
   }
-  if (formValues.healthCodeList.length < 2) {
+  if (formValues.healthCode.length < 2) {
     ShowToast.info('请同时上传访客行程码和健康码');
     return;
   }
+  await createVisitor(formValues);
+  redirectTo({
+    url: '/pages/serve/children/visitor/index',
+  });
 };
 </script>
 
@@ -130,8 +135,8 @@ const submitFormValues = () => {
     width: 100px;
   }
 }
-  .nut-cell__value {
-    color: #808080;
+.nut-cell__value {
+  color: #808080;
 }
 .footer {
   padding: 16px;
