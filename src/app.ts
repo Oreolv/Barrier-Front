@@ -33,6 +33,7 @@ import {
   Calendar,
   Checkbox,
   CheckboxGroup,
+  Picker,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -66,6 +67,7 @@ const NutComponent = [
   RadioGroup,
   Checkbox,
   CheckboxGroup,
+  Picker,
 ];
 
 App.use(pinia);
