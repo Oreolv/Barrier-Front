@@ -8,21 +8,15 @@
         type="text"
       />
     </nut-form-item>
-    <nut-cell
-      class="calendar"
-      title="访问时间"
-      :desc="
-        formValues.startTime ? `${formValues.startTime}至${formValues.endTime}` : '请选择访问时间'
-      "
-      @click="state.showCalendar = true"
-    ></nut-cell>
-    <nut-calendar
-      v-model:visible="state.showCalendar"
-      type="range"
-      :show-title="false"
-      @choose="setChooseValue"
-      @close="state.showCalendar = false"
-    ></nut-calendar>
+    <nut-form-item label="访问时间" :rules="[{ required: true, message: '请填写访问时间' }]">
+      <input
+        v-model="rangeDate"
+        class="nut-input-text"
+        placeholder="请选择访问时间"
+        :disabled="true"
+        @click="state.showCalendar = true"
+      />
+    </nut-form-item>
     <nut-form-item label="来自异地">
       <nut-radiogroup direction="horizontal" v-model="formValues.foreign">
         <nut-radio :label="0">否</nut-radio>
@@ -59,6 +53,13 @@
       ></nut-uploader>
     </nut-form-item>
   </nut-form>
+  <nut-calendar
+    v-model:visible="state.showCalendar"
+    type="range"
+    :show-title="false"
+    @choose="setChooseValue"
+    @close="state.showCalendar = false"
+  ></nut-calendar>
   <div class="footer">
     <nut-checkbox v-model="state.userPromise" label="本人承诺以上内容属实">
       本人承诺以上内容属实
@@ -67,7 +68,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, computed } from 'vue';
 import { global } from '/@/utils/global';
 import { redirectTo } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
@@ -92,6 +93,10 @@ const formValues = reactive({
   startTime: '',
   endTime: '',
   healthCode: [] as string[],
+});
+
+const rangeDate = computed(() => {
+  return `${formValues.startTime}至${formValues.endTime}`;
 });
 
 const setChooseValue = (param) => {
