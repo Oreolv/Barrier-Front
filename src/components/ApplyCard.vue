@@ -38,6 +38,10 @@
         <div class="apply-content__item-name">结束时间</div>
         <div class="apply-content__item-content">{{ props.endTime }}</div>
       </div>
+      <div class="apply-content__item" v-if="props.status === ApplyStatusEnum.reject">
+        <div class="apply-content__item-name">拒绝理由</div>
+        <div class="apply-content__item-content">{{ props.description }}</div>
+      </div>
     </div>
   </div>
 </template>
@@ -47,6 +51,7 @@ interface ApplyCardProps {
   type: string;
   status: ApplyStatusEnum;
   title: string;
+  description?: string | null;
   startTime: string;
   endTime: string;
 }
@@ -54,6 +59,7 @@ const props = withDefaults(defineProps<ApplyCardProps>(), {
   type: '',
   status: ApplyStatusEnum.underReview,
   title: '',
+  description: '',
   startTime: '',
   endTime: '',
 });

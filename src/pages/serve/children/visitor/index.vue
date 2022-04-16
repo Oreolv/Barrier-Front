@@ -28,6 +28,7 @@
         type="访客申请"
         :status="item.status"
         :title="`${item.visitor}访客申请`"
+        :description="item.description"
         :startTime="item.startTime"
         :endTime="item.endTime"
       ></ApplyCardVue>
@@ -40,6 +41,7 @@
         type="访客申请"
         :status="item.status"
         :title="`${item.visitor}访客申请`"
+        :description="item.description"
         :startTime="item.startTime"
         :endTime="item.endTime"
       ></ApplyCardVue>

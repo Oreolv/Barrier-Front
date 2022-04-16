@@ -15,6 +15,7 @@ export interface VisitorItem {
   foreign: number;
   comeFrom: string;
   goTo: string;
+  description: string;
   healthCode: string;
   startTime: string;
   endTime: string;
