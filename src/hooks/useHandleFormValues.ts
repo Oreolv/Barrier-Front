@@ -2,7 +2,14 @@ import { ShowToast } from '/@/hooks/useShowMessage';
 
 export const validate = (formValues, formSchema) => {
   for (const keys in formValues) {
-    if (formValues[keys] === '' || formValues[keys] == null) {
+    if (formValues[keys] === 0) {
+      continue;
+    }
+    if (!formValues[keys]) {
+      ShowToast.info(`${formSchema[keys]}不能为空`);
+      throw new Error(`${formSchema[keys]}不能为空`);
+    }
+    if (typeof formValues[keys] === 'object' && !Object.keys(formValues[keys]).length) {
       ShowToast.info(`${formSchema[keys]}不能为空`);
       throw new Error(`${formSchema[keys]}不能为空`);
     }
