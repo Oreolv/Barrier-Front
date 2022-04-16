@@ -19,7 +19,7 @@
     </nut-form-item>
     <nut-form-item :label="formSchema.vehicle">
       <input
-        v-model="state.vehicleShowValue"
+        v-model="vehicleShowValue"
         class="nut-input-text"
         :placeholder="`请输入${formSchema.vehicle}`"
         :disabled="true"
@@ -66,16 +66,17 @@
 <script lang="ts" setup>
 import { reactive, computed, ref } from 'vue';
 import { redirectTo } from '@tarojs/taro';
-import { ShowToast } from '/@/hooks/useShowMessage';
 import { createTrip } from '/@/api/serve/trip';
+import { validate } from '/@/hooks/useHandleFormValues';
+import { CreateTripParams } from '/@/api/serve/trip/model';
 
 const state = reactive({
   showCalendar: false,
   showVehiclePicker: false,
   userPromise: true,
-  vehicleShowValue: '',
 });
-const formValues = reactive({
+
+const formValues = reactive<CreateTripParams>({
   destination: '',
   vehicle: '',
   vehicleNo: '',
@@ -83,14 +84,16 @@ const formValues = reactive({
   startTime: '',
   endTime: '',
 });
+
 const formSchema = {
   destination: '目的地',
+  startTime: '行程时间',
   vehicle: '交通工具',
   vehicleNo: '车牌/车次号',
   vehicleSeat: '座位号',
-  startTime: '行程时间',
 };
-const vehicleColumns = ref([
+
+const vehicleColumns = ref<Array<{ text: string; value: number }>>([
   { text: '驾车', value: 0 },
   { text: '大巴', value: 1 },
   { text: '火车', value: 2 },
@@ -105,24 +108,26 @@ const rangeDate = computed(() => {
   return `${formValues.startTime}至${formValues.endTime}`;
 });
 
+const vehicleShowValue = computed(() => {
+  if (formValues.vehicle === '') {
+    return '';
+  }
+  const i = vehicleColumns.value.filter((i) => i.value == Number(formValues.vehicle))[0];
+  return i.text;
+});
+
 const setChooseValue = (param) => {
   formValues.startTime = param[0][3];
   formValues.endTime = param[1][3];
 };
 
 function handleVehiclePickerComfirm(record) {
-  state.vehicleShowValue = record.selectedOptions[0].text;
   formValues.vehicle = record.selectedOptions[0].value;
 }
 
 const submitFormValues = async () => {
   // 组件自带的实在是难用，还不如自己写
-  for (const keys in formValues) {
-    if (!formValues[keys]) {
-      ShowToast.info(`${formSchema[keys]}不能为空`);
-      return;
-    }
-  }
+  validate(formValues, formSchema);
   await createTrip(formValues);
   setTimeout(() => {
     redirectTo({

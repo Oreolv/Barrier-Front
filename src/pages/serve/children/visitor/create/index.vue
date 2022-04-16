@@ -1,48 +1,45 @@
 <template>
-  <nut-form :model-value="formValues">
-    <nut-form-item label="访客姓名" :rules="[{ required: true, message: '请填写访客姓名' }]">
+  <nut-form>
+    <nut-form-item :label="formSchema.visitor">
       <input
         v-model="formValues.visitor"
         class="nut-input-text"
-        placeholder="请输入姓名"
+        :placeholder="`请输入${formSchema.visitor}`"
         type="text"
       />
     </nut-form-item>
-    <nut-form-item label="访问时间" :rules="[{ required: true, message: '请填写访问时间' }]">
+    <nut-form-item :label="formSchema.startTime">
       <input
         v-model="rangeDate"
         class="nut-input-text"
-        placeholder="请选择访问时间"
+        :placeholder="`请选择${formSchema.startTime}`"
         :disabled="true"
         @click="state.showCalendar = true"
       />
     </nut-form-item>
-    <nut-form-item label="来自异地">
+    <nut-form-item :label="formSchema.foreign">
       <nut-radiogroup direction="horizontal" v-model="formValues.foreign">
         <nut-radio :label="0">否</nut-radio>
         <nut-radio :label="1">是</nut-radio>
       </nut-radiogroup>
     </nut-form-item>
-    <nut-form-item label="来自何地" :rules="[{ required: true, message: '请填写访客家庭地址' }]">
+    <nut-form-item :label="formSchema.comeFrom">
       <input
         v-model="formValues.comeFrom"
         class="nut-input-text"
-        placeholder="请输入访客的家庭住址"
+        :placeholder="`请输入访客${formSchema.comeFrom}`"
         type="text"
       />
     </nut-form-item>
-    <nut-form-item label="去往何地" :rules="[{ required: true, message: '请输入访客的去往地址' }]">
+    <nut-form-item :label="formSchema.goTo">
       <input
         v-model="formValues.goTo"
         class="nut-input-text"
-        placeholder="请输入访客的去往地址"
+        :placeholder="`请输入访客${formSchema.goTo}`"
         type="text"
       />
     </nut-form-item>
-    <nut-form-item
-      label="访客的健康码与行程码截图"
-      :rules="[{ required: true, message: '请上传访客健康码行程码截图' }]"
-    >
+    <nut-form-item :label="formSchema.healthCode">
       <nut-uploader
         :headers="state.uploadConfig.headers"
         :url="state.uploadConfig.url"
@@ -72,8 +69,9 @@ import { reactive, computed } from 'vue';
 import { global } from '/@/utils/global';
 import { redirectTo } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
-import { ShowToast } from '/@/hooks/useShowMessage';
+import { validate } from '/@/hooks/useHandleFormValues';
 import { createVisitor } from '/@/api/serve/visitor';
+import { ShowToast } from '/@/hooks/useShowMessage';
 
 const userStore = useUserStore();
 
@@ -94,6 +92,15 @@ const formValues = reactive({
   endTime: '',
   healthCode: [] as string[],
 });
+
+const formSchema = {
+  visitor: '访客姓名',
+  foreign: '来自异地',
+  comeFrom: '来自何地',
+  goTo: '去往何地',
+  startTime: '访问时间',
+  healthCode: '访客的健康码与行程码',
+};
 
 const rangeDate = computed(() => {
   if (!formValues.startTime) {
@@ -122,26 +129,9 @@ const ErrorCallback = () => {
 
 const submitFormValues = async () => {
   // 组件自带的实在是难用，还不如自己写
-  if (!formValues.visitor) {
-    ShowToast.info('请填写访客姓名');
-    return;
-  }
-  if (!formValues.startTime && !formValues.endTime) {
-    ShowToast.info('请填写访问时间');
-    return;
-  }
-  if (!formValues.comeFrom) {
-    ShowToast.info('请填写访客家庭住址');
-    return;
-  }
-  if (!formValues.goTo) {
-    ShowToast.info('请填写访客去往住址');
-    return;
-  }
-  if (formValues.healthCode.length < 2) {
-    ShowToast.info('请同时上传访客行程码和健康码');
-    return;
-  }
+  console.log(formValues);
+
+  validate(formValues, formSchema);
   await createVisitor(formValues);
   setTimeout(() => {
     redirectTo({
