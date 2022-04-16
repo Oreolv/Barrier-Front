@@ -96,6 +96,9 @@ const formValues = reactive({
 });
 
 const rangeDate = computed(() => {
+  if (!formValues.startTime) {
+    return '请选择行程持续时间';
+  }
   return `${formValues.startTime}至${formValues.endTime}`;
 });
 
