@@ -29,11 +29,19 @@
         <nut-radio :label="1">是</nut-radio>
       </nut-radiogroup>
     </nut-form-item>
-    <nut-form-item label="访客住址" :rules="[{ required: true, message: '请填写访客家庭地址' }]">
+    <nut-form-item label="来自何地" :rules="[{ required: true, message: '请填写访客家庭地址' }]">
       <input
-        v-model="formValues.address"
+        v-model="formValues.comeFrom"
         class="nut-input-text"
         placeholder="请输入访客的家庭住址"
+        type="text"
+      />
+    </nut-form-item>
+    <nut-form-item label="去往何地" :rules="[{ required: true, message: '请输入访客的去往地址' }]">
+      <input
+        v-model="formValues.goTo"
+        class="nut-input-text"
+        placeholder="请输入访客的去往地址"
         type="text"
       />
     </nut-form-item>
@@ -79,7 +87,8 @@ const state = reactive({
 const formValues = reactive({
   visitor: '',
   foreign: 0,
-  address: '',
+  comeFrom: '',
+  goTo: '',
   startTime: '',
   endTime: '',
   healthCode: [] as string[],
@@ -113,8 +122,12 @@ const submitFormValues = async () => {
     ShowToast.info('请填写访问时间');
     return;
   }
-  if (!formValues.address) {
+  if (!formValues.comeFrom) {
     ShowToast.info('请填写访客家庭住址');
+    return;
+  }
+  if (!formValues.goTo) {
+    ShowToast.info('请填写访客去往住址');
     return;
   }
   if (formValues.healthCode.length < 2) {

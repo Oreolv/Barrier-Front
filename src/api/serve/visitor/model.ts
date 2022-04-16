@@ -1,7 +1,8 @@
 export interface CreateVisitorParams {
   visitor: string;
   foreign: number;
-  address: string;
+  comeFrom: string;
+  goTo: string;
   startTime: string;
   endTime: string;
   healthCode: string[];
@@ -12,7 +13,8 @@ export interface VisitorItem {
   status: number;
   visitor: string;
   foreign: number;
-  address: string;
+  comeFrom: string;
+  goTo: string;
   healthCode: string;
   startTime: string;
   endTime: string;
