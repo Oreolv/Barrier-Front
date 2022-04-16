@@ -13,3 +13,9 @@ export interface BasicTimeResult {
   updatedAt: string;
   deletedAt: string;
 }
+
+export interface ResidentInfo {
+  cname: string;
+  uname: string;
+  uphone: string;
+}
