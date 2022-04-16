@@ -25,22 +25,22 @@
       <ApplyCardVue
         v-for="item in state.currentList"
         :key="item.id"
-        type="行程报备"
         :status="item.status"
-        :title="`${item.visitor}行程报备`"
+        type="行程报备"
+        :title="`${item.residentInfo.uname}前往${item.destination}行程报备`"
       >
         <template #content>
           <div class="apply-content__item">
-            <div class="apply-content__item-name">开始时间</div>
+            <div class="apply-content__item-name">目的地</div>
+            <div class="apply-content__item-content">{{ item.destination }}</div>
+          </div>
+          <div class="apply-content__item">
+            <div class="apply-content__item-name">去往时间</div>
             <div class="apply-content__item-content">{{ item.startTime }}</div>
           </div>
           <div class="apply-content__item">
-            <div class="apply-content__item-name">结束时间</div>
+            <div class="apply-content__item-name">返程时间</div>
             <div class="apply-content__item-content">{{ item.endTime }}</div>
-          </div>
-          <div class="apply-content__item" v-if="item.status === ApplyStatusEnum.reject">
-            <div class="apply-content__item-name">拒绝理由</div>
-            <div class="apply-content__item-content">{{ item.description }}</div>
           </div>
         </template>
       </ApplyCardVue>
@@ -50,22 +50,22 @@
       <ApplyCardVue
         v-for="item in state.historyList"
         :key="item.id"
-        type="行程报备"
         :status="item.status"
-        :title="`${item.visitor}行程报备`"
+        type="行程报备"
+        :title="`${item.residentInfo.uname}前往${item.destination}行程报备`"
       >
         <template #content>
           <div class="apply-content__item">
-            <div class="apply-content__item-name">开始时间</div>
+            <div class="apply-content__item-name">目的地</div>
+            <div class="apply-content__item-content">{{ item.destination }}</div>
+          </div>
+          <div class="apply-content__item">
+            <div class="apply-content__item-name">去往时间</div>
             <div class="apply-content__item-content">{{ item.startTime }}</div>
           </div>
           <div class="apply-content__item">
-            <div class="apply-content__item-name">结束时间</div>
+            <div class="apply-content__item-name">返程时间</div>
             <div class="apply-content__item-content">{{ item.endTime }}</div>
-          </div>
-          <div class="apply-content__item" v-if="item.status === ApplyStatusEnum.reject">
-            <div class="apply-content__item-name">拒绝理由</div>
-            <div class="apply-content__item-content">{{ item.description }}</div>
           </div>
         </template>
       </ApplyCardVue>
@@ -76,27 +76,26 @@
 import { navigateTo } from '@tarojs/taro';
 import { reactive, onBeforeMount, ref } from 'vue';
 import ApplyCardVue from '/@/components/ApplyCard.vue';
-import { getVisitorList } from '/@/api/serve/visitor';
-import { GetVisitorListResultModel } from '/@/api/serve/visitor/model';
+import { getTripList } from '/@/api/serve/trip';
+import { GetTripListResultModel } from '/@/api/serve/trip/model';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
-import { ApplyStatusEnum } from '/@/enums/serveEnums';
 
 const state = reactive({
   tabValue: '0',
-  currentList: [] as GetVisitorListResultModel,
-  historyList: [] as GetVisitorListResultModel,
+  currentList: [] as GetTripListResultModel,
+  historyList: [] as GetTripListResultModel,
 });
 
 const tabnineHeight = ref('80vh');
 
 const createApply = () => {
   navigateTo({
-    url: '/pages/serve/children/visitor/create/index',
+    url: '/pages/serve/children/trip/create/index',
   });
 };
 
 onBeforeMount(async () => {
-  const data = await getVisitorList();
+  const data = await getTripList();
   const currentTime = new Date().getTime();
   state.currentList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) > currentTime);
   state.historyList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) <= currentTime);
