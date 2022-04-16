@@ -28,10 +28,22 @@
         type="访客申请"
         :status="item.status"
         :title="`${item.visitor}访客申请`"
-        :description="item.description"
-        :startTime="item.startTime"
-        :endTime="item.endTime"
-      ></ApplyCardVue>
+      >
+        <template #content>
+          <div class="apply-content__item">
+            <div class="apply-content__item-name">开始时间</div>
+            <div class="apply-content__item-content">{{ item.startTime }}</div>
+          </div>
+          <div class="apply-content__item">
+            <div class="apply-content__item-name">结束时间</div>
+            <div class="apply-content__item-content">{{ item.endTime }}</div>
+          </div>
+          <div class="apply-content__item" v-if="item.status === ApplyStatusEnum.reject">
+            <div class="apply-content__item-name">拒绝理由</div>
+            <div class="apply-content__item-content">{{ item.description }}</div>
+          </div>
+        </template>
+      </ApplyCardVue>
     </nut-tabpane>
     <nut-tabpane pane-key="2">
       <nut-empty description="无数据" v-if="!state.historyList.length"></nut-empty>
@@ -41,10 +53,22 @@
         type="访客申请"
         :status="item.status"
         :title="`${item.visitor}访客申请`"
-        :description="item.description"
-        :startTime="item.startTime"
-        :endTime="item.endTime"
-      ></ApplyCardVue>
+      >
+        <template #content>
+          <div class="apply-content__item">
+            <div class="apply-content__item-name">开始时间</div>
+            <div class="apply-content__item-content">{{ item.startTime }}</div>
+          </div>
+          <div class="apply-content__item">
+            <div class="apply-content__item-name">结束时间</div>
+            <div class="apply-content__item-content">{{ item.endTime }}</div>
+          </div>
+          <div class="apply-content__item" v-if="item.status === ApplyStatusEnum.reject">
+            <div class="apply-content__item-name">拒绝理由</div>
+            <div class="apply-content__item-content">{{ item.description }}</div>
+          </div>
+        </template>
+      </ApplyCardVue>
     </nut-tabpane>
   </nut-tabs>
 </template>
@@ -55,6 +79,7 @@ import ApplyCardVue from '/@/components/ApplyCard.vue';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { GetVisitorListResultModel } from '/@/api/serve/visitor/model';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
+import { ApplyStatusEnum } from '/@/enums/serveEnums';
 
 const state = reactive({
   tabValue: '0',
