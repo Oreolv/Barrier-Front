@@ -7,7 +7,7 @@
         </div>
         <div class="apply-header__type-name">{{ props.type }}</div>
       </div>
-      <div class="apply-header__apply">
+      <div class="apply-header__apply" v-if="props.status">
         <div class="apply-header__apply-name" v-if="props.status === ApplyStatusEnum.underReview">
           审核中
         </div>
@@ -38,12 +38,12 @@
 import { ApplyStatusEnum } from '/@/enums/serveEnums';
 interface ApplyCardProps {
   type: string;
-  status: ApplyStatusEnum;
+  status?: ApplyStatusEnum | null;
   title: string;
 }
 const props = withDefaults(defineProps<ApplyCardProps>(), {
   type: '',
-  status: ApplyStatusEnum.underReview,
+  status: null,
   title: '',
 });
 </script>
