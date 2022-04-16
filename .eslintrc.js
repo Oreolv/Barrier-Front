@@ -42,7 +42,7 @@ module.exports = {
       },
     ],
     '@typescript-eslint/no-explicit-any': ['off'], //禁止使用any
-    eqeqeq: 2, //必须使用全等
+    eqeqeq: 0, //必须使用全等
     'max-lines': ['error', 500], //限制行数 请勿修改 请优化你的代码
     'require-await': 'error',
     'vue/multi-word-component-names': 0,
