@@ -8,3 +8,17 @@ export const validate = (formValues, formSchema) => {
     }
   }
 };
+
+export const reset = (formValues) => {
+  for (const keys in formValues) {
+    if (typeof formValues[keys] === 'number') {
+      formValues[keys] = NaN;
+    }
+    if (typeof formValues[keys] === 'string') {
+      formValues[keys] = '';
+    }
+    if (formValues[keys] instanceof Array) {
+      formValues[keys].length = 0;
+    }
+  }
+};
