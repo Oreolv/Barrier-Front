@@ -11,7 +11,7 @@ export interface CreateTripParams {
 
 export interface TripItem {
   id: number;
-  residentId: number;
+  applicant: number;
   status: number;
   destination: string;
   startTime: string;
@@ -19,7 +19,7 @@ export interface TripItem {
   vehicle: string;
   vehicleNo: string;
   vehicleSeat: string;
-  residentInfo: ResidentInfo;
+  applicantInfo: ResidentInfo;
 }
 
 export type GetTripListResultModel = TripItem[];

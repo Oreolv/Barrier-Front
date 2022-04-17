@@ -27,7 +27,7 @@
         :key="item.id"
         :status="item.status"
         type="行程报备"
-        :title="`${item.residentInfo.uname}前往${item.destination}行程报备`"
+        :title="`${item.applicantInfo.uname}前往${item.destination}行程报备`"
       >
         <template #content>
           <div class="apply-content__item">
@@ -52,7 +52,7 @@
         :key="item.id"
         :status="item.status"
         type="行程报备"
-        :title="`${item.residentInfo.uname}前往${item.destination}行程报备`"
+        :title="`${item.applicantInfo.uname}前往${item.destination}行程报备`"
       >
         <template #content>
           <div class="apply-content__item">
