@@ -72,6 +72,7 @@ import { useUserStore } from '/@/store/users';
 import { validate } from '/@/hooks/useHandleFormValues';
 import { createVisitor } from '/@/api/serve/visitor';
 import { ShowToast } from '/@/hooks/useShowMessage';
+import { formValues, formSchema } from './data';
 
 const userStore = useUserStore();
 
@@ -83,24 +84,6 @@ const state = reactive({
   },
   userPromise: true,
 });
-const formValues = reactive({
-  visitor: '',
-  foreign: 0,
-  comeFrom: '',
-  goTo: '',
-  startTime: '',
-  endTime: '',
-  healthCode: [] as string[],
-});
-
-const formSchema = {
-  visitor: '访客姓名',
-  foreign: '来自异地',
-  comeFrom: '来自何地',
-  goTo: '去往何地',
-  startTime: '访问时间',
-  healthCode: '访客的健康码与行程码',
-};
 
 const rangeDate = computed(() => {
   if (!formValues.startTime) {
@@ -129,8 +112,6 @@ const ErrorCallback = () => {
 
 const submitFormValues = async () => {
   // 组件自带的实在是难用，还不如自己写
-  console.log(formValues);
-
   validate(formValues, formSchema);
   await createVisitor(formValues);
   setTimeout(() => {

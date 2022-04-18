@@ -64,42 +64,17 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { reactive, computed, ref } from 'vue';
+import { reactive, computed } from 'vue';
 import { redirectTo } from '@tarojs/taro';
 import { createTrip } from '/@/api/serve/trip';
 import { validate } from '/@/hooks/useHandleFormValues';
-import { CreateTripParams } from '/@/api/serve/trip/model';
+import { formValues, formSchema, vehicleColumns } from './data';
 
 const state = reactive({
   showCalendar: false,
   showVehiclePicker: false,
   userPromise: true,
 });
-
-const formValues = reactive<CreateTripParams>({
-  destination: '',
-  vehicle: '',
-  vehicleNo: '',
-  vehicleSeat: '',
-  startTime: '',
-  endTime: '',
-});
-
-const formSchema = {
-  destination: '目的地',
-  startTime: '行程时间',
-  vehicle: '交通工具',
-  vehicleNo: '车牌/车次号',
-  vehicleSeat: '座位号',
-};
-
-const vehicleColumns = ref<Array<{ text: string; value: number }>>([
-  { text: '驾车', value: 0 },
-  { text: '大巴', value: 1 },
-  { text: '火车', value: 2 },
-  { text: '高铁', value: 3 },
-  { text: '飞机', value: 4 },
-]);
 
 const rangeDate = computed(() => {
   if (!formValues.startTime) {
