@@ -17,6 +17,7 @@ export default defineAppConfig({
         'trip/index',
         'trip/create/index',
         'back/index',
+        'back/create/index',
         'abnormal/index',
         'suggestion/index',
         'health/index',
