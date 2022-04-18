@@ -1,3 +1,5 @@
+import { BasicApplyItem } from '/@/api/model/baseModel';
+
 export interface CreateVisitorParams {
   visitor: string;
   foreign: number;
@@ -8,17 +10,12 @@ export interface CreateVisitorParams {
   healthCode: string[];
 }
 
-export interface VisitorItem {
-  id: number;
-  status: number;
+export interface VisitorItem extends BasicApplyItem {
   visitor: string;
   foreign: number;
   comeFrom: string;
   goTo: string;
-  description: string;
   healthCode: string;
-  startTime: string;
-  endTime: string;
 }
 
 export type GetVisitorListResultModel = VisitorItem[];

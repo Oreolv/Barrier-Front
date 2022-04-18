@@ -19,3 +19,13 @@ export interface ResidentInfo {
   uname: string;
   uphone: string;
 }
+
+export interface BasicApplyItem {
+  id: number;
+  applicant: number;
+  applicantInfo: ResidentInfo;
+  status: number;
+  description: string;
+  startTime: string;
+  endTime: string;
+}
