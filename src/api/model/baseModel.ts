@@ -15,6 +15,7 @@ export interface BasicTimeResult {
 }
 
 export interface ResidentInfo {
+  avatar?: string;
   cname: string;
   uname: string;
   uphone: string;

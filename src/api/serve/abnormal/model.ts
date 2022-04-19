@@ -1,4 +1,4 @@
-import { BasicApplyItem } from '/@/api/model/baseModel';
+import { BasicApplyItem, BasicTimeResult } from '/@/api/model/baseModel';
 
 export interface CreateAbnormalParams {
   abnormal: string;
@@ -10,7 +10,7 @@ export interface CreateAbnormalParams {
   healthCode: string[];
 }
 
-export interface AbnormalItem extends Omit<BasicApplyItem, 'starTime | endTime'> {
+export interface AbnormalItem extends Omit<BasicApplyItem, 'starTime | endTime'>, BasicTimeResult {
   temperature: string;
   diagnosis: number;
   contact: number;
