@@ -36,6 +36,7 @@ import {
   Picker,
   Cascader,
   DatePicker,
+  TextArea,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -72,6 +73,7 @@ const NutComponent = [
   Picker,
   Cascader,
   DatePicker,
+  TextArea,
 ];
 
 App.use(pinia);

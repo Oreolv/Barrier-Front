@@ -21,6 +21,7 @@ export default defineAppConfig({
         'abnormal/index',
         'abnormal/create/index',
         'suggestion/index',
+        'suggestion/create/index',
         'health/index',
         'material/index',
         'agency/index',
