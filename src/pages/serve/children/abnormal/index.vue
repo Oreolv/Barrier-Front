@@ -61,4 +61,10 @@ page {
     opacity: 0.7;
   }
 }
+.apply {
+  margin-top: 16px;
+}
+.apply:first-child {
+  margin-top: 0;
+}
 </style>
