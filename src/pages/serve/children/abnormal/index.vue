@@ -42,7 +42,7 @@ onBeforeMount(async () => {
 
 const createApplyAbnormal = () => {
   navigateTo({
-    url: '/pages/serve/children/back/create/index',
+    url: '/pages/serve/children/abnormal/create/index',
   });
 };
 </script>

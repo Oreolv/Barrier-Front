@@ -72,7 +72,7 @@ const submitFormValues = async () => {
   await createAbnormal(formValues);
   setTimeout(() => {
     redirectTo({
-      url: '/pages/serve/children/back/index',
+      url: '/pages/serve/children/abnormal/index',
     });
   }, 1000);
 };
