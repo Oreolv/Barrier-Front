@@ -21,10 +21,19 @@ export interface ResidentInfo {
   uphone: string;
 }
 
+export interface UserInfo {
+  username: string;
+  realName: string;
+  avatar: string;
+}
+
 export interface BasicApplyItem {
   id: number;
   applicant: number;
   applicantInfo: ResidentInfo;
+  approver: number;
+  approveTime: string;
+  approverInfo: UserInfo;
   status: number;
   description: string;
   startTime: string;
