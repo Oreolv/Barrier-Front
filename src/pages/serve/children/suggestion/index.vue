@@ -48,10 +48,14 @@
       </div>
     </template>
   </InfiniteLoading>
+  <div class="push" @click="createApplyAbnormal">
+    <nut-icon font-class-name="iconfont" class-prefix="icon" name="zengjia" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { reactive } from 'vue';
+import { navigateTo } from '@tarojs/taro';
 import { transformDate } from '/@/hooks/useTransformData';
 import { getSuggestionList } from '/@/api/serve/suggestion';
 import { SuggestionItem } from '/@/api/serve/suggestion/model';
@@ -69,6 +73,12 @@ const refresh = async (_, api, pageSize) => {
   state.suggestionList.length = 0;
   const data = await api({ page: 1, pageSize });
   state.suggestionList.push(...data.rows);
+};
+
+const createApplyAbnormal = () => {
+  navigateTo({
+    url: '/pages/serve/children/suggestion/create/index',
+  });
 };
 </script>
 
@@ -155,6 +165,15 @@ page {
     .reply-content__time {
       text-align: right;
     }
+  }
+}
+.push {
+  position: fixed;
+  bottom: 48px;
+  right: 32px;
+  text {
+    font-size: 36px;
+    opacity: 0.7;
   }
 }
 </style>
