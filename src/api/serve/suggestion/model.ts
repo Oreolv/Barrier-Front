@@ -1,4 +1,4 @@
-import { BasicApplyItem, BasicTimeResult } from '/@/api/model/baseModel';
+import { BasicApplyItem, BasicTimeResult, BasicFetchResult } from '/@/api/model/baseModel';
 
 export interface CreateSuggestionParams {
   type: string;
@@ -12,4 +12,4 @@ export interface SuggestionItem
   content: string;
 }
 
-export type GetSuggestionListResultModel = SuggestionItem[];
+export type GetSuggestionListResultModel = BasicFetchResult<SuggestionItem>;
