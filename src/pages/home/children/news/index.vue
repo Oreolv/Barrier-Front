@@ -23,7 +23,7 @@
 
 <script lang="ts" setup>
 import { getCurrentInstance } from '@tarojs/taro';
-import { NewsItem } from '/@/api/system/model/covidModel';
+import { NewsItem } from '/@/api/index/model/informationModel';
 const params: NewsItem = JSON.parse(decodeURIComponent(getCurrentInstance().router!.params.data!));
 // setNavigationBarTitle({ title: params.title });
 </script>
