@@ -103,73 +103,29 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="3">
-      <InfiniteLoading
-        name="notice"
-        :pageSize="10"
-        :api="getNoticeList"
-        @load="loadMore"
-        @refresh="refresh"
-      >
-        <template #content>
-          <div class="notice" v-for="i in dataList.noticeList" :key="i.id">
-            <div class="notice-header">
-              <div class="notice-header__avatar">
-                <img :src="i.publisherInfo.avatar" />
-              </div>
-              <div class="notice-header__info">
-                <div class="notice-info__name">{{ i.publisherInfo.realName }}</div>
-                <div class="notice-info__description">
-                  {{ i.publisherInfo.roles.roleName }}
-                </div>
-              </div>
-            </div>
-            <div class="notice-content">
-              {{ i.content }}
-            </div>
-            <div class="notice-footer">
-              <div class="notice-footer__tag" v-if="i.grade == 0">
-                <nut-icon name="check-checked" color="#4FC08D"></nut-icon>
-                <div class="notice-footer__tag-name">安全</div>
-              </div>
-              <div class="notice-footer__tag" v-if="i.grade == 1">
-                <nut-icon name="check-checked" color="#F3812E"></nut-icon>
-                <div class="notice-footer__tag-name">重要</div>
-              </div>
-              <div class="notice-footer__tag" v-if="i.grade == 2">
-                <nut-icon name="check-checked" color="#EA290E"></nut-icon>
-                <div class="notice-footer__tag-name">紧急</div>
-              </div>
-              <div class="notice-footer__time">{{ transformDate(i.createdAt) }}</div>
-            </div>
-          </div>
-        </template>
-      </InfiniteLoading>
-    </nut-tabpane>
   </nut-tabs>
 </template>
 
 <script lang="ts" setup>
 import { useDidShow } from '@tarojs/taro';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import { getTipsList, getNewsList, getNoticeList } from '/@/api/index/information';
+import { getTipsList, getNewsList } from '/@/api/index/information';
 import { getCovidData } from '/@/api/index/covid';
 import Card from '../../components/Card.vue';
 import { CovidList, CityColumn, TabList } from './data';
 import { onBeforeMount, reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
-import { addPlusAndMinus, transformDate } from '/@/hooks/useTransformData';
+import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { GetCovidDataResultModel } from '/@/api/index/model/covidModel';
-import { NewsItem, NoticeItem } from '/@/api/index/model/informationModel';
+import { NewsItem } from '/@/api/index/model/informationModel';
 import { navigateTo } from '@tarojs/taro';
 
 const dataList = reactive({
   allData: {} as GetCovidDataResultModel,
   newsList: [] as NewsItem[],
   tipsList: [] as NewsItem[],
-  noticeList: [] as NoticeItem[],
 });
 
 const tabsTop = getNavBarHeigtht();
@@ -336,68 +292,6 @@ const navigateToTipsInfo = (index) => {
       -webkit-line-clamp: 2;
       overflow: hidden;
       -webkit-box-orient: vertical;
-    }
-  }
-}
-.notice:first-child {
-  padding-top: 0;
-}
-.notice {
-  padding: 16px 0;
-  border-bottom: 1px solid #f1f1f1;
-  .notice-header {
-    display: flex;
-    align-items: center;
-    .notice-header__avatar {
-      margin-right: 16px;
-      img {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-      }
-    }
-    .notice-header__info {
-      display: flex;
-      flex-direction: column;
-      font-size: 13px;
-      box-sizing: border-box;
-      justify-content: space-around;
-      .notice-info__name {
-        margin-bottom: 4px;
-        color: #1a1a1a;
-        font-weight: bolder;
-      }
-      .notice-info__description {
-        color: #666666;
-      }
-    }
-  }
-  .notice-content {
-    white-space: pre-line;
-    line-height: 24px;
-    margin-top: 16px;
-    font-size: 14px;
-  }
-  .notice-footer {
-    margin-top: 12px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    .notice-footer__time {
-      color: #7c7c7c;
-      flex: 1;
-      text-align: end;
-    }
-    .notice-footer__tag {
-      display: flex;
-      align-items: center;
-      border: 1px solid #f1f1f1;
-      border-radius: 16px;
-      padding: 2px 8px 3px 6px;
-      .notice-footer__tag-name {
-        color: #7c7c7c;
-        margin-left: 4px;
-      }
     }
   }
 }

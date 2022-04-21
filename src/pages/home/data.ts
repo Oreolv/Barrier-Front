@@ -65,9 +65,5 @@ export const TabList = reactive({
       title: '防疫知识',
       paneKey: '2',
     },
-    {
-      title: '社区公告',
-      paneKey: '3',
-    },
   ],
 });

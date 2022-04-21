@@ -20,11 +20,6 @@ export const ServeList = {
       name: '异常报备',
       icon: 'tongzhi',
     },
-    {
-      key: 'suggestion',
-      name: '意见反馈',
-      icon: 'youjian3',
-    },
   ],
   urgent: [
     {
