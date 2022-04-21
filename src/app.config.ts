@@ -27,6 +27,7 @@ export default defineAppConfig({
         'material/index',
         'material/create/index',
         'agency/index',
+        'agency/create/index',
       ],
     },
   ],
