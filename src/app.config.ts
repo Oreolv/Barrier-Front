@@ -1,5 +1,5 @@
 export default defineAppConfig({
-  pages: ['pages/home/index', 'pages/serve/index', 'pages/mine/index'],
+  pages: ['pages/home/index', 'pages/serve/index', 'pages/discover/index', 'pages/mine/index'],
   subpackages: [
     {
       root: 'pages/mine/children',
@@ -49,6 +49,12 @@ export default defineAppConfig({
         text: '首页',
         iconPath: './assets/icons/home.png',
         selectedIconPath: './assets/icons/home-active.png',
+      },
+      {
+        pagePath: 'pages/discover/index',
+        text: '发现',
+        iconPath: './assets/icons/discover.png',
+        selectedIconPath: './assets/icons/discover-active.png',
       },
       {
         pagePath: 'pages/serve/index',
