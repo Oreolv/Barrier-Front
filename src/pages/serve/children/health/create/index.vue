@@ -47,7 +47,7 @@ import { global } from '/@/utils/global';
 import { redirectTo } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
 import { validate } from '/@/hooks/useHandleFormValues';
-import { createAbnormal } from '/@/api/serve/abnormal';
+import { createHealth } from '/@/api/serve/health';
 import { formValues, formSchema } from './data';
 
 const userStore = useUserStore();
@@ -69,10 +69,10 @@ const state = reactive({
 const submitFormValues = async () => {
   // 组件自带的实在是难用，还不如自己写
   validate(formValues, formSchema);
-  await createAbnormal(formValues);
+  await createHealth(formValues);
   setTimeout(() => {
     redirectTo({
-      url: '/pages/serve/children/abnormal/index',
+      url: '/pages/serve/children/health/index',
     });
   }, 1000);
 };

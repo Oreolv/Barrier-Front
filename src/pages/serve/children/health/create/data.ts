@@ -1,4 +1,4 @@
-import { reactive, ref } from 'vue';
+import { reactive } from 'vue';
 
 export const formValues = reactive({
   temperature: '36~37.2℃',
