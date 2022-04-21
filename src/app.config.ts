@@ -25,6 +25,7 @@ export default defineAppConfig({
         'health/index',
         'health/create/index',
         'material/index',
+        'material/create/index',
         'agency/index',
       ],
     },
