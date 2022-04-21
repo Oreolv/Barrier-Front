@@ -19,6 +19,7 @@ export default defineAppConfig({
         'back/index',
         'back/create/index',
         'abnormal/index',
+        'abnormal/create/index',
         'suggestion/index',
         'suggestion/create/index',
         'health/index',
