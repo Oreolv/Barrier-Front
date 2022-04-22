@@ -131,33 +131,23 @@ const refresh = async (name, api, pageSize) => {
 .nut-navbar {
   box-shadow: none;
 }
-.nut-table__main__head__tr {
-  font-weight: 600;
-  white-space: nowrap;
-  text-align: center;
-}
+
 .nut-tabs {
   position: relative;
   top: v-bind(tabsTop);
-}
-.nut-tabs__titles {
-  padding-left: 16px;
 }
 
 .nut-tabs__titles-item.active {
   font-size: 16px !important;
   .nut-tabs__titles-item__line {
     background: #000;
-    width: 40%;
-    bottom: 8%;
+    width: 10%;
+    bottom: 4%;
     border-radius: 10px;
   }
 }
-.nut-tabs__titles-item {
-  width: auto;
-  min-width: 0;
-  flex: 0 1 auto;
-  margin-right: 16px;
+.nut-tabs__titles {
+  padding: 0;
 }
 .nut-tabpane {
   height: v-bind(tabnineHeight);
