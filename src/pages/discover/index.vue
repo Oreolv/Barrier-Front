@@ -22,37 +22,30 @@
         @refresh="refresh"
       >
         <template #content>
-          <div class="notice" v-for="i in dataList.noticeList" :key="i.id">
-            <div class="notice-header">
-              <div class="notice-header__avatar">
-                <img :src="i.publisherInfo.avatar" />
-              </div>
-              <div class="notice-header__info">
-                <div class="notice-info__name">{{ i.publisherInfo.realName }}</div>
-                <div class="notice-info__description">
-                  {{ i.publisherInfo.roles.roleName }}
-                </div>
-              </div>
-            </div>
-            <div class="notice-content">
-              {{ i.content }}
-            </div>
-            <div class="notice-footer">
-              <div class="notice-footer__tag" v-if="i.grade == 0">
+          <DiscussCardVue
+            :avatar="i.publisherInfo.avatar"
+            :name="i.publisherInfo.realName"
+            :description="i.publisherInfo.roles.roleName"
+            :content="i.content"
+            :time="i.createdAt"
+            v-for="i in dataList.noticeList"
+            :key="i.id"
+          >
+            <template #tag>
+              <div class="discuss-footer__tag" v-if="i.grade == 0">
                 <nut-icon name="check-checked" color="#4FC08D"></nut-icon>
-                <div class="notice-footer__tag-name">安全</div>
+                <div class="discuss-footer__tag-name">安全</div>
               </div>
-              <div class="notice-footer__tag" v-if="i.grade == 1">
+              <div class="discuss-footer__tag" v-if="i.grade == 1">
                 <nut-icon name="check-checked" color="#F3812E"></nut-icon>
-                <div class="notice-footer__tag-name">重要</div>
+                <div class="discuss-footer__tag-name">重要</div>
               </div>
-              <div class="notice-footer__tag" v-if="i.grade == 2">
+              <div class="discuss-footer__tag" v-if="i.grade == 2">
                 <nut-icon name="check-checked" color="#EA290E"></nut-icon>
-                <div class="notice-footer__tag-name">紧急</div>
+                <div class="discuss-footer__tag-name">紧急</div>
               </div>
-              <div class="notice-footer__time">{{ transformDate(i.createdAt) }}</div>
-            </div>
-          </div>
+            </template>
+          </DiscussCardVue>
         </template>
       </InfiniteLoading>
     </nut-tabpane>
@@ -65,45 +58,20 @@
         @refresh="refresh"
       >
         <template #content>
-          <div class="container" v-for="i in dataList.suggestionList" :key="i.id">
-            <div class="notice">
-              <div class="notice-header">
-                <div class="notice-header__avatar">
-                  <img :src="i.applicantInfo.avatar" />
-                </div>
-                <div class="notice-header__info">
-                  <div class="notice-info__name">{{ i.applicantInfo.uname }}</div>
-                  <div class="notice-info__description">{{ i.applicantInfo.cname }}居民</div>
-                </div>
-              </div>
-              <div class="notice-content">
-                {{ i.content }}
-              </div>
-              <div class="notice-footer">
-                <div class="notice-footer__tag">
-                  <nut-icon name="check-checked"></nut-icon>
-                  <div class="notice-footer__tag-name">{{ i.type }}</div>
-                </div>
-                <div class="notice-footer__time">{{ transformDate(i.createdAt) }}</div>
-              </div>
-              <div class="reply" v-if="i.description">
-                <div class="notice-header">
-                  <div class="notice-header__avatar">
-                    <img :src="i.approverInfo.avatar" />
-                  </div>
-                  <div class="notice-header__info">
-                    <div class="notice-info__name">{{ i.approverInfo.realName }}</div>
-                    <div class="notice-info__description">{{ transformDate(i.approveTime) }}</div>
-                  </div>
-                </div>
-                <div class="reply-content">
-                  <div class="reply-content__text">
-                    {{ i.description }}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+          <DiscussCardVue
+            :avatar="i.applicantInfo.avatar"
+            :name="i.applicantInfo.uname"
+            :description="i.applicantInfo.cname"
+            :content="i.content"
+            :time="i.createdAt"
+            :type="i.type"
+            :replyAvat="i.approverInfo?.avatar"
+            :replyName="i.approverInfo?.realName"
+            :replyDesc="i?.approveTime"
+            :replyCont="i?.description"
+            v-for="i in dataList.suggestionList"
+            :key="i.id"
+          />
         </template>
       </InfiniteLoading>
     </nut-tabpane>
@@ -114,8 +82,8 @@
 import { TabList } from './data';
 import { onBeforeMount, reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
+import DiscussCardVue from '/@/components/DiscussCard.vue';
 import { getNoticeList } from '/@/api/index/information';
-import { transformDate } from '/@/hooks/useTransformData';
 import { getSuggestionList } from '/@/api/serve/suggestion';
 import { SuggestionItem } from '/@/api/serve/suggestion/model';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
@@ -157,82 +125,6 @@ const refresh = async (name, api, pageSize) => {
 }
 #infiniteLoading {
   height: v-bind(loadmoreHeight);
-}
-.notice {
-  padding: 16px 0;
-  border-bottom: 1px solid #f1f1f1;
-  .notice-header {
-    display: flex;
-    align-items: center;
-    .notice-header__avatar {
-      margin-right: 16px;
-      img {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-      }
-    }
-    .notice-header__info {
-      display: flex;
-      flex-direction: column;
-      font-size: 13px;
-      box-sizing: border-box;
-      justify-content: space-around;
-      .notice-info__name {
-        margin-bottom: 4px;
-        color: #1a1a1a;
-        font-weight: bolder;
-      }
-      .notice-info__description {
-        color: #666666;
-      }
-    }
-  }
-  .notice-content {
-    white-space: pre-line;
-    line-height: 24px;
-    margin-top: 16px;
-    font-size: 14px;
-  }
-  .notice-footer {
-    margin-top: 12px;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    .notice-footer__time {
-      color: #7c7c7c;
-      flex: 1;
-      text-align: end;
-    }
-    .notice-footer__tag {
-      display: flex;
-      align-items: center;
-      border: 1px solid #f1f1f1;
-      border-radius: 16px;
-      padding: 2px 8px 3px 6px;
-      .notice-footer__tag-name {
-        color: #7c7c7c;
-        margin-left: 4px;
-      }
-    }
-  }
-}
-.reply {
-  padding: 16px;
-  margin-top: 8px;
-  background-color: #f5f5f5;
-  .reply-header {
-    color: #666666;
-    font-size: 12px;
-  }
-  .reply-content {
-    margin-top: 12px;
-    font-size: 12px;
-    border: 1px solid #f1f1f1;
-    .reply-content__time {
-      text-align: right;
-    }
-  }
 }
 </style>
 
