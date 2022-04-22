@@ -3,8 +3,7 @@ import { BasicApplyItem, BasicTimeResult, BasicFetchResult } from '/@/api/model/
 export interface CreateVisitorParams {
   visitor: string;
   foreign: number;
-  comeFrom: string;
-  goTo: string;
+  come_from: string;
   startTime: string;
   endTime: string;
   healthCode: string[];
@@ -13,8 +12,7 @@ export interface CreateVisitorParams {
 export interface VisitorItem extends BasicApplyItem, BasicTimeResult {
   visitor: string;
   foreign: number;
-  comeFrom: string;
-  goTo: string;
+  come_from: string;
   healthCode: string;
 }
 
