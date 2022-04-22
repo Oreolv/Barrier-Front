@@ -29,7 +29,7 @@
           <div class="visitor" v-else v-for="i in DataList.visitor" :key="i.id">
             <div class="visitor-left">
               <div class="visitor-left__top">{{ i.visitor }}申请访问</div>
-              <div class="visitor-left__middle">{{ i.startTime }} - {{ i.endTime }}</div>
+              <div class="visitor-left__middle">{{ i.startTime }}至{{ i.endTime }}</div>
 
               <div class="visitor-left__bottom">
                 {{ transformDate(i.createdAt) }}
@@ -39,8 +39,11 @@
               <div class="visitor-right__avatar">
                 <img :src="i.approverInfo?.avatar || require('/@/assets/avatar.png')" alt="" />
               </div>
-              <div class="visitor-right__result">
-                {{ transformStatus(i.status) }}
+              <div
+                class="visitor-right__result"
+                :style="{ color: transformStatus(i.status).color }"
+              >
+                {{ transformStatus(i.status).text }}
               </div>
             </div>
           </div>
@@ -80,6 +83,7 @@ import { navigateTo } from '@tarojs/taro';
 import { TabList, ServeList, DataList } from './data';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { ApplyStatusEnum } from '/@/enums/serveEnums';
+import { ResultColor } from '/@/enums/colorEnum';
 import { transformDate } from '/@/hooks/useTransformData';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
@@ -98,14 +102,22 @@ const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');
 
 const transformStatus = (status) => {
+  let text, color;
   switch (status) {
     case ApplyStatusEnum.approval:
-      return '已通过';
+      text = '已通过';
+      color = ResultColor.SUCCESS;
+      break;
     case ApplyStatusEnum.reject:
-      return '已拒绝';
+      text = '已拒绝';
+      color = ResultColor.ERROR;
+      break;
     case ApplyStatusEnum.underReview:
-      return '待审批';
+      text = '待审批';
+      color = ResultColor.WARNING;
+      break;
   }
+  return { text, color };
 };
 
 const loadMore = (name, data) => {
@@ -157,7 +169,7 @@ setTimeout(async () => {
 .visitor {
   display: flex;
   padding: 16px;
-  margin: 12px 0;
+  margin: 12px 16px;
   border-radius: 8px;
   background-color: #f5f5f5;
   .visitor-left {
@@ -176,7 +188,10 @@ setTimeout(async () => {
     }
   }
   .visitor-right {
-    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     .visitor-right__avatar {
       img {
         width: 36px;
@@ -224,7 +239,7 @@ setTimeout(async () => {
 }
 
 .nut-tabpane {
+  padding: 0;
   height: v-bind(tabnineHeight);
-  padding: 0 16px;
 }
 </style>
