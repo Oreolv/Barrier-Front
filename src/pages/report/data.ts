@@ -1,4 +1,5 @@
 import { reactive } from 'vue';
+import { VisitorItem } from '/@/api/serve/visitor/model';
 
 export const TabList = reactive({
   tabValue: 'visitor',
@@ -71,3 +72,11 @@ export const ServeList = [
     icon: 'wenjian',
   },
 ];
+
+export interface DataListProps {
+  visitor: VisitorItem[];
+}
+
+export const DataList = reactive<DataListProps>({
+  visitor: [],
+});

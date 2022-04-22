@@ -15,7 +15,38 @@
         </nut-radiogroup>
       </scroll-view>
     </template>
-    <nut-tabpane pane-key="visitor">123</nut-tabpane>
+    <nut-tabpane pane-key="visitor">
+      <InfiniteLoading
+        name="visitor"
+        :pageSize="10"
+        :api="getVisitorList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <nut-empty description="无数据" v-if="!DataList.visitor.length"></nut-empty>
+
+          <div class="visitor" v-else v-for="i in DataList.visitor" :key="i.id">
+            <div class="visitor-left">
+              <div class="visitor-left__top">{{ i.visitor }}申请访问</div>
+              <div class="visitor-left__middle">{{ i.startTime }} - {{ i.endTime }}</div>
+
+              <div class="visitor-left__bottom">
+                {{ transformDate(i.createdAt) }}
+              </div>
+            </div>
+            <div class="visitor-right">
+              <div class="visitor-right__avatar">
+                <img :src="i.approverInfo?.avatar || require('/@/assets/avatar.png')" alt="" />
+              </div>
+              <div class="visitor-right__result">
+                {{ transformStatus(i.status) }}
+              </div>
+            </div>
+          </div>
+        </template>
+      </InfiniteLoading>
+    </nut-tabpane>
     <nut-tabpane pane-key="trip">123</nut-tabpane>
     <nut-tabpane pane-key="back">123</nut-tabpane>
     <nut-tabpane pane-key="abnormal">123</nut-tabpane>
@@ -44,9 +75,14 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { navigateTo } from '@tarojs/taro';
-import { TabList, ServeList } from './data';
+import { TabList, ServeList, DataList } from './data';
+import { getVisitorList } from '/@/api/serve/visitor';
+import { ApplyStatusEnum } from '/@/enums/serveEnums';
+import { transformDate } from '/@/hooks/useTransformData';
+import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
+import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 
 const state = reactive({
   showPushPop: false,
@@ -57,6 +93,35 @@ const create = (dir) => {
     url: `/pages/serve/children/${dir}/index`,
   });
 };
+
+const tabnineHeight = ref('80vh');
+const loadmoreHeight = ref('80vh');
+
+const transformStatus = (status) => {
+  switch (status) {
+    case ApplyStatusEnum.approval:
+      return '已通过';
+    case ApplyStatusEnum.reject:
+      return '已拒绝';
+    case ApplyStatusEnum.underReview:
+      return '待审批';
+  }
+};
+
+const loadMore = (name, data) => {
+  DataList[`${name}`].push(...data.rows);
+};
+
+const refresh = async (name, api, pageSize) => {
+  DataList[`${name}`].length = 0;
+  const data = await api({ page: 1, pageSize });
+  DataList[`${name}`].push(...data.rows);
+};
+
+setTimeout(async () => {
+  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
+  tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
+}, 1000);
 </script>
 
 <style lang="scss">
@@ -72,7 +137,6 @@ const create = (dir) => {
 }
 .push-popup {
   height: 100%;
-  padding: 16px;
   .pop-content {
     text {
       font-size: 36px;
@@ -87,6 +151,41 @@ const create = (dir) => {
       color: white;
       padding: 8px;
       border-radius: 50%;
+    }
+  }
+}
+.visitor {
+  display: flex;
+  padding: 16px;
+  margin: 12px 0;
+  border-radius: 8px;
+  background-color: #f5f5f5;
+  .visitor-left {
+    flex: 1;
+    .visitor-left__top {
+      font-weight: bolder;
+    }
+    .visitor-left__middle {
+      margin-top: 8px;
+      font-size: 14px;
+    }
+    .visitor-left__bottom {
+      margin-top: 8px;
+      font-size: 12px;
+      color: #7c7c7c;
+    }
+  }
+  .visitor-right {
+    text-align: center;
+    .visitor-right__avatar {
+      img {
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+      }
+    }
+    .visitor-right__result {
+      font-size: 12px;
     }
   }
 }
@@ -118,5 +217,14 @@ const create = (dir) => {
 .nut-popup {
   padding: 24px 16px 16px 16px;
   box-sizing: border-box;
+}
+
+#infiniteLoading {
+  height: v-bind(loadmoreHeight);
+}
+
+.nut-tabpane {
+  height: v-bind(tabnineHeight);
+  padding: 0 16px;
 }
 </style>
