@@ -62,3 +62,10 @@ const refresh = (done) => {
   done();
 };
 </script>
+
+<style>
+.nut-infinite-bottom {
+  padding-top: 0 !important;
+  padding-bottom: 16px;
+}
+</style>
