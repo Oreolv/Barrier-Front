@@ -108,7 +108,6 @@
 
 <script lang="ts" setup>
 import { useDidShow } from '@tarojs/taro';
-import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 import { getTipsList, getNewsList } from '/@/api/index/information';
 import { getCovidData } from '/@/api/index/covid';
 import Card from '../../components/Card.vue';
@@ -120,6 +119,7 @@ import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import { GetCovidDataResultModel } from '/@/api/index/model/covidModel';
 import { NewsItem } from '/@/api/index/model/informationModel';
+import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 import { navigateTo } from '@tarojs/taro';
 
 const dataList = reactive({
