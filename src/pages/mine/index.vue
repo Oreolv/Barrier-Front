@@ -152,10 +152,8 @@ const showBindingModal = () => {
 }
 .user-setting {
   padding: 24px 8px 16px 8px;
-  .nut-cell__title {
-    .iconfont {
-      margin-right: 8px;
-    }
+  .nut-cell__icon {
+    margin-right: 8px;
     color: black;
   }
   .nutui-iconfont {
