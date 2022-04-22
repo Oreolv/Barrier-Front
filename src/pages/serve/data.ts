@@ -1,41 +1,35 @@
-export const ServeList = {
-  normal: [
+import { reactive } from 'vue';
+
+export const TabList = reactive({
+  tabValue: 'visitor',
+  list: [
     {
-      key: 'visitor',
-      name: '来访申请',
-      icon: 'tongxunlu',
+      title: '来访申请',
+      paneKey: 'visitor',
     },
     {
-      key: 'trip',
-      name: '行程报备',
-      icon: 'ziyuangongxiang',
+      title: '行程报备',
+      paneKey: 'trip',
     },
     {
-      key: 'back',
-      name: '返乡报备',
-      icon: 'laifangshenpi',
+      title: '返乡报备',
+      paneKey: 'back',
     },
     {
-      key: 'abnormal',
-      name: '异常报备',
-      icon: 'tongzhi',
-    },
-  ],
-  urgent: [
-    {
-      key: 'health',
-      name: '健康上报',
-      icon: 'renzheng',
+      title: '异常报备',
+      paneKey: 'abnormal',
     },
     {
-      key: 'material',
-      name: '物资申请',
-      icon: 'che',
+      title: '健康上报',
+      paneKey: 'health',
     },
     {
-      key: 'agency',
-      name: '事情代办',
-      icon: 'wenjian',
+      title: '物资申请',
+      paneKey: 'material',
+    },
+    {
+      title: '事情代办',
+      paneKey: 'agency',
     },
   ],
-};
+});

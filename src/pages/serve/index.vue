@@ -1,77 +1,48 @@
 <template>
-  <div class="top-img">
-    <img src="https://img.xinyu.ink//serve-background1.png" mode="widthFix" />
-  </div>
-  <div class="serve">
-    <div class="serve-header">日常防疫</div>
-    <div class="serve-content">
-      <nut-grid :column-num="4" :border="false" clickable>
-        <nut-grid-item
-          v-for="(item, index) in ServeList.normal"
-          :key="index"
-          :text="item.name"
-          @click="navigate(item.key)"
-        >
-          <template #icon>
-            <nut-icon font-class-name="iconfont" class-prefix="icon" :name="item.icon" />
-          </template>
-        </nut-grid-item>
-      </nut-grid>
-    </div>
-  </div>
-  <div class="serve">
-    <div class="serve-header">紧急防疫</div>
-    <div class="serve-content">
-      <nut-grid :column-num="4" :border="false" clickable>
-        <nut-grid-item
-          v-for="(item, index) in ServeList.urgent"
-          :key="index"
-          :text="item.name"
-          @click="navigate(item.key)"
-        >
-          <template #icon>
-            <nut-icon font-class-name="iconfont" class-prefix="icon" :name="item.icon" />
-          </template>
-        </nut-grid-item>
-      </nut-grid>
-    </div>
-  </div>
+  <nut-tabs v-model="TabList.tabValue" background="#FFF" title-gutter="15">
+    <template v-slot:titles>
+      <scroll-view :scroll-x="true" class="scroll-view_H">
+        <nut-radiogroup v-model="TabList.tabValue" direction="horizontal">
+          <nut-radio
+            shape="button"
+            v-for="i in TabList.list"
+            :key="i.paneKey"
+            :label="i.paneKey"
+            @click="TabList.tabValue = i.paneKey"
+          >
+            {{ i.title }}
+          </nut-radio>
+        </nut-radiogroup>
+      </scroll-view>
+    </template>
+    <nut-tabpane pane-key="visitor">123</nut-tabpane>
+    <nut-tabpane pane-key="trip">123</nut-tabpane>
+    <nut-tabpane pane-key="back">123</nut-tabpane>
+    <nut-tabpane pane-key="abnormal">123</nut-tabpane>
+    <nut-tabpane pane-key="health">123</nut-tabpane>
+    <nut-tabpane pane-key="material">123</nut-tabpane>
+    <nut-tabpane pane-key="agency">123</nut-tabpane>
+  </nut-tabs>
 </template>
 
-<script setup>
-import { ServeList } from './data';
-import { navigateTo } from '@tarojs/taro';
-const navigate = (dir) => {
-  navigateTo({
-    url: `/pages/serve/children/${dir}/index`,
-    events: {},
-  });
-};
+<script lang="ts" setup>
+import { TabList } from './data';
 </script>
 
+<style lang="scss"></style>
 <style lang="scss">
-page {
-  box-sizing: border-box;
-  padding: 16px;
+.nut-radio__button--active {
+  background-color: #1a1a1a;
+  border: none;
+  color: white;
 }
-.top-img {
-  margin-bottom: 16px;
-  img {
-    width: 100%;
-    border-radius: 8px;
-    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  }
+
+.nut-radio__button {
+  // border-radius: 0;
+  font-size: 13px;
+  padding: 12rpx 24px;
 }
-.serve {
-  .serve-header {
-    font-weight: bold;
-    font-size: 18px;
-  }
-  .serve-content {
-    padding: 16px 0;
-  }
-}
-.iconfont {
-  font-size: 30px;
+.scroll-view_H {
+  white-space: nowrap;
 }
 </style>
