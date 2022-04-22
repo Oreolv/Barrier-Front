@@ -1,7 +1,7 @@
 <template>
   <nut-tabs v-model="TabList.tabValue" background="#FFF" title-gutter="15">
-    <template v-slot:titles>
-      <scroll-view :scroll-x="true" class="scroll-view_H">
+    <template #titles>
+      <scroll-view :scroll-x="true" style="white-space: nowrap">
         <nut-radiogroup v-model="TabList.tabValue" direction="horizontal">
           <nut-radio
             shape="button"
@@ -57,30 +57,15 @@
     <nut-tabpane pane-key="material">123</nut-tabpane>
     <nut-tabpane pane-key="agency">123</nut-tabpane>
   </nut-tabs>
-  <div class="push-button" @click="state.showPushPop = true">
+  <div class="push-button" @click="create(TabList.tabValue)">
     <nut-icon font-class-name="iconfont" class-prefix="icon" name="zengjia" />
   </div>
-  <nut-popup position="bottom" round class="push-popup" v-model:visible="state.showPushPop">
-    <div class="pop-header"></div>
-    <div class="pop-content">
-      <nut-grid :border="false" clickable>
-        <nut-grid-item v-for="i in ServeList" :key="i.key" :text="i.name" @click="create(i.key)">
-          <template #icon>
-            <nut-icon font-class-name="iconfont" class-prefix="icon" :name="i.icon" />
-          </template>
-        </nut-grid-item>
-      </nut-grid>
-    </div>
-    <div class="pop-footer" @click="state.showPushPop = false">
-      <nut-icon name="close-little"></nut-icon>
-    </div>
-  </nut-popup>
 </template>
 
 <script lang="ts" setup>
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { navigateTo } from '@tarojs/taro';
-import { TabList, ServeList, DataList } from './data';
+import { TabList, DataList } from './data';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { ApplyStatusEnum } from '/@/enums/serveEnums';
 import { ResultColor } from '/@/enums/colorEnum';
@@ -88,13 +73,9 @@ import { transformDate } from '/@/hooks/useTransformData';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 
-const state = reactive({
-  showPushPop: false,
-});
-
 const create = (dir) => {
   navigateTo({
-    url: `/pages/serve/children/${dir}/index`,
+    url: `/pages/report/children/${dir}/index`,
   });
 };
 
@@ -217,21 +198,6 @@ setTimeout(async () => {
   // border-radius: 0;
   font-size: 13px;
   padding: 8px 16px;
-}
-
-.scroll-view_H {
-  white-space: nowrap;
-}
-
-.nutui-popup__close-icon {
-  position: relative !important;
-  left: 50%;
-  bottom: 0;
-}
-
-.nut-popup {
-  padding: 24px 16px 16px 16px;
-  box-sizing: border-box;
 }
 
 #infiniteLoading {
