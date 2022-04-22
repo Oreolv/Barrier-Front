@@ -200,6 +200,10 @@ setTimeout(async () => {
   padding: 8px 16px;
 }
 
+.nut-radio .nut-radiogroup {
+  margin-bottom: 0;
+}
+
 #infiniteLoading {
   height: v-bind(loadmoreHeight);
 }
@@ -207,5 +211,10 @@ setTimeout(async () => {
 .nut-tabpane {
   padding: 0;
   height: v-bind(tabnineHeight);
+}
+
+.nut-tabs__titles {
+  height: auto;
+  padding: 10px 10px 0 10px;
 }
 </style>
