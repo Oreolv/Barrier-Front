@@ -1,5 +1,5 @@
 export default defineAppConfig({
-  pages: ['pages/home/index', 'pages/serve/index', 'pages/discover/index', 'pages/mine/index'],
+  pages: ['pages/home/index', 'pages/report/index', 'pages/discover/index', 'pages/mine/index'],
   subpackages: [
     {
       root: 'pages/mine/children',
@@ -12,25 +12,6 @@ export default defineAppConfig({
     {
       root: 'pages/discover/children',
       pages: ['suggestion/index'],
-    },
-    {
-      root: 'pages/serve/children',
-      pages: [
-        'visitor/index',
-        'visitor/create/index',
-        'trip/index',
-        'trip/create/index',
-        'back/index',
-        'back/create/index',
-        'abnormal/index',
-        'abnormal/create/index',
-        'health/index',
-        'health/create/index',
-        'material/index',
-        'material/create/index',
-        'agency/index',
-        'agency/create/index',
-      ],
     },
   ],
   window: {
@@ -59,10 +40,10 @@ export default defineAppConfig({
         selectedIconPath: './assets/icons/discover-active.png',
       },
       {
-        pagePath: 'pages/serve/index',
-        text: '服务',
-        iconPath: './assets/icons/serve.png',
-        selectedIconPath: './assets/icons/serve-active.png',
+        pagePath: 'pages/report/index',
+        text: '报备',
+        iconPath: './assets/icons/report.png',
+        selectedIconPath: './assets/icons/report-active.png',
       },
       {
         pagePath: 'pages/mine/index',
