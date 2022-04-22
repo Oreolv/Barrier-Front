@@ -76,11 +76,15 @@
       </InfiniteLoading>
     </nut-tabpane>
   </nut-tabs>
+  <div class="push-button" v-show="TabList.tabValue === '1'" @click="createSuggestion">
+    <nut-icon font-class-name="iconfont" class-prefix="icon" name="zengjia" />
+  </div>
 </template>
 
 <script lang="ts" setup>
 import { TabList } from './data';
 import { reactive, ref } from 'vue';
+import { navigateTo } from '@tarojs/taro';
 import SearchBar from '/@/components/SearchBar.vue';
 import DiscussCardVue from '/@/components/DiscussCard.vue';
 import { getNoticeList } from '/@/api/index/information';
@@ -112,6 +116,12 @@ const refresh = async (name, api, pageSize) => {
   const data = await api({ page: 1, pageSize });
   dataList[`${name}List`].length = 0;
   dataList[`${name}List`].push(...data.rows);
+};
+
+const createSuggestion = () => {
+  navigateTo({
+    url: '/pages/discover/children/suggestion/index',
+  });
 };
 </script>
 
@@ -163,5 +173,16 @@ const refresh = async (name, api, pageSize) => {
 
 .container:first-child {
   padding-top: 0;
+}
+
+.push-button {
+  position: fixed;
+  bottom: 48px;
+  right: 32px;
+  text {
+    font-size: 36px;
+    opacity: 0.7;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  }
 }
 </style>

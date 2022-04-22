@@ -10,6 +10,10 @@ export default defineAppConfig({
       pages: ['risk/index', 'news/index'],
     },
     {
+      root: 'pages/discover/children',
+      pages: ['suggestion/index'],
+    },
+    {
       root: 'pages/serve/children',
       pages: [
         'visitor/index',
@@ -20,7 +24,6 @@ export default defineAppConfig({
         'back/create/index',
         'abnormal/index',
         'abnormal/create/index',
-        'suggestion/create/index',
         'health/index',
         'health/create/index',
         'material/index',
