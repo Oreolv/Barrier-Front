@@ -102,13 +102,13 @@ const transformStatus = (status) => {
 };
 
 const loadMore = (name, data) => {
-  DataList[`${name}`].push(...data.rows);
+  DataList[name].push(...data.rows);
 };
 
 const refresh = async (name, api, pageSize) => {
-  DataList[`${name}`].length = 0;
+  DataList[name].length = 0;
   const data = await api({ page: 1, pageSize });
-  DataList[`${name}`].push(...data.rows);
+  DataList[name].push(...data.rows);
 };
 
 setTimeout(async () => {

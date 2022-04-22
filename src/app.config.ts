@@ -13,6 +13,10 @@ export default defineAppConfig({
       root: 'pages/discover/children',
       pages: ['suggestion/index'],
     },
+    {
+      root: 'pages/report/children',
+      pages: ['visitor/index'],
+    },
   ],
   window: {
     backgroundTextStyle: 'light',
