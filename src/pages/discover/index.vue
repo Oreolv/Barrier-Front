@@ -80,7 +80,7 @@
 
 <script lang="ts" setup>
 import { TabList } from './data';
-import { onBeforeMount, reactive, ref } from 'vue';
+import { reactive, ref } from 'vue';
 import SearchBar from '/@/components/SearchBar.vue';
 import DiscussCardVue from '/@/components/DiscussCard.vue';
 import { getNoticeList } from '/@/api/index/information';
@@ -99,11 +99,10 @@ const tabsTop = getNavBarHeigtht();
 const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');
 
-onBeforeMount(async () => {
-  // FIX: getNodePositionInfo无法获取到值
+setTimeout(async () => {
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
-});
+}, 1000);
 
 const loadMore = (name, data) => {
   dataList[`${name}List`].push(...data.rows);
