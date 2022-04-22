@@ -8,7 +8,7 @@
       @load-more="loadMore"
       @refresh="refresh"
       pull-txt=""
-      load-more-txt="没有更多数据了"
+      load-more-txt="已经到底啦"
       pull-icon="loading"
       load-icon="loading"
     >
