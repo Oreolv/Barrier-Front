@@ -1,4 +1,4 @@
-import { BasicApplyItem } from '/@/api/model/baseModel';
+import { BasicApplyItem, BasicFetchResult, BasicTimeResult } from '/@/api/model/baseModel';
 
 export interface CreateTripParams {
   destination: string;
@@ -9,11 +9,11 @@ export interface CreateTripParams {
   vehicleSeat: string;
 }
 
-export interface TripItem extends BasicApplyItem {
+export interface TripItem extends BasicApplyItem, BasicTimeResult {
   destination: string;
   vehicle: string;
   vehicleNo: string;
   vehicleSeat: string;
 }
 
-export type GetTripListResultModel = TripItem[];
+export type GetTripListResultModel = BasicFetchResult<TripItem>;
