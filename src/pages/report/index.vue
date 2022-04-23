@@ -84,7 +84,29 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="abnormal">123</nut-tabpane>
+    <nut-tabpane pane-key="abnormal">
+      <InfiniteLoading
+        name="abnormal"
+        :pageSize="10"
+        :api="getAbnormalList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <nut-empty description="无数据" v-if="!DataList.abnormal.length"></nut-empty>
+          <ReportCardVue
+            v-else
+            v-for="i in DataList.abnormal"
+            :key="i.id"
+            :status="i.status"
+            :title="i.type"
+            :description="i.content"
+            :avatar="i.approverInfo?.avatar"
+            :createdAt="i.createdAt"
+          ></ReportCardVue>
+        </template>
+      </InfiniteLoading>
+    </nut-tabpane>
     <nut-tabpane pane-key="health">123</nut-tabpane>
     <nut-tabpane pane-key="material">123</nut-tabpane>
     <nut-tabpane pane-key="agency">123</nut-tabpane>
@@ -101,6 +123,7 @@ import { TabList, DataList } from './data';
 import { getTripList } from '/@/api/serve/trip';
 import { getBackList } from '/@/api/serve/back';
 import { getVisitorList } from '/@/api/serve/visitor';
+import { getAbnormalList } from '/@/api/serve/abnormal';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 import ReportCardVue from '/@/components/ReportCard.vue';

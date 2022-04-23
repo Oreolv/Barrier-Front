@@ -1,6 +1,7 @@
 import { defHttp } from '/@/utils/axios';
 import { CreateAbnormalParams, GetAbnormalListResultModel } from './model';
 import { BasicPageParams } from '/@/api/model/baseModel';
+
 enum Api {
   CreateAbnormal = '/abnormal/createAbnormal',
   GetAbnormalList = '/abnormal/getAbnormalList',

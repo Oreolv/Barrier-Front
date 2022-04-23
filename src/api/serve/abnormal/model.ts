@@ -5,9 +5,7 @@ export interface CreateAbnormalParams {
   content: string;
 }
 
-export interface AbnormalItem
-  extends Omit<BasicApplyItem, 'start_time | end_time'>,
-    BasicTimeResult {
+export interface AbnormalItem extends BasicApplyItem, BasicTimeResult {
   type: string;
   content: string;
 }
