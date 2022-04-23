@@ -11,3 +11,9 @@ export enum VehicleEnum {
   CHSR = 3,
   PLANE = 4,
 }
+
+export enum TemperatureEnum {
+  '36~37.2℃',
+  '37.3~37.9℃',
+  '38℃及以上',
+}
