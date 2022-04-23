@@ -2,11 +2,11 @@ import { reactive } from 'vue';
 import { CreateHealthParams } from '/@/api/serve/health/model';
 
 export const formValues = reactive<CreateHealthParams>({
-  temperature: '',
+  temperature: NaN,
   diagnosis: NaN,
   contact: NaN,
   symptom: NaN,
-  hospital: '',
+  hospital: NaN,
 });
 
 export const formSchema = {

@@ -17,3 +17,9 @@ export enum TemperatureEnum {
   '37.3~37.9℃',
   '38℃及以上',
 }
+
+export enum HospitalEnum {
+  '无',
+  '就诊',
+  '住院',
+}

@@ -5,9 +5,9 @@
       <div class="health-item__form">
         <scroll-view :scroll-x="true" style="white-space: nowrap">
           <nut-radiogroup direction="horizontal" v-model="formValues.temperature">
-            <nut-radio shape="button" label="36~37.2℃">36~37.2℃</nut-radio>
-            <nut-radio shape="button" label="37.3~37.9℃">37.3~37.9℃</nut-radio>
-            <nut-radio shape="button" label="38℃及以上">38℃及以上</nut-radio>
+            <nut-radio shape="button" :label="0">{{ TemperatureEnum[0] }}</nut-radio>
+            <nut-radio shape="button" :label="1">{{ TemperatureEnum[1] }}</nut-radio>
+            <nut-radio shape="button" :label="2">{{ TemperatureEnum[2] }}</nut-radio>
           </nut-radiogroup>
         </scroll-view>
       </div>
@@ -43,9 +43,9 @@
       <div class="health-item__title">{{ formSchema.hospital }}</div>
       <div class="health-item__form">
         <nut-radiogroup direction="horizontal" v-model="formValues.hospital">
-          <nut-radio shape="button" label="无">无</nut-radio>
-          <nut-radio shape="button" label="就诊">就诊</nut-radio>
-          <nut-radio shape="button" label="住院">住院</nut-radio>
+          <nut-radio shape="button" :label="0">{{ HospitalEnum[0] }}</nut-radio>
+          <nut-radio shape="button" :label="1">{{ HospitalEnum[1] }}</nut-radio>
+          <nut-radio shape="button" :label="2">{{ HospitalEnum[2] }}</nut-radio>
         </nut-radiogroup>
       </div>
     </div>
@@ -65,6 +65,7 @@ import { useUserStore } from '/@/store/users';
 import { formValues, formSchema } from './data';
 import { createHealth } from '/@/api/serve/health';
 import { validate } from '/@/hooks/useHandleFormValues';
+import { TemperatureEnum, HospitalEnum } from '/@/enums/serveEnums';
 
 const userStore = useUserStore();
 

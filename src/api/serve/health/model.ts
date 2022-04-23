@@ -1,19 +1,19 @@
 import { BasicApplyItem, BasicTimeResult, BasicFetchResult } from '/@/api/model/baseModel';
 
 export interface CreateHealthParams {
-  temperature: string;
+  temperature: number;
   diagnosis: number;
   contact: number;
   symptom: number;
-  hospital: string;
+  hospital: number;
 }
 
 export interface HealthItem extends BasicApplyItem, BasicTimeResult {
-  temperature: string;
+  temperature: number;
   diagnosis: number;
   contact: number;
   symptom: number;
-  hospital: string;
+  hospital: number;
 }
 
 export type GetHealthListResultModel = BasicFetchResult<HealthItem>;
