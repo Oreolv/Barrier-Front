@@ -1,9 +1,10 @@
 import { reactive, ref } from 'vue';
+import { VehicleEnum } from '/@/enums/serveEnums';
 import { CreateTripParams } from '/@/api/serve/trip/model';
 
 export const formValues = reactive<CreateTripParams>({
   destination: '',
-  vehicle: '',
+  vehicle: VehicleEnum.BUS,
   vehicleNo: '',
   vehicleSeat: '',
   startTime: '',
@@ -19,9 +20,9 @@ export const formSchema = {
 };
 
 export const vehicleColumns = ref<Array<{ text: string; value: number }>>([
-  { text: '驾车', value: 0 },
-  { text: '大巴', value: 1 },
-  { text: '火车', value: 2 },
-  { text: '高铁', value: 3 },
-  { text: '飞机', value: 4 },
+  { text: '驾车', value: VehicleEnum.CAR },
+  { text: '大巴', value: VehicleEnum.BUS },
+  { text: '火车', value: VehicleEnum.TRAIN },
+  { text: '高铁', value: VehicleEnum.CHSR },
+  { text: '飞机', value: VehicleEnum.PLANE },
 ]);
