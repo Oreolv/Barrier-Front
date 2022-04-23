@@ -1,14 +1,14 @@
-import { BasicApplyItem } from '/@/api/model/baseModel';
+import { BasicApplyItem, BasicTimeResult } from '/@/api/model/baseModel';
 
 export interface CreateBackParams {
   riskStatus: number;
-  comeFrom: string;
+  come_from: string;
   endTime: string;
   healthCode: string[];
 }
 
-export interface BackItem extends BasicApplyItem {
-  comeFrom: string;
+export interface BackItem extends BasicApplyItem, BasicTimeResult {
+  come_from: string;
   riskStatus: number;
   vehicle: string;
   vehicleNo: string;
