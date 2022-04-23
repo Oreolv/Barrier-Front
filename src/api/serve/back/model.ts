@@ -3,21 +3,21 @@ import { VehicleEnum } from '/@/enums/serveEnums';
 
 export interface CreateBackParams {
   vehicle: VehicleEnum;
-  vehicleNo: string;
-  vehicleSeat: string;
-  riskStatus: number;
+  vehicle_no: string;
+  vehicle_seat: string;
+  risk_status: number;
   come_from: string;
-  endTime: string;
-  healthCode: string[];
+  end_time: string;
+  health_code: string[];
 }
 
 export interface BackItem extends BasicApplyItem, BasicTimeResult {
   come_from: string;
-  riskStatus: number;
+  risk_status: number;
   vehicle: string;
-  vehicleNo: string;
-  vehicleSeat: string;
-  healthCode: string[];
+  vehicle_no: string;
+  vehicle_seat: string;
+  health_code: string[];
 }
 
 export type GetBackListResultModel = BackItem[];

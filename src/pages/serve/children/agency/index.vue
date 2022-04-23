@@ -34,8 +34,8 @@
                 <img :src="i.approverInfo.avatar" />
               </div>
               <div class="agency-header__info">
-                <div class="agency-info__name">{{ i.approverInfo.realName }}</div>
-                <div class="agency-info__description">{{ transformDate(i.approveTime) }}</div>
+                <div class="agency-info__name">{{ i.approverInfo.real_name }}</div>
+                <div class="agency-info__description">{{ transformDate(i.approve_time) }}</div>
               </div>
             </div>
             <div class="reply-content">

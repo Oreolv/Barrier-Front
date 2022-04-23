@@ -8,7 +8,7 @@ export interface CreateHealthParams {
   hospital: string;
 }
 
-export interface HealthItem extends Omit<BasicApplyItem, 'starTime | endTime'>, BasicTimeResult {
+export interface HealthItem extends Omit<BasicApplyItem, 'start_time | end_time'>, BasicTimeResult {
   temperature: string;
   diagnosis: number;
   contact: number;

@@ -23,7 +23,7 @@ export interface ResidentInfo {
 
 export interface UserInfo {
   username: string;
-  realName: string;
+  real_name: string;
   avatar: string;
 }
 
@@ -32,10 +32,10 @@ export interface BasicApplyItem {
   applicant: number;
   applicantInfo: ResidentInfo;
   approver: number;
-  approveTime: string;
+  approve_time: string;
   approverInfo: UserInfo;
   status: number;
   description: string;
-  startTime: string;
-  endTime: string;
+  start_time: string;
+  end_time: string;
 }

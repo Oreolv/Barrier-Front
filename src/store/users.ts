@@ -54,7 +54,7 @@ export const useUserStore = defineStore('users', {
     },
     checkUserInfoBinding(): boolean {
       // eslint-disable-next-line eqeqeq
-      return !this.getUserLoginStatus || Boolean(this.getUserInfo.accessStatus != null) || false;
+      return !this.getUserLoginStatus || Boolean(this.getUserInfo.access_status != null) || false;
     },
   },
   actions: {
@@ -76,45 +76,45 @@ export const useUserStore = defineStore('users', {
       setLocalCache(USER_PROFILE_KEY, info);
     },
     getUserStatusAction(userInfo: UserInfo) {
-      const healthStatus = {
-        key: 'healthStatus',
+      const health_status = {
+        key: 'health_status',
         title: '风险等级',
         data: '',
         color: '',
       };
-      switch (userInfo.healthStatus) {
+      switch (userInfo.health_status) {
         case UserHealthEnum.Low:
-          healthStatus.data = '低';
-          healthStatus.color = ResultColor.SUCCESS;
+          health_status.data = '低';
+          health_status.color = ResultColor.SUCCESS;
           break;
         case UserHealthEnum.Middle:
-          healthStatus.data = '中';
-          healthStatus.color = ResultColor.WARNING;
+          health_status.data = '中';
+          health_status.color = ResultColor.WARNING;
           break;
         case UserHealthEnum.High:
-          healthStatus.data = '高';
-          healthStatus.color = ResultColor.ERROR;
+          health_status.data = '高';
+          health_status.color = ResultColor.ERROR;
           break;
         default:
-          healthStatus.data = '高';
-          healthStatus.color = ResultColor.ERROR;
+          health_status.data = '高';
+          health_status.color = ResultColor.ERROR;
           break;
       }
-      const isolationStatus = {
-        key: 'isolationStatus',
+      const isolation_status = {
+        key: 'isolation_status',
         title: '隔离状态',
-        data: userInfo.isolationStatus === UserStatusEnum.No ? '否' : '是',
+        data: userInfo.isolation_status === UserStatusEnum.No ? '否' : '是',
         color:
-          userInfo.isolationStatus === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
+          userInfo.isolation_status === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
       };
-      const accessStatus = {
-        key: 'accessStatus',
+      const access_status = {
+        key: 'access_status',
         title: '限制出入',
-        data: userInfo.accessStatus === UserStatusEnum.No ? '否' : '是',
+        data: userInfo.access_status === UserStatusEnum.No ? '否' : '是',
         color:
-          userInfo.accessStatus === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
+          userInfo.access_status === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
       };
-      return [healthStatus, isolationStatus, accessStatus];
+      return [health_status, isolation_status, access_status];
     },
     async loginAction() {
       showLoading.loading('正在登陆');

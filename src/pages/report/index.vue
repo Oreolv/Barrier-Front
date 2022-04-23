@@ -31,7 +31,7 @@
             :key="i.id"
             :status="i.status"
             :title="`${i.visitor}申请访问`"
-            :description="`${i.startTime}至${i.endTime}`"
+            :description="`${i.start_time}至${i.end_time}`"
             :avatar="i.approverInfo?.avatar"
             :createdAt="i.createdAt"
           ></ReportCardVue>
@@ -54,7 +54,7 @@
             :key="i.id"
             :status="i.status"
             :title="`前往${i.destination}报备`"
-            :description="`${i.startTime}至${i.endTime}`"
+            :description="`${i.start_time}至${i.end_time}`"
             :avatar="i.approverInfo?.avatar"
             :createdAt="i.createdAt"
           ></ReportCardVue>
@@ -77,7 +77,7 @@
             :key="i.id"
             :status="i.status"
             :title="`自${i.come_from}返乡`"
-            :description="`${i.endTime}到达`"
+            :description="`${i.end_time}到达`"
             :avatar="i.approverInfo?.avatar"
             :createdAt="i.createdAt"
           ></ReportCardVue>

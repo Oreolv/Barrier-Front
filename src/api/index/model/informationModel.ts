@@ -19,15 +19,15 @@ export interface NewsItem extends BasicTimeResult {
 
 export interface PublisherInfo {
   username: string;
-  realName: string;
+  real_name: string;
   avatar: string;
   roles: Roles;
 }
 
 export interface Roles {
   id: number;
-  roleValue: string;
-  roleName: string;
+  role_value: string;
+  role_name: string;
 }
 
 export interface NoticeItem extends BasicTimeResult {

@@ -32,11 +32,11 @@
         <template #content>
           <div class="apply-content__item">
             <div class="apply-content__item-name">出发地区</div>
-            <div class="apply-content__item-content">{{ item.comeFrom }}</div>
+            <div class="apply-content__item-content">{{ item.come_from }}</div>
           </div>
           <div class="apply-content__item">
             <div class="apply-content__item-name">到达时间</div>
-            <div class="apply-content__item-content">{{ item.endTime }}</div>
+            <div class="apply-content__item-content">{{ item.end_time }}</div>
           </div>
           <div class="apply-content__item" v-if="item.status === ApplyStatusEnum.reject">
             <div class="apply-content__item-name">拒绝理由</div>
@@ -57,11 +57,11 @@
         <template #content>
           <div class="apply-content__item">
             <div class="apply-content__item-name">出发地区</div>
-            <div class="apply-content__item-content">{{ item.comeFrom }}</div>
+            <div class="apply-content__item-content">{{ item.come_from }}</div>
           </div>
           <div class="apply-content__item">
             <div class="apply-content__item-name">到达时间</div>
-            <div class="apply-content__item-content">{{ item.endTime }}</div>
+            <div class="apply-content__item-content">{{ item.end_time }}</div>
           </div>
           <div class="apply-content__item" v-if="item.status === ApplyStatusEnum.reject">
             <div class="apply-content__item-name">拒绝理由</div>
@@ -98,8 +98,8 @@ const createApply = () => {
 onBeforeMount(async () => {
   const data = await getBackList();
   const currentTime = new Date().getTime();
-  state.currentList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) > currentTime);
-  state.historyList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) <= currentTime);
+  state.currentList = data.filter((i) => Date.parse(i.end_time.replace(/-/g, '/')) > currentTime);
+  state.historyList = data.filter((i) => Date.parse(i.end_time.replace(/-/g, '/')) <= currentTime);
 
   tabnineHeight.value = `calc(100vh - ${
     (await getNodePositionInfo('.nut-tabs__titles')).height

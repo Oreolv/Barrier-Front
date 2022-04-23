@@ -34,8 +34,8 @@
                 <img :src="i.approverInfo.avatar" />
               </div>
               <div class="suggest-header__info">
-                <div class="suggest-info__name">{{ i.approverInfo.realName }}</div>
-                <div class="suggest-info__description">{{ transformDate(i.approveTime) }}</div>
+                <div class="suggest-info__name">{{ i.approverInfo.real_name }}</div>
+                <div class="suggest-info__description">{{ transformDate(i.approve_time) }}</div>
               </div>
             </div>
             <div class="reply-content">

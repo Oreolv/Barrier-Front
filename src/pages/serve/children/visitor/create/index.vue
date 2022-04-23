@@ -8,11 +8,11 @@
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.startTime">
+    <nut-form-item :label="formSchema.start_time">
       <input
         v-model="rangeDate"
         class="nut-input-text"
-        :placeholder="`请选择${formSchema.startTime}`"
+        :placeholder="`请选择${formSchema.start_time}`"
         :disabled="true"
         @click="state.showCalendar = true"
       />
@@ -23,11 +23,11 @@
         <nut-radio :label="1">是</nut-radio>
       </nut-radiogroup>
     </nut-form-item>
-    <nut-form-item :label="formSchema.comeFrom">
+    <nut-form-item :label="formSchema.come_from">
       <input
-        v-model="formValues.comeFrom"
+        v-model="formValues.come_from"
         class="nut-input-text"
-        :placeholder="`请输入访客${formSchema.comeFrom}`"
+        :placeholder="`请输入访客${formSchema.come_from}`"
         type="text"
       />
     </nut-form-item>
@@ -39,7 +39,7 @@
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.healthCode">
+    <nut-form-item :label="formSchema.health_code">
       <nut-uploader
         :headers="state.uploadConfig.headers"
         :url="state.uploadConfig.url"
@@ -86,15 +86,15 @@ const state = reactive({
 });
 
 const rangeDate = computed(() => {
-  if (!formValues.startTime) {
+  if (!formValues.start_time) {
     return '请选择行程持续时间';
   }
-  return `${formValues.startTime}至${formValues.endTime}`;
+  return `${formValues.start_time}至${formValues.end_time}`;
 });
 
 const setChooseValue = (param) => {
-  formValues.startTime = param[0][3];
-  formValues.endTime = param[1][3];
+  formValues.start_time = param[0][3];
+  formValues.end_time = param[1][3];
 };
 
 const SuccessCallback = (res) => {
@@ -103,7 +103,7 @@ const SuccessCallback = (res) => {
     ShowToast.error('上传失败');
     return;
   }
-  formValues.healthCode.push(data.result);
+  formValues.health_code.push(data.result);
 };
 
 const ErrorCallback = () => {

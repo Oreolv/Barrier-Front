@@ -6,7 +6,7 @@ export interface CreateSuggestionParams {
 }
 
 export interface SuggestionItem
-  extends Omit<BasicApplyItem, 'startTime | endTime'>,
+  extends Omit<BasicApplyItem, 'start_time | end_time'>,
     BasicTimeResult {
   type: string;
   content: string;

@@ -24,8 +24,8 @@
         <template #content>
           <DiscussCardVue
             :avatar="i.publisherInfo.avatar"
-            :name="i.publisherInfo.realName"
-            :description="i.publisherInfo.roles.roleName"
+            :name="i.publisherInfo.real_name"
+            :description="i.publisherInfo.roles.role_name"
             :content="i.content"
             :time="i.createdAt"
             v-for="i in dataList.noticeList"
@@ -66,8 +66,8 @@
             :time="i.createdAt"
             :type="i.type"
             :replyAvat="i.approverInfo?.avatar"
-            :replyName="i.approverInfo?.realName"
-            :replyDesc="i?.approveTime"
+            :replyName="i.approverInfo?.real_name"
+            :replyDesc="i?.approve_time"
             :replyCont="i?.description"
             v-for="i in dataList.suggestionList"
             :key="i.id"

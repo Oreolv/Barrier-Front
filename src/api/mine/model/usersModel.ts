@@ -16,12 +16,12 @@ export interface UserInfo {
   bnum: string;
   hnum: string;
   hname: string;
-  idCard: string;
+  id_card: string;
   company: string;
-  foreignStatus: UserStatusEnum | string;
-  healthStatus: UserHealthEnum | string;
-  isolationStatus: UserStatusEnum | string;
-  accessStatus: UserStatusEnum | string;
+  foreign_status: UserStatusEnum | string;
+  health_status: UserHealthEnum | string;
+  isolation_status: UserStatusEnum | string;
+  access_status: UserStatusEnum | string;
 }
 
 export interface LoginResultModel {
@@ -32,5 +32,5 @@ export interface LoginResultModel {
 // 由微信获取，头像和昵称
 export interface UserProfile {
   avatar?: string;
-  nickName?: string;
+  nick_name?: string;
 }

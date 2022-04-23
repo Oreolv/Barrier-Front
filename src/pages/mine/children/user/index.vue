@@ -18,7 +18,7 @@
       <nut-cell-group>
         <nut-cell
           title="昵称"
-          :desc="userInfo.profile.nickName"
+          :desc="userInfo.profile.nick_name"
           is-link
           @click="editNickName.show = true"
         ></nut-cell>
@@ -102,12 +102,12 @@ const ErrorCallback = () => {
 
 const editNickName = reactive({
   show: false,
-  value: userInfo.profile.nickName,
+  value: userInfo.profile.nick_name,
 });
 
 const updateNickName = async () => {
-  await userStore.updateUserProfile({ nickName: editNickName.value });
-  userInfo.profile.nickName = editNickName.value;
+  await userStore.updateUserProfile({ nick_name: editNickName.value });
+  userInfo.profile.nick_name = editNickName.value;
   editNickName.show = false;
 };
 </script>

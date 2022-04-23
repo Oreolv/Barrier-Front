@@ -17,17 +17,17 @@
         :options="state.chinaAreaData"
       ></nut-cascader>
     </nut-form-item>
-    <nut-form-item :label="formSchema.riskStatus">
+    <nut-form-item :label="formSchema.risk_status">
       <input
-        v-model="riskStatusShowValue"
+        v-model="risk_statusShowValue"
         class="nut-input-text"
-        :placeholder="`请选择所在地区${formSchema.riskStatus}`"
+        :placeholder="`请选择所在地区${formSchema.risk_status}`"
         :disabled="true"
         @click="state.showRiskStatusPicker = true"
       />
       <nut-picker
         v-model:visible="state.showRiskStatusPicker"
-        :columns="riskStatusColumns"
+        :columns="risk_statusColumns"
         title="风险等级"
         @confirm="handleRisk"
       ></nut-picker>
@@ -47,39 +47,39 @@
         @confirm="handleVehicle"
       ></nut-picker>
     </nut-form-item>
-    <nut-form-item :label="formSchema.vehicleNo">
+    <nut-form-item :label="formSchema.vehicle_no">
       <input
-        v-model="formValues.vehicleNo"
+        v-model="formValues.vehicle_no"
         class="nut-input-text"
         placeholder="请输入车牌号/车次号/航班号"
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.vehicleSeat">
+    <nut-form-item :label="formSchema.vehicle_seat">
       <input
-        v-model="formValues.vehicleSeat"
+        v-model="formValues.vehicle_seat"
         class="nut-input-text"
         placeholder="请输入座位号(自驾与大巴请填无)"
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.endTime">
+    <nut-form-item :label="formSchema.end_time">
       <input
-        v-model="formValues.endTime"
+        v-model="formValues.end_time"
         class="nut-input-text"
-        :placeholder="`请选择您的${formSchema.endTime}`"
+        :placeholder="`请选择您的${formSchema.end_time}`"
         :disabled="true"
         @click="state.showEndTime = true"
       />
       <nut-datepicker
-        v-model="formValues.endTime"
+        v-model="formValues.end_time"
         title="日期时间选择"
         type="datetime"
         @confirm="confirm"
         v-model:visible="state.showEndTime"
       ></nut-datepicker>
     </nut-form-item>
-    <nut-form-item :label="formSchema.healthCode">
+    <nut-form-item :label="formSchema.health_code">
       <nut-uploader
         :headers="uploadConfig.headers"
         :url="uploadConfig.url"
@@ -107,7 +107,7 @@ import { ShowToast } from '/@/hooks/useShowMessage';
 import { getChinaAreaData } from '/@/api/system/index';
 import { reactive, onBeforeMount, computed } from 'vue';
 import { validate } from '/@/hooks/useHandleFormValues';
-import { formValues, formSchema, vehicleColumns, riskStatusColumns } from './data';
+import { formValues, formSchema, vehicleColumns, risk_statusColumns } from './data';
 
 const userStore = useUserStore();
 
@@ -133,7 +133,7 @@ onBeforeMount(async () => {
 const confirm = ({ selectedValue }) => {
   const date = selectedValue.slice(0, 3).join('-');
   const time = selectedValue.slice(3).join(':');
-  formValues.endTime = date + ' ' + time;
+  formValues.end_time = date + ' ' + time;
 };
 
 function confirmAreaData(arg) {
@@ -153,11 +153,11 @@ const vehicleShowValue = computed(() => {
   return i.text;
 });
 
-const riskStatusShowValue = computed(() => {
-  if (isNaN(formValues.riskStatus)) {
+const risk_statusShowValue = computed(() => {
+  if (isNaN(formValues.risk_status)) {
     return '';
   }
-  const i = riskStatusColumns.value.filter((i) => i.value == Number(formValues.riskStatus))[0];
+  const i = risk_statusColumns.value.filter((i) => i.value == Number(formValues.risk_status))[0];
   return i.text;
 });
 
@@ -166,7 +166,7 @@ function handleVehicle(record) {
 }
 
 function handleRisk(record) {
-  formValues.riskStatus = record.selectedOptions[0].value;
+  formValues.risk_status = record.selectedOptions[0].value;
 }
 
 function handleSuccess(res) {
@@ -175,7 +175,7 @@ function handleSuccess(res) {
     ShowToast.error('上传失败');
     return;
   }
-  formValues.healthCode.push(data.result);
+  formValues.health_code.push(data.result);
 }
 
 function handleError() {

@@ -4,16 +4,16 @@ export interface CreateVisitorParams {
   visitor: string;
   foreign: number;
   come_from: string;
-  startTime: string;
-  endTime: string;
-  healthCode: string[];
+  start_time: string;
+  end_time: string;
+  health_code: string[];
 }
 
 export interface VisitorItem extends BasicApplyItem, BasicTimeResult {
   visitor: string;
   foreign: number;
   come_from: string;
-  healthCode: string;
+  health_code: string;
 }
 
 export type GetVisitorListResultModel = BasicFetchResult<VisitorItem>;

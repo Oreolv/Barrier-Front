@@ -3,18 +3,18 @@ import { BasicApplyItem, BasicFetchResult, BasicTimeResult } from '/@/api/model/
 
 export interface CreateTripParams {
   destination: string;
-  startTime: string;
-  endTime: string;
+  start_time: string;
+  end_time: string;
   vehicle: VehicleEnum;
-  vehicleNo: string;
-  vehicleSeat: string;
+  vehicle_no: string;
+  vehicle_seat: string;
 }
 
 export interface TripItem extends BasicApplyItem, BasicTimeResult {
   destination: string;
   vehicle: string;
-  vehicleNo: string;
-  vehicleSeat: string;
+  vehicle_no: string;
+  vehicle_seat: string;
 }
 
 export type GetTripListResultModel = BasicFetchResult<TripItem>;

@@ -5,7 +5,7 @@ export interface CreateAgencyParams {
   content: string;
 }
 
-export interface AgencyItem extends Omit<BasicApplyItem, 'startTime | endTime'>, BasicTimeResult {
+export interface AgencyItem extends Omit<BasicApplyItem, 'start_time | end_time'>, BasicTimeResult {
   type: string;
   content: string;
 }

@@ -8,7 +8,7 @@
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.startTime">
+    <nut-form-item :label="formSchema.start_time">
       <input
         v-model="dateRange"
         class="nut-input-text"
@@ -31,7 +31,7 @@
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.healthCode">
+    <nut-form-item :label="formSchema.health_code">
       <nut-uploader
         :headers="uploaderConfig.headers"
         :url="uploaderConfig.url"
@@ -79,15 +79,15 @@ const uploaderConfig = {
 };
 
 const dateRange = computed(() => {
-  if (formValues.startTime === '') {
+  if (formValues.start_time === '') {
     return '请选择行程持续时间';
   }
-  return `${formValues.startTime}至${formValues.endTime}`;
+  return `${formValues.start_time}至${formValues.end_time}`;
 });
 
 function setCalendarValue(param) {
-  formValues.startTime = param[0][3];
-  formValues.endTime = param[1][3];
+  formValues.start_time = param[0][3];
+  formValues.end_time = param[1][3];
 }
 
 function handleSuccess(res) {
@@ -96,7 +96,7 @@ function handleSuccess(res) {
     ShowToast.error('上传失败');
     return;
   }
-  formValues.healthCode.push(data.result);
+  formValues.health_code.push(data.result);
 }
 
 function handleError() {

@@ -8,11 +8,11 @@
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.startTime">
+    <nut-form-item :label="formSchema.start_time">
       <input
         v-model="rangeDate"
         class="nut-input-text"
-        :placeholder="`请输入${formSchema.startTime}`"
+        :placeholder="`请输入${formSchema.start_time}`"
         :disabled="true"
         @click="state.showCalendar = true"
       />
@@ -26,17 +26,17 @@
         @click="state.showVehiclePicker = true"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.vehicleNo">
+    <nut-form-item :label="formSchema.vehicle_no">
       <input
-        v-model="formValues.vehicleNo"
+        v-model="formValues.vehicle_no"
         class="nut-input-text"
         placeholder="请输入车牌号/车次号/航班号"
         type="text"
       />
     </nut-form-item>
-    <nut-form-item :label="formSchema.vehicleSeat">
+    <nut-form-item :label="formSchema.vehicle_seat">
       <input
-        v-model="formValues.vehicleSeat"
+        v-model="formValues.vehicle_seat"
         class="nut-input-text"
         placeholder="请输入座位号(自驾与大巴请填无)"
         type="text"
@@ -77,10 +77,10 @@ const state = reactive({
 });
 
 const rangeDate = computed(() => {
-  if (!formValues.startTime) {
+  if (!formValues.start_time) {
     return '请选择行程持续时间';
   }
-  return `${formValues.startTime}至${formValues.endTime}`;
+  return `${formValues.start_time}至${formValues.end_time}`;
 });
 
 const vehicleShowValue = computed(() => {
@@ -92,8 +92,8 @@ const vehicleShowValue = computed(() => {
 });
 
 const setChooseValue = (param) => {
-  formValues.startTime = param[0][3];
-  formValues.endTime = param[1][3];
+  formValues.start_time = param[0][3];
+  formValues.end_time = param[1][3];
 };
 
 function handleVehiclePickerComfirm(record) {

@@ -36,11 +36,11 @@
           </div>
           <div class="apply-content__item">
             <div class="apply-content__item-name">去往时间</div>
-            <div class="apply-content__item-content">{{ item.startTime }}</div>
+            <div class="apply-content__item-content">{{ item.start_time }}</div>
           </div>
           <div class="apply-content__item">
             <div class="apply-content__item-name">返程时间</div>
-            <div class="apply-content__item-content">{{ item.endTime }}</div>
+            <div class="apply-content__item-content">{{ item.end_time }}</div>
           </div>
         </template>
       </ApplyCardVue>
@@ -61,11 +61,11 @@
           </div>
           <div class="apply-content__item">
             <div class="apply-content__item-name">去往时间</div>
-            <div class="apply-content__item-content">{{ item.startTime }}</div>
+            <div class="apply-content__item-content">{{ item.start_time }}</div>
           </div>
           <div class="apply-content__item">
             <div class="apply-content__item-name">返程时间</div>
-            <div class="apply-content__item-content">{{ item.endTime }}</div>
+            <div class="apply-content__item-content">{{ item.end_time }}</div>
           </div>
         </template>
       </ApplyCardVue>
@@ -97,8 +97,8 @@ const createApply = () => {
 onBeforeMount(async () => {
   const data = await getTripList();
   const currentTime = new Date().getTime();
-  state.currentList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) > currentTime);
-  state.historyList = data.filter((i) => Date.parse(i.endTime.replace(/-/g, '/')) <= currentTime);
+  state.currentList = data.filter((i) => Date.parse(i.end_time.replace(/-/g, '/')) > currentTime);
+  state.historyList = data.filter((i) => Date.parse(i.end_time.replace(/-/g, '/')) <= currentTime);
 
   tabnineHeight.value = `calc(100vh - ${
     (await getNodePositionInfo('.nut-tabs__titles')).height

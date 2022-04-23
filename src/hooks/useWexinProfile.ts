@@ -9,7 +9,7 @@ export const useWexinProfile = (): Promise<UserProfile> => {
         const userInfo = res.userInfo;
         const result = {
           avatar: userInfo.avatarUrl,
-          nickName: userInfo.nickName,
+          nick_name: userInfo.nickName,
         };
         resolve(result);
       },
