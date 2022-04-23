@@ -61,7 +61,29 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="back">123</nut-tabpane>
+    <nut-tabpane pane-key="back">
+      <InfiniteLoading
+        name="back"
+        :pageSize="10"
+        :api="getBackList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <nut-empty description="无数据" v-if="!DataList.back.length"></nut-empty>
+          <ReportCardVue
+            v-else
+            v-for="i in DataList.back"
+            :key="i.id"
+            :status="i.status"
+            :title="`自${i.come_from}返乡`"
+            :description="`${i.endTime}到达`"
+            :avatar="i.approverInfo?.avatar"
+            :createdAt="i.createdAt"
+          ></ReportCardVue>
+        </template>
+      </InfiniteLoading>
+    </nut-tabpane>
     <nut-tabpane pane-key="abnormal">123</nut-tabpane>
     <nut-tabpane pane-key="health">123</nut-tabpane>
     <nut-tabpane pane-key="material">123</nut-tabpane>
@@ -77,6 +99,7 @@ import { ref } from 'vue';
 import { navigateTo } from '@tarojs/taro';
 import { TabList, DataList } from './data';
 import { getTripList } from '/@/api/serve/trip';
+import { getBackList } from '/@/api/serve/back';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
