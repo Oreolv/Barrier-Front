@@ -2,7 +2,7 @@
   <div class="component">
     <div class="report">
       <div class="report-left">
-        <div class="report-left__top">{{ props.title }}申请访问</div>
+        <div class="report-left__top">{{ props.title }}</div>
         <div class="report-left__middle">{{ props.description }}</div>
 
         <div class="report-left__bottom">
