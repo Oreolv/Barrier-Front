@@ -123,7 +123,7 @@
             :key="i.id"
             :status="i.status"
             title="每日健康上报"
-            :description="i.createdAt.substring(0, 10)"
+            :description="`${i.createdAt.substring(0, 10)} ${transformHealth(i)}`"
             :avatar="i.approverInfo?.avatar"
             :createdAt="i.createdAt"
           ></ReportCardVue>
@@ -169,6 +169,12 @@ const refresh = async (name, api, pageSize) => {
   const data = await api({ page: 1, pageSize });
   DataList[name].push(...data.rows);
 };
+
+function transformHealth(params) {
+  const { temperature, diagnosis, contact, symptom, hospital } = params;
+  const array = [temperature, diagnosis, contact, symptom, hospital];
+  return array.some((i) => i > 0) ? '异常' : '无异常';
+}
 
 setTimeout(async () => {
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
