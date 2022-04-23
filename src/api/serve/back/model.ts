@@ -1,6 +1,10 @@
 import { BasicApplyItem, BasicTimeResult } from '/@/api/model/baseModel';
+import { VehicleEnum } from '/@/enums/serveEnums';
 
 export interface CreateBackParams {
+  vehicle: VehicleEnum;
+  vehicleNo: string;
+  vehicleSeat: string;
   riskStatus: number;
   come_from: string;
   endTime: string;
