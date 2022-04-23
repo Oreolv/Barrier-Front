@@ -1,8 +1,9 @@
 import { reactive } from 'vue';
 import { TripItem } from '/@/api/serve/trip/model';
 import { BackItem } from '../../api/serve/back/model';
+import { HealthItem } from '/@/api/serve/health/model';
 import { VisitorItem } from '/@/api/serve/visitor/model';
-import { AbnormalItem } from '../../api/serve/abnormal/model';
+import { AbnormalItem } from '/@/api/serve/abnormal/model';
 
 export const TabList = reactive({
   tabValue: 'visitor',
@@ -41,6 +42,7 @@ export const TabList = reactive({
 export interface DataListProps {
   trip: TripItem[];
   back: BackItem[];
+  health: HealthItem[];
   visitor: VisitorItem[];
   abnormal: AbnormalItem[];
 }
@@ -48,6 +50,7 @@ export interface DataListProps {
 export const DataList = reactive<DataListProps>({
   trip: [],
   back: [],
+  health: [],
   visitor: [],
   abnormal: [],
 });

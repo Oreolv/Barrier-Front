@@ -1,4 +1,4 @@
-import { BasicApplyItem, BasicTimeResult } from '/@/api/model/baseModel';
+import { BasicApplyItem, BasicTimeResult, BasicFetchResult } from '/@/api/model/baseModel';
 
 export interface CreateHealthParams {
   temperature: string;
@@ -8,7 +8,7 @@ export interface CreateHealthParams {
   hospital: string;
 }
 
-export interface HealthItem extends Omit<BasicApplyItem, 'start_time | end_time'>, BasicTimeResult {
+export interface HealthItem extends BasicApplyItem, BasicTimeResult {
   temperature: string;
   diagnosis: number;
   contact: number;
@@ -16,4 +16,4 @@ export interface HealthItem extends Omit<BasicApplyItem, 'start_time | end_time'
   hospital: string;
 }
 
-export type GetHealthListResultModel = HealthItem[];
+export type GetHealthListResultModel = BasicFetchResult<HealthItem>;

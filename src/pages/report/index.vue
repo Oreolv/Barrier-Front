@@ -107,7 +107,29 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="health">123</nut-tabpane>
+    <nut-tabpane pane-key="health">
+      <InfiniteLoading
+        name="health"
+        :pageSize="10"
+        :api="getHealthList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <nut-empty description="无数据" v-if="!DataList.health.length"></nut-empty>
+          <ReportCardVue
+            v-else
+            v-for="i in DataList.health"
+            :key="i.id"
+            :status="i.status"
+            title="每日健康上报"
+            :description="i.createdAt.substring(0, 10)"
+            :avatar="i.approverInfo?.avatar"
+            :createdAt="i.createdAt"
+          ></ReportCardVue>
+        </template>
+      </InfiniteLoading>
+    </nut-tabpane>
     <nut-tabpane pane-key="material">123</nut-tabpane>
     <nut-tabpane pane-key="agency">123</nut-tabpane>
   </nut-tabs>
@@ -122,6 +144,7 @@ import { navigateTo } from '@tarojs/taro';
 import { TabList, DataList } from './data';
 import { getTripList } from '/@/api/serve/trip';
 import { getBackList } from '/@/api/serve/back';
+import { getHealthList } from '/@/api/serve/health/index';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { getAbnormalList } from '/@/api/serve/abnormal';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
