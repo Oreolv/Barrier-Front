@@ -59,7 +59,7 @@
 <script lang="ts" setup>
 import { reactive, computed } from 'vue';
 import { global } from '/@/utils/global';
-import { redirectTo } from '@tarojs/taro';
+import { switchTab } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
 import { formValues, formSchema } from './data';
 import { ShowToast } from '/@/hooks/useShowMessage';
@@ -79,6 +79,9 @@ const uploaderConfig = {
 };
 
 const dateRange = computed(() => {
+  if (formValues.startTime === '') {
+    return '请选择行程持续时间';
+  }
   return `${formValues.startTime}至${formValues.endTime}`;
 });
 
@@ -104,7 +107,7 @@ async function handleSubmit() {
   validate(formValues, formSchema);
   await createVisitor(formValues);
   setTimeout(() => {
-    redirectTo({
+    switchTab({
       url: '/pages/report/index',
     });
   }, 1000);
