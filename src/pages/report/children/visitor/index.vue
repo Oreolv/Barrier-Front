@@ -64,7 +64,7 @@ import { useUserStore } from '/@/store/users';
 import { formValues, formSchema } from './data';
 import { ShowToast } from '/@/hooks/useShowMessage';
 import { createVisitor } from '/@/api/serve/visitor';
-import { validate } from '/@/hooks/useHandleFormValues';
+import { validate, reset } from '/@/hooks/useHandleFormValues';
 
 const userStore = useUserStore();
 
@@ -110,6 +110,7 @@ async function handleSubmit() {
     switchTab({
       url: '/pages/report/index',
     });
+    reset(formValues);
   }, 1000);
 }
 </script>

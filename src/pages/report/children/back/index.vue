@@ -106,7 +106,7 @@ import { createBack } from '/@/api/serve/back';
 import { ShowToast } from '/@/hooks/useShowMessage';
 import { getChinaAreaData } from '/@/api/system/index';
 import { reactive, onBeforeMount, computed } from 'vue';
-import { validate } from '/@/hooks/useHandleFormValues';
+import { validate, reset } from '/@/hooks/useHandleFormValues';
 import { formValues, formSchema, vehicleColumns, risk_statusColumns } from './data';
 
 const userStore = useUserStore();
@@ -189,6 +189,7 @@ async function handleSubmit() {
     switchTab({
       url: '/pages/report/index',
     });
+    reset(formValues);
   }, 1000);
 }
 </script>

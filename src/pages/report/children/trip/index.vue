@@ -67,7 +67,7 @@
 import { reactive, computed } from 'vue';
 import { switchTab } from '@tarojs/taro';
 import { createTrip } from '/@/api/serve/trip';
-import { validate } from '/@/hooks/useHandleFormValues';
+import { validate, reset } from '/@/hooks/useHandleFormValues';
 import { formValues, formSchema, vehicleColumns } from './data';
 
 const state = reactive({
@@ -84,7 +84,7 @@ const dateRange = computed(() => {
 });
 
 const vehicleShowValue = computed(() => {
-  if (formValues.vehicle === '') {
+  if (isNaN(formValues.vehicle)) {
     return '';
   }
   const i = vehicleColumns.value.filter((i) => i.value == Number(formValues.vehicle))[0];
@@ -107,6 +107,7 @@ async function handleSubmit() {
     switchTab({
       url: '/pages/report/index',
     });
+    reset(formValues);
   }, 1000);
 }
 </script>

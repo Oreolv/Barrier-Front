@@ -64,7 +64,7 @@ import { global } from '/@/utils/global';
 import { useUserStore } from '/@/store/users';
 import { formValues, formSchema } from './data';
 import { createHealth } from '/@/api/serve/health';
-import { validate } from '/@/hooks/useHandleFormValues';
+import { validate, reset } from '/@/hooks/useHandleFormValues';
 import { TemperatureEnum, HospitalEnum } from '/@/enums/serveEnums';
 
 const userStore = useUserStore();
@@ -88,6 +88,7 @@ async function handleSubmit() {
     switchTab({
       url: '/pages/report/index',
     });
+    reset(formValues);
   }, 1000);
 }
 </script>

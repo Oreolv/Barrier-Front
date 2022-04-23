@@ -10,7 +10,7 @@ export const formValues = reactive<CreateBackParams>({
   vehicle_seat: '',
   end_time: '',
   risk_status: NaN,
-  health_code: [] as string[],
+  health_code: [],
 });
 
 export const formSchema = {

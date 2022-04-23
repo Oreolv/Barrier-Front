@@ -3,7 +3,7 @@ import { CreateVisitorParams } from '/@/api/serve/visitor/model';
 
 export const formValues = reactive<CreateVisitorParams>({
   visitor: '',
-  foreign: 0,
+  foreign: NaN,
   come_from: '',
   start_time: '',
   end_time: '',

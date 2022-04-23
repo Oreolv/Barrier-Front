@@ -4,7 +4,7 @@ import { CreateTripParams } from '/@/api/serve/trip/model';
 
 export const formValues = reactive<CreateTripParams>({
   destination: '',
-  vehicle: VehicleEnum.BUS,
+  vehicle: NaN,
   vehicle_no: '',
   vehicle_seat: '',
   start_time: '',
