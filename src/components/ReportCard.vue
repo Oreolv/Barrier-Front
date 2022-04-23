@@ -61,6 +61,7 @@ const props = defineProps({
       flex-direction: column;
       justify-content: center;
       align-items: center;
+      margin-left: 8px;
       .report-right__avatar {
         img {
           width: 36px;
