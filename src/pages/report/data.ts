@@ -4,6 +4,7 @@ import { BackItem } from '../../api/serve/back/model';
 import { HealthItem } from '/@/api/serve/health/model';
 import { VisitorItem } from '/@/api/serve/visitor/model';
 import { AbnormalItem } from '/@/api/serve/abnormal/model';
+import { MaterialItem } from '/@/api/serve/material/model';
 
 export const TabList = reactive({
   tabValue: 'visitor',
@@ -45,6 +46,7 @@ export interface DataListProps {
   health: HealthItem[];
   visitor: VisitorItem[];
   abnormal: AbnormalItem[];
+  material: MaterialItem[];
 }
 
 export const DataList = reactive<DataListProps>({
@@ -53,4 +55,5 @@ export const DataList = reactive<DataListProps>({
   health: [],
   visitor: [],
   abnormal: [],
+  material: [],
 });

@@ -130,7 +130,29 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="material">123</nut-tabpane>
+    <nut-tabpane pane-key="material">
+      <InfiniteLoading
+        name="material"
+        :pageSize="10"
+        :api="getMaterialList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <nut-empty description="无数据" v-if="!DataList.material.length"></nut-empty>
+          <ReportCardVue
+            v-else
+            v-for="i in DataList.material"
+            :key="i.id"
+            :status="i.status"
+            :title="`${i.type}申请`"
+            :description="i.content"
+            :avatar="i.approverInfo?.avatar"
+            :createdAt="i.createdAt"
+          ></ReportCardVue>
+        </template>
+      </InfiniteLoading>
+    </nut-tabpane>
     <nut-tabpane pane-key="agency">123</nut-tabpane>
   </nut-tabs>
   <div class="push-button" @click="create(TabList.tabValue)">
@@ -147,6 +169,7 @@ import { getBackList } from '/@/api/serve/back';
 import { getHealthList } from '/@/api/serve/health/index';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { getAbnormalList } from '/@/api/serve/abnormal';
+import { getMaterialList } from '/@/api/serve/material';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 import ReportCardVue from '/@/components/ReportCard.vue';
