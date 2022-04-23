@@ -25,7 +25,7 @@
       </div>
     </div>
     <div class="footer">
-      <nut-button shape="square" type="primary" block @click="submitFormValues">提交</nut-button>
+      <nut-button shape="square" type="primary" block @click="handleSubmit">提交</nut-button>
     </div>
   </div>
 </template>
@@ -35,7 +35,7 @@ import { validate } from '/@/hooks/useHandleFormValues';
 import { createMaterial } from '/@/api/serve/material';
 import { formValues, formSchema, materialType } from './data';
 
-const submitFormValues = async () => {
+async function handleSubmit() {
   validate(formValues, formSchema);
   await createMaterial(formValues);
   setTimeout(() => {
@@ -43,7 +43,7 @@ const submitFormValues = async () => {
       url: '/pages/report/index',
     });
   }, 1000);
-};
+}
 </script>
 
 <style lang="scss">
