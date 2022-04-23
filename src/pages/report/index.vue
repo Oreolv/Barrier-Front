@@ -25,23 +25,19 @@
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.visitor.length"></nut-empty>
-
-          <div class="visitor" v-else v-for="i in DataList.visitor" :key="i.id">
-            <div class="visitor-left">
-              <div class="visitor-left__top">{{ i.visitor }}申请访问</div>
-              <div class="visitor-left__middle">{{ i.startTime }}至{{ i.endTime }}</div>
-
-              <div class="visitor-left__bottom">
-                {{ transformDate(i.createdAt) }}
-              </div>
-            </div>
-            <div class="visitor-right">
-              <div class="visitor-right__avatar">
-                <img :src="i.approverInfo?.avatar || require('/@/assets/avatar.png')" alt="" />
-              </div>
-              <div
-                class="visitor-right__result"
-                :style="{ color: transformStatus(i.status).color }"
+          <ReportCardVue
+            v-else
+            v-for="i in DataList.visitor"
+            :key="i.id"
+            :status="i.status"
+            :title="`${i.visitor}申请访问`"
+            :description="`${i.startTime}至${i.endTime}`"
+            :avatar="i.approverInfo?.avatar"
+            :createdAt="i.createdAt"
+          ></ReportCardVue>
+        </template>
+      </InfiniteLoading>
+    </nut-tabpane>
               >
                 {{ transformStatus(i.status).text }}
               </div>
@@ -69,7 +65,7 @@ import { TabList, DataList } from './data';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import { transformDate, transformStatus } from '/@/hooks/useTransformData';
+import ReportCardVue from '/@/components/ReportCard.vue';
 
 const create = (dir) => {
   navigateTo({
@@ -123,44 +119,6 @@ setTimeout(async () => {
       color: white;
       padding: 8px;
       border-radius: 50%;
-    }
-  }
-}
-.visitor {
-  display: flex;
-  padding: 16px;
-  margin: 12px 16px;
-  border-radius: 8px;
-  background-color: #f5f5f5;
-  .visitor-left {
-    flex: 1;
-    .visitor-left__top {
-      font-weight: bolder;
-    }
-    .visitor-left__middle {
-      margin-top: 8px;
-      font-size: 14px;
-    }
-    .visitor-left__bottom {
-      margin-top: 8px;
-      font-size: 12px;
-      color: #7c7c7c;
-    }
-  }
-  .visitor-right {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    .visitor-right__avatar {
-      img {
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-      }
-    }
-    .visitor-right__result {
-      font-size: 12px;
     }
   }
 }
