@@ -1,3 +1,6 @@
+import { ResultColor } from '/@/enums/colorEnum';
+import { ApplyStatusEnum } from '/@/enums/serveEnums';
+
 export const addPlusAndMinus = (data) => {
   if (typeof data === 'object') {
     for (const key of Object.keys(data)) {
@@ -34,4 +37,23 @@ export const transformDate = (time: string) => {
       }
   }
   return tips;
+};
+
+export const transformStatus = (status) => {
+  let text, color;
+  switch (status) {
+    case ApplyStatusEnum.approval:
+      text = '已通过';
+      color = ResultColor.SUCCESS;
+      break;
+    case ApplyStatusEnum.reject:
+      text = '已拒绝';
+      color = ResultColor.ERROR;
+      break;
+    case ApplyStatusEnum.underReview:
+      text = '待审批';
+      color = ResultColor.WARNING;
+      break;
+  }
+  return { text, color };
 };

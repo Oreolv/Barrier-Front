@@ -67,11 +67,9 @@ import { ref } from 'vue';
 import { navigateTo } from '@tarojs/taro';
 import { TabList, DataList } from './data';
 import { getVisitorList } from '/@/api/serve/visitor';
-import { ApplyStatusEnum } from '/@/enums/serveEnums';
-import { ResultColor } from '/@/enums/colorEnum';
-import { transformDate } from '/@/hooks/useTransformData';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
+import { transformDate, transformStatus } from '/@/hooks/useTransformData';
 
 const create = (dir) => {
   navigateTo({
@@ -81,25 +79,6 @@ const create = (dir) => {
 
 const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');
-
-const transformStatus = (status) => {
-  let text, color;
-  switch (status) {
-    case ApplyStatusEnum.approval:
-      text = '已通过';
-      color = ResultColor.SUCCESS;
-      break;
-    case ApplyStatusEnum.reject:
-      text = '已拒绝';
-      color = ResultColor.ERROR;
-      break;
-    case ApplyStatusEnum.underReview:
-      text = '待审批';
-      color = ResultColor.WARNING;
-      break;
-  }
-  return { text, color };
-};
 
 const loadMore = (name, data) => {
   DataList[name].push(...data.rows);
