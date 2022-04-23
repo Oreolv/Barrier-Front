@@ -38,15 +38,29 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-              >
-                {{ transformStatus(i.status).text }}
-              </div>
-            </div>
-          </div>
+    <nut-tabpane pane-key="trip">
+      <InfiniteLoading
+        name="trip"
+        :pageSize="10"
+        :api="getTripList"
+        @load="loadMore"
+        @refresh="refresh"
+      >
+        <template #content>
+          <nut-empty description="无数据" v-if="!DataList.trip.length"></nut-empty>
+          <ReportCardVue
+            v-else
+            v-for="i in DataList.trip"
+            :key="i.id"
+            :status="i.status"
+            :title="`前往${i.destination}报备`"
+            :description="`${i.startTime}至${i.endTime}`"
+            :avatar="i.approverInfo?.avatar"
+            :createdAt="i.createdAt"
+          ></ReportCardVue>
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="trip">123</nut-tabpane>
     <nut-tabpane pane-key="back">123</nut-tabpane>
     <nut-tabpane pane-key="abnormal">123</nut-tabpane>
     <nut-tabpane pane-key="health">123</nut-tabpane>
@@ -62,6 +76,7 @@
 import { ref } from 'vue';
 import { navigateTo } from '@tarojs/taro';
 import { TabList, DataList } from './data';
+import { getTripList } from '/@/api/serve/trip';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
