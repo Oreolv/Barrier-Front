@@ -15,7 +15,14 @@ export default defineAppConfig({
     },
     {
       root: 'pages/report/children',
-      pages: ['visitor/index', 'trip/index', 'back/index', 'abnormal/index', 'health/index'],
+      pages: [
+        'visitor/index',
+        'trip/index',
+        'back/index',
+        'abnormal/index',
+        'health/index',
+        'material/index',
+      ],
     },
   ],
   window: {
