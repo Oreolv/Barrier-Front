@@ -22,6 +22,7 @@
         :api="getVisitorList"
         @load="loadMore"
         @refresh="refresh"
+        v-if="TabList.tabValue === 'visitor'"
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.visitor.length"></nut-empty>
@@ -45,6 +46,7 @@
         :api="getTripList"
         @load="loadMore"
         @refresh="refresh"
+        v-if="TabList.tabValue === 'trip'"
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.trip.length"></nut-empty>
@@ -68,6 +70,7 @@
         :api="getBackList"
         @load="loadMore"
         @refresh="refresh"
+        v-if="TabList.tabValue === 'back'"
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.back.length"></nut-empty>
@@ -91,6 +94,7 @@
         :api="getAbnormalList"
         @load="loadMore"
         @refresh="refresh"
+        v-if="TabList.tabValue === 'abnormal'"
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.abnormal.length"></nut-empty>
@@ -114,6 +118,7 @@
         :api="getHealthList"
         @load="loadMore"
         @refresh="refresh"
+        v-if="TabList.tabValue === 'health'"
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.health.length"></nut-empty>
@@ -137,6 +142,7 @@
         :api="getMaterialList"
         @load="loadMore"
         @refresh="refresh"
+        v-if="TabList.tabValue === 'material'"
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.material.length"></nut-empty>
@@ -160,6 +166,7 @@
         :api="getAgencyList"
         @load="loadMore"
         @refresh="refresh"
+        v-if="TabList.tabValue === 'agency'"
       >
         <template #content>
           <nut-empty description="无数据" v-if="!DataList.agency.length"></nut-empty>
