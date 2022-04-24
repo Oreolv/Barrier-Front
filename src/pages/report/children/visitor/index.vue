@@ -60,6 +60,7 @@
 import { reactive, computed } from 'vue';
 import { global } from '/@/utils/global';
 import { switchTab } from '@tarojs/taro';
+import { Flag } from '/@/pages/report/data';
 import { useUserStore } from '/@/store/users';
 import { formValues, formSchema } from './data';
 import { ShowToast } from '/@/hooks/useShowMessage';
@@ -107,6 +108,7 @@ async function handleSubmit() {
   validate(formValues, formSchema);
   await createVisitor(formValues);
   setTimeout(() => {
+    Flag.value = true;
     switchTab({
       url: '/pages/report/index',
     });

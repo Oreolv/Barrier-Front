@@ -66,6 +66,7 @@
 <script lang="ts" setup>
 import { reactive, computed } from 'vue';
 import { switchTab } from '@tarojs/taro';
+import { Flag } from '/@/pages/report/data';
 import { createTrip } from '/@/api/serve/trip';
 import { validate, reset } from '/@/hooks/useHandleFormValues';
 import { formValues, formSchema, vehicleColumns } from './data';
@@ -104,6 +105,7 @@ async function handleSubmit() {
   validate(formValues, formSchema);
   await createTrip(formValues);
   setTimeout(() => {
+    Flag.value = true;
     switchTab({
       url: '/pages/report/index',
     });

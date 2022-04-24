@@ -31,6 +31,7 @@
 </template>
 <script lang="ts" setup>
 import { switchTab } from '@tarojs/taro';
+import { Flag } from '/@/pages/report/data';
 import { createMaterial } from '/@/api/serve/material';
 import { formValues, formSchema, materialType } from './data';
 import { validate, reset } from '/@/hooks/useHandleFormValues';
@@ -39,6 +40,7 @@ async function handleSubmit() {
   validate(formValues, formSchema);
   await createMaterial(formValues);
   setTimeout(() => {
+    Flag.value = true;
     switchTab({
       url: '/pages/report/index',
     });

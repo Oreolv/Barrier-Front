@@ -29,6 +29,7 @@
 </template>
 <script lang="ts" setup>
 import { switchTab } from '@tarojs/taro';
+import { Flag } from '/@/pages/report/data';
 import { createAgency } from '/@/api/serve/agency';
 import { formValues, formSchema, agencyType } from './data';
 import { validate, reset } from '/@/hooks/useHandleFormValues';
@@ -37,6 +38,7 @@ async function handleSubmit() {
   validate(formValues, formSchema);
   await createAgency(formValues);
   setTimeout(() => {
+    Flag.value = true;
     switchTab({
       url: '/pages/report/index',
     });

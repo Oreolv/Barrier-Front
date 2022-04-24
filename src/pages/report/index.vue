@@ -19,7 +19,7 @@
       <InfiniteLoading
         name="visitor"
         :pageSize="10"
-        :api="getVisitorList"
+        :api="FuncList.visitor"
         @load="loadMore"
         @refresh="refresh"
         v-if="TabList.tabValue === 'visitor'"
@@ -43,7 +43,7 @@
       <InfiniteLoading
         name="trip"
         :pageSize="10"
-        :api="getTripList"
+        :api="FuncList.trip"
         @load="loadMore"
         @refresh="refresh"
         v-if="TabList.tabValue === 'trip'"
@@ -67,7 +67,7 @@
       <InfiniteLoading
         name="back"
         :pageSize="10"
-        :api="getBackList"
+        :api="FuncList.back"
         @load="loadMore"
         @refresh="refresh"
         v-if="TabList.tabValue === 'back'"
@@ -91,7 +91,7 @@
       <InfiniteLoading
         name="abnormal"
         :pageSize="10"
-        :api="getAbnormalList"
+        :api="FuncList.abnormal"
         @load="loadMore"
         @refresh="refresh"
         v-if="TabList.tabValue === 'abnormal'"
@@ -115,7 +115,7 @@
       <InfiniteLoading
         name="health"
         :pageSize="10"
-        :api="getHealthList"
+        :api="FuncList.health"
         @load="loadMore"
         @refresh="refresh"
         v-if="TabList.tabValue === 'health'"
@@ -139,7 +139,7 @@
       <InfiniteLoading
         name="material"
         :pageSize="10"
-        :api="getMaterialList"
+        :api="FuncList.material"
         @load="loadMore"
         @refresh="refresh"
         v-if="TabList.tabValue === 'material'"
@@ -163,7 +163,7 @@
       <InfiniteLoading
         name="agency"
         :pageSize="10"
-        :api="getAgencyList"
+        :api="FuncList.agency"
         @load="loadMore"
         @refresh="refresh"
         v-if="TabList.tabValue === 'agency'"
@@ -191,24 +191,24 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { navigateTo } from '@tarojs/taro';
-import { TabList, DataList } from './data';
-import { getTripList } from '/@/api/serve/trip';
-import { getBackList } from '/@/api/serve/back';
-import { getHealthList } from '/@/api/serve/health/index';
-import { getAgencyList } from '/@/api/serve/agency/index';
-import { getVisitorList } from '/@/api/serve/visitor';
-import { getAbnormalList } from '/@/api/serve/abnormal';
-import { getMaterialList } from '/@/api/serve/material';
+import { navigateTo, useDidShow } from '@tarojs/taro';
+import ReportCardVue from '/@/components/ReportCard.vue';
+import { TabList, DataList, FuncList, Flag } from './data';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import ReportCardVue from '/@/components/ReportCard.vue';
 
 const create = (dir) => {
   navigateTo({
     url: `/pages/report/children/${dir}/index`,
   });
 };
+
+useDidShow(() => {
+  if (Flag.value) {
+    refresh(TabList.tabValue, FuncList[TabList.tabValue], 10);
+    Flag.value = false;
+  }
+});
 
 const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');

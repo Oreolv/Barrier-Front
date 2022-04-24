@@ -101,6 +101,7 @@
 <script lang="ts" setup>
 import { global } from '/@/utils/global';
 import { switchTab } from '@tarojs/taro';
+import { Flag } from '/@/pages/report/data';
 import { useUserStore } from '/@/store/users';
 import { createBack } from '/@/api/serve/back';
 import { ShowToast } from '/@/hooks/useShowMessage';
@@ -186,6 +187,7 @@ async function handleSubmit() {
   validate(formValues, formSchema);
   await createBack(formValues);
   setTimeout(() => {
+    Flag.value = true;
     switchTab({
       url: '/pages/report/index',
     });

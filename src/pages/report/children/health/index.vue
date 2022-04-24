@@ -60,6 +60,7 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import { switchTab } from '@tarojs/taro';
+import { Flag } from '/@/pages/report/data';
 import { global } from '/@/utils/global';
 import { useUserStore } from '/@/store/users';
 import { formValues, formSchema } from './data';
@@ -85,6 +86,7 @@ async function handleSubmit() {
   validate(formValues, formSchema);
   await createHealth(formValues);
   setTimeout(() => {
+    Flag.value = true;
     switchTab({
       url: '/pages/report/index',
     });
