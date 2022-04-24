@@ -1,4 +1,4 @@
-import { VehicleEnum } from '/@/enums/serveEnums';
+import { VehicleEnum } from '/@/enums/serveEnum';
 import { BasicApplyItem, BasicFetchResult, BasicTimeResult } from '/@/api/model/baseModel';
 
 export interface CreateTripParams {

@@ -1,6 +1,6 @@
 import { UserSexEnum } from '/@/enums/userEnum';
 import { ResultColorEnum } from '/@/enums/colorEnum';
-import { ApplyStatusEnum } from '/@/enums/serveEnums';
+import { ApplyStatusEnum } from '/@/enums/serveEnum';
 import { UserInfo } from '/@/api/mine/model/usersModel';
 
 export const addPlusAndMinus = (data) => {

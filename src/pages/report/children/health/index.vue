@@ -66,7 +66,7 @@ import { useUserStore } from '/@/store/users';
 import { formValues, formSchema } from './data';
 import { createHealth } from '/@/api/serve/health';
 import { validate, reset } from '/@/hooks/useHandleFormValues';
-import { TemperatureEnum, HospitalEnum } from '/@/enums/serveEnums';
+import { TemperatureEnum, HospitalEnum } from '/@/enums/serveEnum';
 
 const userStore = useUserStore();
 

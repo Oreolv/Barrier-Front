@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue';
-import { VehicleEnum } from '/@/enums/serveEnums';
+import { VehicleEnum } from '/@/enums/serveEnum';
 import { CreateTripParams } from '/@/api/serve/trip/model';
 
 export const formValues = reactive<CreateTripParams>({

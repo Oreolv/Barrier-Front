@@ -1,5 +1,5 @@
 import { reactive, ref } from 'vue';
-import { VehicleEnum } from '/@/enums/serveEnums';
+import { VehicleEnum } from '/@/enums/serveEnum';
 import { CreateBackParams } from '/@/api/serve/back/model';
 import { UserHealthEnum as RiskStatusEnum } from '/@/enums/userEnum';
 

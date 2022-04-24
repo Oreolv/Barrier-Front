@@ -1,5 +1,5 @@
 import { BasicApplyItem, BasicTimeResult } from '/@/api/model/baseModel';
-import { VehicleEnum } from '/@/enums/serveEnums';
+import { VehicleEnum } from '/@/enums/serveEnum';
 
 export interface CreateBackParams {
   vehicle: VehicleEnum;
