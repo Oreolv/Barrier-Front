@@ -213,4 +213,9 @@ async function handleSubmit() {
     width: 100%;
   }
 }
+.nut-cascader__popup {
+  .nut-tabs__titles-item.active .nut-tabs__titles-item__line {
+    background: #1a1a1a !important;
+  }
+}
 </style>
