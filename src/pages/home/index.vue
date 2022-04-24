@@ -198,51 +198,52 @@ const navigateToTipsInfo = (index) => {
   justify-content: center;
   margin-top: 5px;
 }
-.data {
-  padding: 10px 0;
-}
+
 #infiniteLoading {
-  padding: 10px 0;
   height: v-bind(loadmoreHeight);
 }
 
-.update-time {
-  display: flex;
-  align-items: center;
-  font-size: 14px;
-  margin-bottom: 8px;
-  .update-time-des {
-    margin-right: 8px;
-    color: #7c7c7c;
+.data {
+  padding: 16px;
+  .update-time {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    margin-bottom: 8px;
+    .update-time-des {
+      margin-right: 8px;
+      color: #7c7c7c;
+    }
+    .update-time-text {
+      color: #222;
+    }
   }
-  .update-time-text {
-    color: #222;
+  .city-data-des {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    .left {
+      flex: 1;
+    }
+  }
+  .card-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+  }
+  .china-item {
+    margin-top: 4px;
+    flex-basis: 33.3%;
+  }
+  .china-item:nth-child(-n + 3) {
+    margin: 8px 0;
   }
 }
-.city-data-des {
-  font-size: 14px;
-  font-weight: bold;
-  margin: 10px 0;
-  display: flex;
-  align-items: center;
-  .left {
-    flex: 1;
-  }
-}
-.card-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-}
-.china-item {
-  margin-top: 4px;
-  flex-basis: 33.3%;
-}
-.china-item:nth-child(-n + 3) {
-  margin: 8px 0;
-}
+
 .news {
-  margin-bottom: 16px;
+  padding: 16px;
   .news-header {
     display: flex;
     align-items: center;
@@ -273,10 +274,10 @@ const navigateToTipsInfo = (index) => {
     }
   }
 }
+
 .tips {
   .tips-content {
-    margin-bottom: 16px;
-    padding-bottom: 16px;
+    padding: 16px;
     border-bottom: 1px #f1f1f1 solid;
     .tips-content__title {
       font-weight: 600;
@@ -331,13 +332,6 @@ const navigateToTipsInfo = (index) => {
 }
 .nut-tabpane {
   height: v-bind(tabnineHeight);
-  padding: 0 16px;
-  // overflow: hidden;
-}
-
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
+  padding: 0;
 }
 </style>
