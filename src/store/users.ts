@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { ResultColor } from '/@/enums/colorEnum';
+import { ResultColorEnum } from '/@/enums/colorEnum';
 import { useWexinLogin } from '/@/hooks/useWexinLogin';
 import { useWexinProfile } from '/@/hooks/useWexinProfile';
 import { getUserInfo, updateUserProfile } from '/@/api/mine/users';
@@ -85,19 +85,19 @@ export const useUserStore = defineStore('users', {
       switch (userInfo.health_status) {
         case UserHealthEnum.Low:
           health_status.data = '低';
-          health_status.color = ResultColor.SUCCESS;
+          health_status.color = ResultColorEnum.SUCCESS;
           break;
         case UserHealthEnum.Middle:
           health_status.data = '中';
-          health_status.color = ResultColor.WARNING;
+          health_status.color = ResultColorEnum.WARNING;
           break;
         case UserHealthEnum.High:
           health_status.data = '高';
-          health_status.color = ResultColor.ERROR;
+          health_status.color = ResultColorEnum.ERROR;
           break;
         default:
           health_status.data = '高';
-          health_status.color = ResultColor.ERROR;
+          health_status.color = ResultColorEnum.ERROR;
           break;
       }
       const isolation_status = {
@@ -105,14 +105,18 @@ export const useUserStore = defineStore('users', {
         title: '隔离状态',
         data: userInfo.isolation_status === UserStatusEnum.No ? '否' : '是',
         color:
-          userInfo.isolation_status === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
+          userInfo.isolation_status === UserStatusEnum.No
+            ? ResultColorEnum.SUCCESS
+            : ResultColorEnum.ERROR,
       };
       const access_status = {
         key: 'access_status',
         title: '限制出入',
         data: userInfo.access_status === UserStatusEnum.No ? '否' : '是',
         color:
-          userInfo.access_status === UserStatusEnum.No ? ResultColor.SUCCESS : ResultColor.ERROR,
+          userInfo.access_status === UserStatusEnum.No
+            ? ResultColorEnum.SUCCESS
+            : ResultColorEnum.ERROR,
       };
       return [health_status, isolation_status, access_status];
     },

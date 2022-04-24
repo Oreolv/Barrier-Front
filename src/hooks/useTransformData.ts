@@ -1,5 +1,5 @@
-import { ResultColor } from '/@/enums/colorEnum';
 import { UserSexEnum } from '/@/enums/userEnum';
+import { ResultColorEnum } from '/@/enums/colorEnum';
 import { ApplyStatusEnum } from '/@/enums/serveEnums';
 import { UserInfo } from '/@/api/mine/model/usersModel';
 
@@ -46,15 +46,15 @@ export const transformStatus = (status) => {
   switch (status) {
     case ApplyStatusEnum.approval:
       text = '已通过';
-      color = ResultColor.SUCCESS;
+      color = ResultColorEnum.SUCCESS;
       break;
     case ApplyStatusEnum.reject:
       text = '已拒绝';
-      color = ResultColor.ERROR;
+      color = ResultColorEnum.ERROR;
       break;
     case ApplyStatusEnum.underReview:
       text = '待审批';
-      color = ResultColor.WARNING;
+      color = ResultColorEnum.WARNING;
       break;
   }
   return { text, color };
