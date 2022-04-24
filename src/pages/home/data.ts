@@ -1,4 +1,12 @@
 import { reactive } from 'vue';
+import { NewsItem } from '/@/api/index/model/informationModel';
+import { GetCovidDataResultModel } from '/@/api/index/model/covidModel';
+
+interface DataListProps {
+  allData: GetCovidDataResultModel;
+  newsList: NewsItem[];
+  tipsList: NewsItem[];
+}
 
 export const CovidList = [
   {
@@ -66,4 +74,10 @@ export const TabList = reactive({
       paneKey: '2',
     },
   ],
+});
+
+export const DataList = reactive<DataListProps>({
+  allData: {} as GetCovidDataResultModel,
+  newsList: [],
+  tipsList: [],
 });

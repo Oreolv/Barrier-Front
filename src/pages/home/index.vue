@@ -20,7 +20,7 @@
           <div class="update-time">
             <div class="update-time-des">统计数据截至</div>
             <nut-skeleton width="60vw" height="16px" animated :loading="loading">
-              <div class="update-time-text">{{ dataList.allData.lastUpdateTime }}</div>
+              <div class="update-time-text">{{ DataList.allData.lastUpdateTime }}</div>
             </nut-skeleton>
           </div>
           <Card title="全国疫情数据">
@@ -35,8 +35,8 @@
                   :loading="loading"
                 >
                   <ChinaCovidItem
-                    :add="dataList.allData.china_add[item.name]"
-                    :today="dataList.allData.china_total[item.name]"
+                    :add="DataList.allData.china_add[item.name]"
+                    :today="DataList.allData.china_total[item.name]"
                     :type="item.name"
                   >
                     {{ item.des }}
@@ -54,7 +54,7 @@
               风险地区查询
             </nut-button>
           </div>
-          <nut-table :columns="CityColumn" :data="dataList.allData.city_data" striped></nut-table>
+          <nut-table :columns="CityColumn" :data="DataList.allData.city_data" striped></nut-table>
         </div>
       </div>
     </nut-tabpane>
@@ -67,7 +67,7 @@
         @refresh="refresh"
       >
         <template #content>
-          <div class="news" v-for="(i, idx) in dataList.newsList" :key="i.id">
+          <div class="news" v-for="(i, idx) in DataList.newsList" :key="i.id">
             <div class="news-header">
               <div class="news-header__left"></div>
               <div class="news-header__time">{{ i.publishTime }}</div>
@@ -93,7 +93,7 @@
         @refresh="refresh"
       >
         <template #content>
-          <div class="tips" v-for="(i, idx) in dataList.tipsList" :key="i.id">
+          <div class="tips" v-for="(i, idx) in DataList.tipsList" :key="i.id">
             <div class="tips-content" @click="navigateToTipsInfo(idx)">
               <div class="tips-content__title">{{ i.title }}</div>
               <div class="tips-content__info">{{ i.summary }}</div>
@@ -107,37 +107,26 @@
 </template>
 
 <script lang="ts" setup>
-import { useDidShow } from '@tarojs/taro';
-import { getTipsList, getNewsList } from '/@/api/index/information';
-import { getCovidData } from '/@/api/index/covid';
+import { onBeforeMount, ref } from 'vue';
+import { navigateTo } from '@tarojs/taro';
 import Card from '../../components/Card.vue';
-import { CovidList, CityColumn, TabList } from './data';
-import { onBeforeMount, reactive, ref } from 'vue';
+import { getCovidData } from '/@/api/index/covid';
 import SearchBar from '/@/components/SearchBar.vue';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
-import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
-import { GetCovidDataResultModel } from '/@/api/index/model/covidModel';
-import { NewsItem } from '/@/api/index/model/informationModel';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import { navigateTo } from '@tarojs/taro';
-
-const dataList = reactive({
-  allData: {} as GetCovidDataResultModel,
-  newsList: [] as NewsItem[],
-  tipsList: [] as NewsItem[],
-});
+import { CovidList, CityColumn, TabList, DataList } from './data';
+import { getTipsList, getNewsList } from '/@/api/index/information';
+import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 
 const tabsTop = getNavBarHeigtht();
 const loading = ref(true);
 const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');
 
-useDidShow(() => {});
-
 onBeforeMount(async () => {
-  dataList.allData = await getCovidData();
-  dataList.allData = transformAllData(dataList.allData);
+  DataList.allData = await getCovidData();
+  DataList.allData = transformAllData(DataList.allData);
   loading.value = false;
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
@@ -154,13 +143,13 @@ const transformAllData = (data) => {
 };
 
 const loadMore = (name, data) => {
-  dataList[`${name}List`].push(...data.rows);
+  DataList[`${name}List`].push(...data.rows);
 };
 
 const refresh = async (name, api, pageSize) => {
-  dataList[`${name}List`].length = 0;
+  DataList[`${name}List`].length = 0;
   const data = await api({ page: 1, pageSize });
-  dataList[`${name}List`].push(...data.rows);
+  DataList[`${name}List`].push(...data.rows);
 };
 
 const navigateToRiskArea = () => {
@@ -171,14 +160,14 @@ const navigateToRiskArea = () => {
 };
 
 const navigateToNewsInfo = (index) => {
-  const params = JSON.stringify(dataList.newsList[index]);
+  const params = JSON.stringify(DataList.newsList[index]);
   navigateTo({
     url: `/pages/home/children/news/index?data=${encodeURIComponent(params)}`,
   });
 };
 
 const navigateToTipsInfo = (index) => {
-  const data = dataList.tipsList[index];
+  const data = DataList.tipsList[index];
   data.mediaInfo = {
     name: data.source!,
     avatar: '',

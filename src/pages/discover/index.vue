@@ -28,7 +28,7 @@
             :description="i.publisherInfo.roles.role_name"
             :content="i.content"
             :time="i.createdAt"
-            v-for="i in dataList.noticeList"
+            v-for="i in DataList.noticeList"
             :key="i.id"
           >
             <template #tag>
@@ -69,7 +69,7 @@
             :replyName="i.approverInfo?.real_name"
             :replyDesc="i?.approve_time"
             :replyCont="i?.description"
-            v-for="i in dataList.suggestionList"
+            v-for="i in DataList.suggestionList"
             :key="i.id"
           />
         </template>
@@ -82,22 +82,15 @@
 </template>
 
 <script lang="ts" setup>
-import { TabList } from './data';
-import { reactive, ref } from 'vue';
+import { ref } from 'vue';
 import { navigateTo } from '@tarojs/taro';
+import { TabList, DataList } from './data';
 import SearchBar from '/@/components/SearchBar.vue';
-import DiscussCardVue from '/@/components/DiscussCard.vue';
 import { getNoticeList } from '/@/api/index/information';
+import DiscussCardVue from '/@/components/DiscussCard.vue';
 import { getSuggestionList } from '/@/api/serve/suggestion';
-import { SuggestionItem } from '/@/api/serve/suggestion/model';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import { NoticeItem } from '/@/api/index/model/informationModel';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
-
-const dataList = reactive({
-  noticeList: [] as NoticeItem[],
-  suggestionList: [] as SuggestionItem[],
-});
 
 const tabsTop = getNavBarHeigtht();
 const tabnineHeight = ref('80vh');
@@ -109,13 +102,13 @@ setTimeout(async () => {
 }, 1000);
 
 const loadMore = (name, data) => {
-  dataList[`${name}List`].push(...data.rows);
+  DataList[`${name}List`].push(...data.rows);
 };
 
 const refresh = async (name, api, pageSize) => {
   const data = await api({ page: 1, pageSize });
-  dataList[`${name}List`].length = 0;
-  dataList[`${name}List`].push(...data.rows);
+  DataList[`${name}List`].length = 0;
+  DataList[`${name}List`].push(...data.rows);
 };
 
 const createSuggestion = () => {

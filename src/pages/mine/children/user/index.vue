@@ -6,8 +6,8 @@
         :headers="uploadConfig.headers"
         :url="uploadConfig.url"
         multiple
-        @success="SuccessCallback"
-        @failure="ErrorCallback"
+        @success="handleSuccess"
+        @failure="handleError"
       ></nut-uploader>
       <img :src="userInfo.profile.avatar" alt="avatar" />
       <div class="change-avatar">
@@ -61,33 +61,23 @@ import { reactive } from 'vue';
 import { global } from '/@/utils/global';
 import { useUserStore } from '/@/store/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
-import { UserSexEnum } from '/@/enums/userEnum';
-import { UserInfo } from '/@/api/system/model/usersModel';
+import { transformUserInfo } from '/@/hooks/useTransformData';
 
 const userStore = useUserStore();
-const transformUserInfo = (info: UserInfo) => {
-  const data = {} as UserInfo;
-  for (const key in info) {
-    // eslint-disable-next-line eqeqeq
-    if (info[key] == null) {
-      data[key] = '暂无数据';
-      continue;
-    }
-    if (key === 'usex') {
-      data[key] = info[key] === UserSexEnum.Male ? '男' : '女';
-      continue;
-    }
-    data[key] = info[key];
-  }
-  return data;
-};
+
 const userInfo = reactive(transformUserInfo(userStore.getUserInfo));
+
+const editNickName = reactive({
+  show: false,
+  value: userInfo.profile.nick_name,
+});
 
 const uploadConfig = {
   url: `${global.apiUrl}/upload`,
   headers: { Authorization: `Bearer ${userStore.getToken}` },
 };
-const SuccessCallback = async (res) => {
+
+async function handleSuccess(res) {
   const data = JSON.parse(res.data.data);
   if (data.code !== 0) {
     ShowToast.error('上传失败');
@@ -95,21 +85,17 @@ const SuccessCallback = async (res) => {
   }
   await userStore.updateUserProfile({ avatar: data.result });
   userInfo.profile.avatar = data.result;
-};
-const ErrorCallback = () => {
+}
+
+function handleError() {
   ShowToast.error('上传失败');
-};
+}
 
-const editNickName = reactive({
-  show: false,
-  value: userInfo.profile.nick_name,
-});
-
-const updateNickName = async () => {
+async function updateNickName() {
   await userStore.updateUserProfile({ nick_name: editNickName.value });
   userInfo.profile.nick_name = editNickName.value;
   editNickName.show = false;
-};
+}
 </script>
 
 <style lang="scss">

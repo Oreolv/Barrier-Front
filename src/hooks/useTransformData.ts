@@ -1,5 +1,7 @@
 import { ResultColor } from '/@/enums/colorEnum';
+import { UserSexEnum } from '/@/enums/userEnum';
 import { ApplyStatusEnum } from '/@/enums/serveEnums';
+import { UserInfo } from '/@/api/mine/model/usersModel';
 
 export const addPlusAndMinus = (data) => {
   if (typeof data === 'object') {
@@ -63,3 +65,19 @@ export function transformHealth(params) {
   const array = [temperature, diagnosis, contact, symptom, hospital];
   return array.some((i) => i > 0) ? '异常' : '无异常';
 }
+
+export const transformUserInfo = (info: UserInfo): UserInfo => {
+  const data = {};
+  for (const key in info) {
+    if (info[key] == null) {
+      data[key] = '暂无数据';
+      continue;
+    }
+    if (key === 'usex') {
+      data[key] = info[key] === UserSexEnum.Male ? '男' : '女';
+      continue;
+    }
+    data[key] = info[key];
+  }
+  return data as UserInfo;
+};

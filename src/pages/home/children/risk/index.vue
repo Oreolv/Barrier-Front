@@ -110,8 +110,10 @@
           :use-window="false"
           :has-more="state.hasMoreMiddleList"
           @load-more="loadMoreMiddleList"
-          load-more-txt="没有更多数据了"
+          load-more-txt="已经到底啦"
           pull-icon="loading"
+          pull-txt=""
+          load-icon="loading"
         >
           <Card id="arealist" v-for="item in state.middlelist" :key="item.id" :show-divider="false">
             <template #content>
@@ -135,7 +137,7 @@
           :use-window="false"
           :has-more="state.hasMoreHighList"
           @load-more="loadMoreHighList"
-          load-more-txt="没有更多数据了"
+          load-more-txt="已经到底啦"
           pull-icon="loading"
           pull-txt=""
           load-icon="loading"
@@ -291,12 +293,6 @@ const showRiskAreaModal = () => {
 page {
   background-color: #f5f5f5;
 }
-// 隐藏滚动条
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
-}
 
 #count {
   .count-list {
@@ -354,6 +350,7 @@ page {
 }
 
 #description {
+  margin-bottom: 16px;
   .description-list {
     display: flex;
     border-bottom: #efefef 1px solid;
@@ -426,14 +423,17 @@ page {
 }
 .card {
   box-shadow: none;
+  margin: 0 16px;
 }
 </style>
 
 <style lang="scss">
 .nut-searchbar {
+  position: relative;
   background-color: #f5f5f5;
   box-shadow: none;
-  margin-top: 8px;
+  padding: 16px;
+  padding-bottom: 4px;
 }
 .nut-tabs__titles {
   padding: 0 16px;
@@ -460,9 +460,11 @@ page {
 
 .nut-tabpane {
   height: v-bind(tabnineHeight);
-  padding: 16px;
-  padding-top: 0;
+  padding: 0;
   background-color: #f5f5f5;
+}
+.nut-infinite-bottom {
+  padding: 16px;
 }
 .nut-divider {
   margin: 8px 0;
