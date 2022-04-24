@@ -15,6 +15,13 @@ import { getAbnormalList } from '/@/api/serve/abnormal';
 import { getMaterialList } from '/@/api/serve/material';
 import { transformHealth } from '/@/hooks/useTransformData';
 
+interface DetailProps {
+  name: string | null;
+  data: any;
+  status: number | null;
+  description: string | null;
+}
+
 export const TabList = reactive({
   tabValue: 'visitor',
   list: [
@@ -50,6 +57,14 @@ export const TabList = reactive({
 });
 
 export const Flag = ref(false);
+
+export const DetailData = reactive<DetailProps>({
+  name: null,
+  data: null,
+  status: null,
+  description: null,
+});
+
 export interface DataListProps {
   trip: TripItem[];
   back: BackItem[];

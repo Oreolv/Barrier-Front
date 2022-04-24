@@ -35,6 +35,7 @@
             :description="getContent(tab.paneKey, i).description"
             :avatar="i.approverInfo?.avatar"
             :createdAt="i.createdAt"
+            @click="showDetail(tab.paneKey, i)"
           ></ReportCardVue>
         </template>
       </InfiniteLoading>
@@ -51,13 +52,17 @@ import { navigateTo, useDidShow } from '@tarojs/taro';
 import ReportCardVue from '/@/components/ReportCard.vue';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import { TabList, DataList, FuncList, Flag, getContent } from './data';
+import { TabList, DataList, FuncList, Flag, getContent, DetailData } from './data';
 
 useDidShow(() => {
   if (Flag.value) {
     refresh(TabList.tabValue, FuncList[TabList.tabValue], 10);
     Flag.value = false;
   }
+  DetailData.name = '';
+  DetailData.data = null;
+  DetailData.status = NaN;
+  DetailData.description = '';
 });
 
 const tabnineHeight = ref('80vh');
@@ -78,6 +83,16 @@ const refresh = async (name, api, pageSize) => {
 const loadMore = (name, data) => {
   DataList[name].push(...data.rows);
 };
+
+function showDetail(name, params) {
+  DetailData.name = name;
+  DetailData.data = params;
+  DetailData.status = params.status;
+  DetailData.description = params.description;
+  navigateTo({
+    url: `/pages/report/children/detail/index`,
+  });
+}
 
 setTimeout(async () => {
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
