@@ -13,6 +13,8 @@ import { getAgencyList } from '/@/api/serve/agency/index';
 import { getVisitorList } from '/@/api/serve/visitor';
 import { getAbnormalList } from '/@/api/serve/abnormal';
 import { getMaterialList } from '/@/api/serve/material';
+import { transformHealth } from '/@/hooks/useTransformData';
+
 export const TabList = reactive({
   tabValue: 'visitor',
   list: [
@@ -77,3 +79,37 @@ export const FuncList = {
   abnormal: getAbnormalList,
   material: getMaterialList,
 };
+
+export function getContent(name, params) {
+  const contentList = {
+    trip: {
+      title: `前往${params.destination}报备`,
+      description: `${params.start_time}至${params.end_time}`,
+    },
+    back: {
+      title: `自${params.come_from}返乡`,
+      description: `${params.end_time}到达`,
+    },
+    health: {
+      title: '每日健康上报',
+      description: `${params.createdAt.substring(0, 10)} ${transformHealth(params)}`,
+    },
+    agency: {
+      title: `${params.type}申请`,
+      description: params.content,
+    },
+    visitor: {
+      title: `${params.visitor}申请访问`,
+      description: `${params.start_time}至${params.end_time}`,
+    },
+    abnormal: {
+      title: params.type,
+      description: params.content,
+    },
+    material: {
+      title: `${params.type}申请`,
+      description: params.content,
+    },
+  };
+  return contentList[name];
+}

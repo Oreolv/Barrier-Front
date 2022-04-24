@@ -57,3 +57,9 @@ export const transformStatus = (status) => {
   }
   return { text, color };
 };
+
+export function transformHealth(params) {
+  const { temperature, diagnosis, contact, symptom, hospital } = params;
+  const array = [temperature, diagnosis, contact, symptom, hospital];
+  return array.some((i) => i > 0) ? '异常' : '无异常';
+}

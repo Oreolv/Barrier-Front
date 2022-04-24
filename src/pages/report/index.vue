@@ -15,168 +15,24 @@
         </nut-radiogroup>
       </scroll-view>
     </template>
-    <nut-tabpane pane-key="visitor">
+    <nut-tabpane v-for="tab in TabList.list" :key="tab.paneKey" :pane-key="tab.paneKey">
       <InfiniteLoading
-        name="visitor"
+        :name="tab.paneKey"
         :pageSize="10"
-        :api="FuncList.visitor"
+        :api="FuncList[tab.paneKey]"
         @load="loadMore"
         @refresh="refresh"
-        v-if="TabList.tabValue === 'visitor'"
+        v-if="TabList.tabValue === tab.paneKey"
       >
         <template #content>
-          <nut-empty description="无数据" v-if="!DataList.visitor.length"></nut-empty>
+          <nut-empty description="无数据" v-if="!DataList[tab.paneKey].length"></nut-empty>
           <ReportCardVue
             v-else
-            v-for="i in DataList.visitor"
+            v-for="i in DataList[tab.paneKey]"
             :key="i.id"
             :status="i.status"
-            :title="`${i.visitor}申请访问`"
-            :description="`${i.start_time}至${i.end_time}`"
-            :avatar="i.approverInfo?.avatar"
-            :createdAt="i.createdAt"
-          ></ReportCardVue>
-        </template>
-      </InfiniteLoading>
-    </nut-tabpane>
-    <nut-tabpane pane-key="trip">
-      <InfiniteLoading
-        name="trip"
-        :pageSize="10"
-        :api="FuncList.trip"
-        @load="loadMore"
-        @refresh="refresh"
-        v-if="TabList.tabValue === 'trip'"
-      >
-        <template #content>
-          <nut-empty description="无数据" v-if="!DataList.trip.length"></nut-empty>
-          <ReportCardVue
-            v-else
-            v-for="i in DataList.trip"
-            :key="i.id"
-            :status="i.status"
-            :title="`前往${i.destination}报备`"
-            :description="`${i.start_time}至${i.end_time}`"
-            :avatar="i.approverInfo?.avatar"
-            :createdAt="i.createdAt"
-          ></ReportCardVue>
-        </template>
-      </InfiniteLoading>
-    </nut-tabpane>
-    <nut-tabpane pane-key="back">
-      <InfiniteLoading
-        name="back"
-        :pageSize="10"
-        :api="FuncList.back"
-        @load="loadMore"
-        @refresh="refresh"
-        v-if="TabList.tabValue === 'back'"
-      >
-        <template #content>
-          <nut-empty description="无数据" v-if="!DataList.back.length"></nut-empty>
-          <ReportCardVue
-            v-else
-            v-for="i in DataList.back"
-            :key="i.id"
-            :status="i.status"
-            :title="`自${i.come_from}返乡`"
-            :description="`${i.end_time}到达`"
-            :avatar="i.approverInfo?.avatar"
-            :createdAt="i.createdAt"
-          ></ReportCardVue>
-        </template>
-      </InfiniteLoading>
-    </nut-tabpane>
-    <nut-tabpane pane-key="abnormal">
-      <InfiniteLoading
-        name="abnormal"
-        :pageSize="10"
-        :api="FuncList.abnormal"
-        @load="loadMore"
-        @refresh="refresh"
-        v-if="TabList.tabValue === 'abnormal'"
-      >
-        <template #content>
-          <nut-empty description="无数据" v-if="!DataList.abnormal.length"></nut-empty>
-          <ReportCardVue
-            v-else
-            v-for="i in DataList.abnormal"
-            :key="i.id"
-            :status="i.status"
-            :title="i.type"
-            :description="i.content"
-            :avatar="i.approverInfo?.avatar"
-            :createdAt="i.createdAt"
-          ></ReportCardVue>
-        </template>
-      </InfiniteLoading>
-    </nut-tabpane>
-    <nut-tabpane pane-key="health">
-      <InfiniteLoading
-        name="health"
-        :pageSize="10"
-        :api="FuncList.health"
-        @load="loadMore"
-        @refresh="refresh"
-        v-if="TabList.tabValue === 'health'"
-      >
-        <template #content>
-          <nut-empty description="无数据" v-if="!DataList.health.length"></nut-empty>
-          <ReportCardVue
-            v-else
-            v-for="i in DataList.health"
-            :key="i.id"
-            :status="i.status"
-            title="每日健康上报"
-            :description="`${i.createdAt.substring(0, 10)} ${transformHealth(i)}`"
-            :avatar="i.approverInfo?.avatar"
-            :createdAt="i.createdAt"
-          ></ReportCardVue>
-        </template>
-      </InfiniteLoading>
-    </nut-tabpane>
-    <nut-tabpane pane-key="material">
-      <InfiniteLoading
-        name="material"
-        :pageSize="10"
-        :api="FuncList.material"
-        @load="loadMore"
-        @refresh="refresh"
-        v-if="TabList.tabValue === 'material'"
-      >
-        <template #content>
-          <nut-empty description="无数据" v-if="!DataList.material.length"></nut-empty>
-          <ReportCardVue
-            v-else
-            v-for="i in DataList.material"
-            :key="i.id"
-            :status="i.status"
-            :title="`${i.type}申请`"
-            :description="i.content"
-            :avatar="i.approverInfo?.avatar"
-            :createdAt="i.createdAt"
-          ></ReportCardVue>
-        </template>
-      </InfiniteLoading>
-    </nut-tabpane>
-    <nut-tabpane pane-key="agency">
-      <InfiniteLoading
-        name="agency"
-        :pageSize="10"
-        :api="FuncList.agency"
-        @load="loadMore"
-        @refresh="refresh"
-        v-if="TabList.tabValue === 'agency'"
-      >
-        <template #content>
-          <nut-empty description="无数据" v-if="!DataList.agency.length"></nut-empty>
-          <ReportCardVue
-            v-else
-            v-for="i in DataList.agency"
-            :key="i.id"
-            :status="i.status"
-            :title="`${i.type}申请`"
-            :description="i.content"
+            :title="getContent(tab.paneKey, i).title"
+            :description="getContent(tab.paneKey, i).description"
             :avatar="i.approverInfo?.avatar"
             :createdAt="i.createdAt"
           ></ReportCardVue>
@@ -193,15 +49,9 @@
 import { ref } from 'vue';
 import { navigateTo, useDidShow } from '@tarojs/taro';
 import ReportCardVue from '/@/components/ReportCard.vue';
-import { TabList, DataList, FuncList, Flag } from './data';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-
-const create = (dir) => {
-  navigateTo({
-    url: `/pages/report/children/${dir}/index`,
-  });
-};
+import { TabList, DataList, FuncList, Flag, getContent } from './data';
 
 useDidShow(() => {
   if (Flag.value) {
@@ -213,8 +63,10 @@ useDidShow(() => {
 const tabnineHeight = ref('80vh');
 const loadmoreHeight = ref('80vh');
 
-const loadMore = (name, data) => {
-  DataList[name].push(...data.rows);
+const create = (dir) => {
+  navigateTo({
+    url: `/pages/report/children/${dir}/index`,
+  });
 };
 
 const refresh = async (name, api, pageSize) => {
@@ -223,11 +75,9 @@ const refresh = async (name, api, pageSize) => {
   DataList[name].push(...data.rows);
 };
 
-function transformHealth(params) {
-  const { temperature, diagnosis, contact, symptom, hospital } = params;
-  const array = [temperature, diagnosis, contact, symptom, hospital];
-  return array.some((i) => i > 0) ? '异常' : '无异常';
-}
+const loadMore = (name, data) => {
+  DataList[name].push(...data.rows);
+};
 
 setTimeout(async () => {
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
