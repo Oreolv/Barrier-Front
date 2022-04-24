@@ -7,7 +7,7 @@ export interface CreateBackParams {
   vehicle_seat: string;
   risk_status: number;
   come_from: string;
-  end_time: string;
+  end_time: any; // Date类型
   health_code: string[];
 }
 

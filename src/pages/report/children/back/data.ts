@@ -8,7 +8,7 @@ export const formValues = reactive<CreateBackParams>({
   vehicle: NaN,
   vehicle_no: '',
   vehicle_seat: '',
-  end_time: '',
+  end_time: new Date(),
   risk_status: NaN,
   health_code: [],
 });
@@ -31,7 +31,7 @@ export const vehicleColumns = ref<Array<{ text: string; value: number }>>([
   { text: '飞机', value: VehicleEnum.PLANE },
 ]);
 
-export const risk_statusColumns = ref<Array<{ text: string; value: number }>>([
+export const riskStatusColumns = ref<Array<{ text: string; value: number }>>([
   { text: '低风险', value: RiskStatusEnum.Low },
   { text: '中风险', value: RiskStatusEnum.Middle },
   { text: '高风险', value: RiskStatusEnum.High },

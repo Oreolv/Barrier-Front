@@ -19,7 +19,7 @@
     </nut-form-item>
     <nut-form-item :label="formSchema.risk_status">
       <input
-        v-model="risk_statusShowValue"
+        v-model="riskStatusShowValue"
         class="nut-input-text"
         :placeholder="`请选择所在地区${formSchema.risk_status}`"
         :disabled="true"
@@ -27,7 +27,7 @@
       />
       <nut-picker
         v-model:visible="state.showRiskStatusPicker"
-        :columns="risk_statusColumns"
+        :columns="riskStatusColumns"
         title="风险等级"
         @confirm="handleRisk"
       ></nut-picker>
@@ -65,7 +65,7 @@
     </nut-form-item>
     <nut-form-item :label="formSchema.end_time">
       <input
-        v-model="formValues.end_time"
+        v-model="state.timePickerShowValue"
         class="nut-input-text"
         :placeholder="`请选择您的${formSchema.end_time}`"
         :disabled="true"
@@ -75,6 +75,8 @@
         v-model="formValues.end_time"
         title="日期时间选择"
         type="datetime"
+        :min-date="new Date(2016, 0, 1)"
+        :max-date="new Date(2046, 11, 31)"
         @confirm="confirm"
         v-model:visible="state.showEndTime"
       ></nut-datepicker>
@@ -108,7 +110,7 @@ import { ShowToast } from '/@/hooks/useShowMessage';
 import { getChinaAreaData } from '/@/api/system/index';
 import { reactive, onBeforeMount, computed } from 'vue';
 import { validate, reset } from '/@/hooks/useHandleFormValues';
-import { formValues, formSchema, vehicleColumns, risk_statusColumns } from './data';
+import { formValues, formSchema, vehicleColumns, riskStatusColumns } from './data';
 
 const userStore = useUserStore();
 
@@ -120,6 +122,7 @@ const state = reactive({
   showVehiclePicker: false,
   showRiskStatusPicker: false,
   userPromise: true,
+  timePickerShowValue: '',
 });
 
 const uploadConfig = {
@@ -129,21 +132,24 @@ const uploadConfig = {
 
 onBeforeMount(async () => {
   state.chinaAreaData = (await getChinaAreaData()) as any;
+  const time = new Date().toJSON().substring(0, 10).split('-').map(Number);
+  formValues.end_time = new Date(time[0], time[1] - 1, time[2], 8, 0);
 });
 
 const confirm = ({ selectedValue }) => {
   const date = selectedValue.slice(0, 3).join('-');
   const time = selectedValue.slice(3).join(':');
   formValues.end_time = date + ' ' + time;
+  state.timePickerShowValue = date + ' ' + time;
 };
 
-function confirmAreaData(arg) {
-  state.areaDataValue = arg;
-  const cityList = ['天津', '北京', '上海', '重庆'];
-  arg[0] = cityList.includes(arg[0]) ? arg[0] + '市' : arg[0] + '省';
-  arg[1] = arg[1] + '市';
-  arg[2] = arg[2] + '区';
-  formValues.come_from = arg.join(' ');
+function confirmAreaData(data) {
+  state.areaDataValue = data;
+  let [prov, city, area] = data;
+  city = city + '市';
+  area = area + '区';
+  prov = ['天津', '北京', '上海', '重庆'].includes(prov) ? prov + '市' : prov + '省';
+  formValues.come_from = [prov, city, area].join(' ');
 }
 
 const vehicleShowValue = computed(() => {
@@ -154,11 +160,11 @@ const vehicleShowValue = computed(() => {
   return i.text;
 });
 
-const risk_statusShowValue = computed(() => {
+const riskStatusShowValue = computed(() => {
   if (isNaN(formValues.risk_status)) {
     return '';
   }
-  const i = risk_statusColumns.value.filter((i) => i.value == Number(formValues.risk_status))[0];
+  const i = riskStatusColumns.value.filter((i) => i.value == Number(formValues.risk_status))[0];
   return i.text;
 });
 
