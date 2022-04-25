@@ -18,7 +18,7 @@
       <nut-cell-group>
         <nut-cell
           title="昵称"
-          :desc="userInfo.profile.nick_name"
+          :desc="userInfo.profile.nickName"
           is-link
           @click="editNickName.show = true"
         ></nut-cell>
@@ -69,7 +69,7 @@ const userInfo = reactive(transformUserInfo(userStore.getUserInfo));
 
 const editNickName = reactive({
   show: false,
-  value: userInfo.profile.nick_name,
+  value: userInfo.profile.nickName,
 });
 
 const uploadConfig = {
@@ -92,8 +92,8 @@ function handleError() {
 }
 
 async function updateNickName() {
-  await userStore.updateUserProfile({ nick_name: editNickName.value });
-  userInfo.profile.nick_name = editNickName.value;
+  await userStore.updateUserProfile({ nickName: editNickName.value });
+  userInfo.profile.nickName = editNickName.value;
   editNickName.show = false;
 }
 </script>

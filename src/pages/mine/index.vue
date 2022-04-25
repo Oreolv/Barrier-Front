@@ -10,7 +10,7 @@
           />
         </div>
         <div class="user-name">
-          <div class="name">{{ userStore.getUserProfile.nick_name || '立即登录' }}</div>
+          <div class="name">{{ userStore.getUserProfile.nickName || '立即登录' }}</div>
           <div class="tips" @click="showBindingModal" v-if="!userStore.checkUserInfoBinding">
             <nut-icon name="ask" size="20"></nut-icon>
           </div>

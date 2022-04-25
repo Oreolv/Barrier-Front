@@ -32,5 +32,5 @@ export interface LoginResultModel {
 // 由微信获取，头像和昵称
 export interface UserProfile {
   avatar?: string;
-  nick_name?: string;
+  nickName?: string;
 }

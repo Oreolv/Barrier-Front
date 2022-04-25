@@ -5,8 +5,8 @@ interface ModalParams {
   title: string;
   content: string;
   showCancel?: boolean;
-  success?: Function;
-  fail?: Function;
+  success?: any;
+  fail?: any;
 }
 
 function toast(title: string, icon: icon, duration: number) {
@@ -22,6 +22,8 @@ function modal(params: ModalParams) {
     title: params.title,
     content: params.content,
     showCancel: params.showCancel,
+    success: params.success,
+    fail: params.fail,
   });
 }
 
