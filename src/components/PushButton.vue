@@ -1,12 +1,27 @@
 <template>
   <div class="component">
-    <div class="push-button">
+    <div class="push-button" @click="checkUserBinding">
       <nut-icon font-class-name="iconfont" class-prefix="icon" name="zengjia" />
     </div>
   </div>
 </template>
 
-<script lang="scss" setup></script>
+<script lang="ts" setup>
+import { useUserStore } from '/@/store/users';
+import { ShowModal } from '/@/hooks/useShowMessage';
+
+const userStore = useUserStore();
+
+function checkUserBinding(event) {
+  if (!userStore.getUserBindingStatus) {
+    ShowModal.info({
+      title: '系统提示',
+      content: '由于您未更新个人信息，暂时无法使用此功能',
+    });
+    event.stopPropagation();
+  }
+}
+</script>
 
 <style lang="scss">
 .component {

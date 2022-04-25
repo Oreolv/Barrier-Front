@@ -52,9 +52,8 @@ export const useUserStore = defineStore('users', {
     getUserLoginStatus(): boolean {
       return Boolean(this.getToken) || false;
     },
-    checkUserInfoBinding(): boolean {
-      // eslint-disable-next-line eqeqeq
-      return !this.getUserLoginStatus || Boolean(this.getUserInfo.access_status != null) || false;
+    getUserBindingStatus(): boolean {
+      return Boolean(this.getUserInfo.cname) || false;
     },
   },
   actions: {
