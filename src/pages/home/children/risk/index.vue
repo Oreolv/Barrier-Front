@@ -19,7 +19,14 @@
     </template>
     <nut-tabpane pane-key="t1">
       <Card id="count" :description="state.risk.end_update_time" title="风险地区数量">
-        <template #icon><nut-icon name="ask" @click="showRiskAreaModal"></nut-icon></template>
+        <template #icon>
+          <nut-icon
+            font-class-name="iconfont"
+            class-prefix="icon"
+            name="question-circle"
+            @click="showRiskAreaModal"
+          ></nut-icon>
+        </template>
         <template #content>
           <nut-skeleton
             width="250px"
@@ -69,7 +76,7 @@
                   id="count-list__left-high"
                   font-class-name="iconfont"
                   class-prefix="icon"
-                  name="error"
+                  name="warning-circle-fill"
                 />
               </div>
               <div class="count-list__middle" id="count-list__second">

@@ -13,7 +13,7 @@ const userStore = useUserStore();
 export const SettingList: SettingItem[] = [
   {
     title: '个人资料',
-    icon: 'wode-gerenziliao',
+    icon: 'adduser',
     click: (loginStatus) => {
       if (loginStatus) {
         navigateTo({
@@ -27,7 +27,7 @@ export const SettingList: SettingItem[] = [
   },
   {
     title: '清除缓存',
-    icon: 'shanchu',
+    icon: 'delete',
     click: () => {
       showModal({
         title: '提醒',
@@ -48,7 +48,7 @@ export const SettingList: SettingItem[] = [
   },
   {
     title: '分享应用',
-    icon: 'fenxiang',
+    icon: 'share',
     click: () => {},
   },
 ];

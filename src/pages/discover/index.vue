@@ -33,15 +33,30 @@
           >
             <template #tag>
               <div class="discuss-footer__tag" v-if="i.grade == 0">
-                <nut-icon name="check-checked" color="#4FC08D"></nut-icon>
+                <nut-icon
+                  font-class-name="iconfont"
+                  class-prefix="icon"
+                  name="slack-circle-fill"
+                  color="#4FC08D"
+                ></nut-icon>
                 <div class="discuss-footer__tag-name">安全</div>
               </div>
               <div class="discuss-footer__tag" v-if="i.grade == 1">
-                <nut-icon name="check-checked" color="#F3812E"></nut-icon>
+                <nut-icon
+                  font-class-name="iconfont"
+                  class-prefix="icon"
+                  name="slack-circle-fill"
+                  color="#F3812E"
+                ></nut-icon>
                 <div class="discuss-footer__tag-name">重要</div>
               </div>
               <div class="discuss-footer__tag" v-if="i.grade == 2">
-                <nut-icon name="check-checked" color="#EA290E"></nut-icon>
+                <nut-icon
+                  font-class-name="iconfont"
+                  class-prefix="icon"
+                  name="slack-circle-fill"
+                  color="#EA290E"
+                ></nut-icon>
                 <div class="discuss-footer__tag-name">紧急</div>
               </div>
             </template>

@@ -11,7 +11,7 @@
       ></nut-uploader>
       <img :src="userInfo.profile.avatar" alt="avatar" />
       <div class="change-avatar">
-        <nut-icon font-class-name="iconfont" class-prefix="icon" name="paizhao" />
+        <nut-icon font-class-name="iconfont" class-prefix="icon" name="camera" />
       </div>
     </div>
     <div class="user-info">

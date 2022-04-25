@@ -11,7 +11,11 @@
       </div>
       <div class="discuss-footer">
         <div class="discuss-footer__tag" v-if="props.type">
-          <nut-icon name="check-checked"></nut-icon>
+          <nut-icon
+            font-class-name="iconfont"
+            class-prefix="icon"
+            name="slack-circle-fill"
+          ></nut-icon>
           <div class="discuss-footer__tag-name">{{ props.type }}</div>
         </div>
         <slot name="tag"></slot>
