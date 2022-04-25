@@ -185,7 +185,7 @@ setTimeout(async () => {
 }
 .nut-tabpane {
   height: v-bind(tabnineHeight);
-  padding: 0 16px;
+  padding: 0;
   // overflow: hidden;
 }
 

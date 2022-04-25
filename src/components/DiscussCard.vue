@@ -66,6 +66,7 @@ const props = withDefaults(defineProps<AvatarHeaderProps>(), {
 .component {
   .discuss {
     padding: 16px 0 8px 0;
+    margin: 0 16px;
     border-bottom: 1px solid #f1f1f1;
     .discuss-content {
       white-space: pre-line;
