@@ -25,9 +25,7 @@
         v-if="TabList.tabValue === tab.paneKey"
       >
         <template #content>
-          <nut-empty description="无数据" v-if="!DataList[tab.paneKey].length"></nut-empty>
           <ReportCardVue
-            v-else
             v-for="i in DataList[tab.paneKey]"
             :key="i.id"
             :status="i.status"
@@ -35,6 +33,7 @@
             :description="getContent(tab.paneKey, i).description"
             :avatar="i.approverInfo?.avatar"
             :createdAt="i.createdAt"
+            :loading="loading"
             @click="showDetail(tab.paneKey, i)"
           ></ReportCardVue>
         </template>
@@ -65,6 +64,7 @@ useDidShow(() => {
   DetailData.description = '';
 });
 
+const loading = ref(true);
 const tabnineHeight = ref('100vh');
 const loadmoreHeight = ref('100vh');
 
@@ -78,6 +78,7 @@ const refresh = async (name, api, pageSize) => {
   DataList[name].length = 0;
   const data = await api({ page: 1, pageSize });
   DataList[name].push(...data.rows);
+  loading.value = false;
 };
 
 const loadMore = (name, data) => {

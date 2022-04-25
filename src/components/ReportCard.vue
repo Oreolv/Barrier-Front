@@ -2,20 +2,40 @@
   <div class="component">
     <div class="report">
       <div class="report-left">
-        <div class="report-left__top">{{ props.title }}</div>
-        <div class="report-left__middle">{{ props.description }}</div>
-
-        <div class="report-left__bottom">
-          {{ transformDate(props.createdAt) }}
-        </div>
+        <nut-skeleton
+          width="200px"
+          height="12px"
+          :loading="props.loading"
+          :title="false"
+          :row="3"
+          animated
+        >
+          <div class="report-left__top">{{ props.title }}</div>
+          <div class="report-left__middle">{{ props.description }}</div>
+          <div class="report-left__bottom">
+            {{ transformDate(props.createdAt) }}
+          </div>
+        </nut-skeleton>
       </div>
       <div class="report-right">
         <div class="report-right__avatar">
-          <img :src="props.avatar || require('/@/assets/avatar.png')" alt="" />
+          <nut-skeleton
+            width="36px"
+            height="36px"
+            :title="false"
+            :loading="props.loading"
+            animated
+            avatar
+            avatarSize="36px"
+          >
+            <img :src="props.avatar || require('/@/assets/avatar.png')" alt="" />
+          </nut-skeleton>
         </div>
-        <div class="report-right__result" :style="{ color: transformStatus(props.status).color }">
-          {{ transformStatus(props.status).text }}
-        </div>
+        <nut-skeleton width="40px" height="12px" :loading="props.loading" :title="false" animated>
+          <div class="report-right__result" :style="{ color: transformStatus(props.status).color }">
+            {{ transformStatus(props.status).text }}
+          </div>
+        </nut-skeleton>
       </div>
     </div>
   </div>
@@ -30,6 +50,7 @@ const props = defineProps({
   title: String,
   description: String,
   createdAt: String,
+  loading: Boolean,
 });
 </script>
 
