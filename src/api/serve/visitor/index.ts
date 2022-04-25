@@ -15,6 +15,9 @@ export function getVisitorList(params: BasicPageParams) {
   return defHttp.get<GetVisitorListResultModel>({ url: Api.GetVisitorList, params });
 }
 
-export function removeVisitor() {
-  return defHttp.delete<null>({ url: Api.RemoveVisitor });
+export function removeVisitor(id: number) {
+  return defHttp.delete<null>(
+    { url: `${Api.RemoveVisitor}?id=${id}` },
+    { showSuccessMessage: true }
+  );
 }

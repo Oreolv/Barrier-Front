@@ -16,6 +16,9 @@ export function getHealthList(params: BasicPageParams) {
   return defHttp.get<GetHealthListResultModel>({ url: Api.GetHealthList, params });
 }
 
-export function removeHealth() {
-  return defHttp.delete<null>({ url: Api.RemoveHealth });
+export function removeHealth(id: number) {
+  return defHttp.delete<null>(
+    { url: `${Api.RemoveHealth}?id=${id}` },
+    { showSuccessMessage: true }
+  );
 }

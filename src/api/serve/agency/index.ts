@@ -15,6 +15,9 @@ export function getAgencyList(params: BasicPageParams) {
   return defHttp.get<GetAgencyListResultModel>({ url: Api.GetAgencyList, params });
 }
 
-export function removeAgency() {
-  return defHttp.delete<null>({ url: Api.RemoveAgency });
+export function removeAgency(id: number) {
+  return defHttp.delete<null>(
+    { url: `${Api.RemoveAgency}?id=${id}` },
+    { showSuccessMessage: true }
+  );
 }

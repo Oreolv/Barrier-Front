@@ -15,6 +15,6 @@ export function getTripList(params: BasicPageParams) {
   return defHttp.get<GetTripListResultModel>({ url: Api.GetTripList, params });
 }
 
-export function removeTrip() {
-  return defHttp.delete<null>({ url: Api.RemoveTrip });
+export function removeTrip(id: number) {
+  return defHttp.delete<null>({ url: `${Api.RemoveTrip}?id=${id}` }, { showSuccessMessage: true });
 }

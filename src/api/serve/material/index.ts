@@ -15,6 +15,9 @@ export function getMaterialList(params: BasicPageParams) {
   return defHttp.get<GetMaterialListResultModel>({ url: Api.GetMaterialList, params });
 }
 
-export function removeMaterial() {
-  return defHttp.delete<null>({ url: Api.RemoveMaterial });
+export function removeMaterial(id: number) {
+  return defHttp.delete<null>(
+    { url: `${Api.RemoveMaterial}?id=${id}` },
+    { showSuccessMessage: true }
+  );
 }

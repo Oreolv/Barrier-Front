@@ -16,6 +16,9 @@ export function getAbnormalList(params: BasicPageParams) {
   return defHttp.get<GetAbnormalListResultModel>({ url: Api.GetAbnormalList, params });
 }
 
-export function removeAbnormal() {
-  return defHttp.delete<null>({ url: Api.RemoveAbnormal });
+export function removeAbnormal(id: number) {
+  return defHttp.delete<null>(
+    { url: `${Api.RemoveAbnormal}?id=${id}` },
+    { showSuccessMessage: true }
+  );
 }

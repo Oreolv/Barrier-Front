@@ -15,6 +15,6 @@ export function getBackList(params: BasicPageParams) {
   return defHttp.get<GetBackListResultModel>({ url: Api.GetBackList, params });
 }
 
-export function removeBack() {
-  return defHttp.delete<null>({ url: Api.RemoveBack });
+export function removeBack(id: number) {
+  return defHttp.delete<null>({ url: `${Api.RemoveBack}?id=${id}` }, { showSuccessMessage: true });
 }
