@@ -34,6 +34,7 @@ import {
   DatePicker,
   TextArea,
   ImagePreview,
+  Avatar,
 } from '@nutui/nutui-taro';
 const pinia = createPinia();
 const App = createApp({});
@@ -68,6 +69,7 @@ const NutComponent = [
   DatePicker,
   TextArea,
   ImagePreview,
+  Avatar,
 ];
 
 App.use(pinia);

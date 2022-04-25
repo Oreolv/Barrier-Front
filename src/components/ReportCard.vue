@@ -7,7 +7,7 @@
           height="12px"
           :loading="props.loading"
           :title="false"
-          :row="3"
+          row="3"
           animated
         >
           <div class="report-left__top">{{ props.title }}</div>
@@ -18,12 +18,21 @@
         </nut-skeleton>
       </div>
       <div class="report-right">
-        <div class="report-right__avatar">
-          <nut-skeleton width="36px" height="36px" :title="false" :loading="props.loading" animated>
+        <nut-skeleton
+          width="0"
+          height="0"
+          animated
+          avatar
+          avatar-size="36"
+          :title="false"
+          :loading="props.loading"
+          style="width: 40px"
+        >
+          <div class="report-right__avatar">
             <img :src="props.avatar || require('/@/assets/avatar.png')" alt="" />
-          </nut-skeleton>
-        </div>
-        <nut-skeleton width="40px" height="12px" :loading="props.loading" :title="false" animated>
+          </div>
+        </nut-skeleton>
+        <nut-skeleton width="40px" height="12px" :loading="props.loading" animated>
           <div class="report-right__result" :style="{ color: transformStatus(props.status).color }">
             {{ transformStatus(props.status).text }}
           </div>
