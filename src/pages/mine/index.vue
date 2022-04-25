@@ -32,12 +32,7 @@
             is-link
           >
             <template v-slot:icon>
-              <nut-icon
-                font-class-name="iconfont"
-                class-prefix="icon"
-                :name="item.icon"
-                size="20"
-              />
+              <nut-icon font-class-name="iconfont" class-prefix="icon" :name="item.icon" />
             </template>
           </nut-cell>
         </nut-cell-group>
@@ -153,13 +148,10 @@ const showBindingModal = () => {
 .user-setting {
   padding: 24px 8px 16px 8px;
   .nut-cell__icon {
-    margin-right: 8px;
-    color: black;
-  }
-  .nutui-iconfont {
-    color: black;
-    font-size: 10px;
-    font-weight: 800;
+    margin-right: 12px;
+    text {
+      font-size: 24px;
+    }
   }
 }
 </style>
