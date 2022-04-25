@@ -54,13 +54,18 @@
         </div>
       </div>
     </div>
+    <div class="detail-footer" v-if="DetailData.status === ApplyStatusEnum.underReview">
+      <nut-button shape="square" type="primary" block @click="removeReport">取消申请</nut-button>
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { computed, reactive } from 'vue';
-import { DetailList } from './data';
+import { Flag } from '/@/pages/report/data';
+import { DetailList, FuncList } from './data';
 import { DetailData } from '/@/pages/report/data';
+import { showModal, switchTab } from '@tarojs/taro';
 import { ResultColorEnum } from '/@/enums/colorEnum';
 import { ApplyStatusEnum } from '/@/enums/serveEnum';
 
@@ -109,6 +114,27 @@ const img = computed(() => {
 });
 
 const detail = DetailList[DetailData.name!](DetailData.data);
+
+function removeReport() {
+  showModal({
+    title: '提醒',
+    content: '确认删除此申请？',
+    showCancel: true,
+    confirmText: '删除',
+    confirmColor: '#FF0000',
+    success: async (res) => {
+      if (res.confirm) {
+        await FuncList[DetailData.name!](DetailData.data.id);
+        setTimeout(() => {
+          Flag.value = true;
+          switchTab({
+            url: '/pages/report/index',
+          });
+        }, 1000);
+      }
+    },
+  });
+}
 </script>
 
 <style lang="scss">
@@ -157,6 +183,9 @@ const detail = DetailList[DetailData.name!](DetailData.data);
         color: #999999;
       }
     }
+  }
+  .detail-footer {
+    margin-top: 16px;
   }
 }
 </style>

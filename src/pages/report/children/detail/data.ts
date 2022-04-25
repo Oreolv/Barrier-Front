@@ -5,6 +5,13 @@ import { HealthItem } from '/@/api/serve/health/model';
 import { VisitorItem } from '/@/api/serve/visitor/model';
 import { AbnormalItem } from '/@/api/serve/abnormal/model';
 import { MaterialItem } from '/@/api/serve/material/model';
+import { removeTrip } from '/@/api/serve/trip';
+import { removeBack } from '/@/api/serve/back';
+import { removeHealth } from '/@/api/serve/health/index';
+import { removeAgency } from '/@/api/serve/agency/index';
+import { removeVisitor } from '/@/api/serve/visitor';
+import { removeAbnormal } from '/@/api/serve/abnormal';
+import { removeMaterial } from '/@/api/serve/material';
 
 const riskStatus = ['低风险', '中风险', '高风险'];
 const vehicleColumns = ['驾车', '大巴', '火车', '高铁', '飞机'];
@@ -142,4 +149,14 @@ export const DetailList = {
       },
     ];
   },
+};
+
+export const FuncList = {
+  trip: removeTrip,
+  back: removeBack,
+  health: removeHealth,
+  agency: removeAgency,
+  visitor: removeVisitor,
+  abnormal: removeAbnormal,
+  material: removeMaterial,
 };
