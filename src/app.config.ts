@@ -5,7 +5,6 @@ export default defineAppConfig({
     'pages/discover/index',
     'pages/mine/index',
     'pages/mine/children/user/index',
-    'pages/mine/children/setting/index',
     'pages/home/children/news/index',
     'pages/home/children/risk/index',
     'pages/discover/children/suggestion/index',

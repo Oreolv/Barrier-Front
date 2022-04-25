@@ -26,25 +26,6 @@ export const SettingList: SettingItem[] = [
     },
   },
   {
-    title: '账户设置',
-    icon: 'wode-bangdingguanxi',
-    click: (loginStatus) => {
-      if (loginStatus) {
-        navigateTo({
-          url: '/pages/mine/children/setting/index',
-          events: {},
-        });
-      } else {
-        ShowToast.info('请先登陆');
-      }
-    },
-  },
-  {
-    title: '分享应用',
-    icon: 'fenxiang',
-    click: () => {},
-  },
-  {
     title: '清除缓存',
     icon: 'shanchu',
     click: () => {
@@ -64,5 +45,10 @@ export const SettingList: SettingItem[] = [
         },
       });
     },
+  },
+  {
+    title: '分享应用',
+    icon: 'fenxiang',
+    click: () => {},
   },
 ];
