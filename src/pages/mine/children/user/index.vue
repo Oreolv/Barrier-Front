@@ -1,5 +1,5 @@
 <template>
-  <view class="index">
+  <div class="index">
     <div class="user-avatar">
       <nut-uploader
         maximum="1"
@@ -31,7 +31,12 @@
         <nut-cell title="所属小区" :desc="userInfo.vname"></nut-cell>
       </nut-cell-group>
     </div>
-  </view>
+    <div class="user-logout">
+      <nut-button id="logout" shape="square" type="primary" block @click="logout">
+        退出登陆
+      </nut-button>
+    </div>
+  </div>
   <nut-popup
     pop-class="popclass"
     v-model:visible="editNickName.show"
@@ -62,6 +67,7 @@ import { global } from '/@/utils/global';
 import { useUserStore } from '/@/store/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
 import { transformUserInfo } from '/@/hooks/useTransformData';
+import { switchTab } from '@tarojs/taro';
 
 const userStore = useUserStore();
 
@@ -96,10 +102,20 @@ async function updateNickName() {
   userInfo.profile.nickName = editNickName.value;
   editNickName.show = false;
 }
+
+function logout() {
+  userStore.logoutAction();
+  setTimeout(() => {
+    switchTab({
+      url: '/pages/mine/index',
+    });
+  }, 1000);
+}
 </script>
 
 <style lang="scss">
 page {
+  box-sizing: border-box;
   background-color: #f4f4f4;
 }
 .index {
@@ -165,6 +181,13 @@ page {
     font-size: 10px;
     font-weight: 800;
   }
+}
+.user-logout {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 16px;
+  position: fixed;
+  bottom: 20px;
 }
 .popclass {
   height: 66.6vh;
