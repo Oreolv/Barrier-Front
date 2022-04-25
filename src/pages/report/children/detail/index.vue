@@ -41,7 +41,7 @@
           {{ DetailData.data.createdAt }}
         </div>
       </div>
-      <div class="detail-content__item" v-if="DetailData.data.approverInfo.real_name">
+      <div class="detail-content__item" v-if="DetailData.data.approverInfo">
         <div class="detail-content__item-title">审批人：</div>
         <div class="detail-content__item-text">
           {{ DetailData.data.approverInfo.real_name }}
