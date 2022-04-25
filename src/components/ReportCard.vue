@@ -19,15 +19,7 @@
       </div>
       <div class="report-right">
         <div class="report-right__avatar">
-          <nut-skeleton
-            width="36px"
-            height="36px"
-            :title="false"
-            :loading="props.loading"
-            animated
-            avatar
-            avatarSize="36px"
-          >
+          <nut-skeleton width="36px" height="36px" :title="false" :loading="props.loading" animated>
             <img :src="props.avatar || require('/@/assets/avatar.png')" alt="" />
           </nut-skeleton>
         </div>

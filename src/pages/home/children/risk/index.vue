@@ -1,7 +1,7 @@
 <template>
   <nut-searchbar v-model="state.searchValue" @change="handleSearch" placeholder="搜索地区风险等级">
     <template v-slot:leftin>
-      <nut-icon size="14" name="search2"></nut-icon>
+      <nut-icon name="search2"></nut-icon>
     </template>
   </nut-searchbar>
   <nut-tabs v-model="tabList.tabValue" type="none" v-show="!state.searchValue.length">

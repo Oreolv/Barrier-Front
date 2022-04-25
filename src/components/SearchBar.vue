@@ -3,7 +3,7 @@
     <template #content>
       <nut-searchbar :placeholder="placeholder">
         <template v-slot:leftin>
-          <nut-icon size="14" name="search2"></nut-icon>
+          <nut-icon name="search2"></nut-icon>
         </template>
       </nut-searchbar>
     </template>

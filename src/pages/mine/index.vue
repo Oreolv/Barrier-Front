@@ -12,7 +12,7 @@
         <div class="user-name">
           <div class="name">{{ userStore.getUserProfile.nickName || '立即登录' }}</div>
           <div class="tips" @click="showBindingModal" v-if="!userStore.checkUserInfoBinding">
-            <nut-icon name="ask" size="20"></nut-icon>
+            <nut-icon name="ask"></nut-icon>
           </div>
         </div>
       </div>
@@ -118,6 +118,7 @@ const showBindingModal = () => {
       text {
         vertical-align: middle;
         color: #faad14;
+        font-size: 20px;
       }
     }
   }
