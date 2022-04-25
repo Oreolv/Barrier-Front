@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3284248 */
-  src: url('//at.alicdn.com/t/font_3284248_ukntsiv6zl9.woff2?t=1650858851872') format('woff2'),
-       url('//at.alicdn.com/t/font_3284248_ukntsiv6zl9.woff?t=1650858851872') format('woff'),
-       url('//at.alicdn.com/t/font_3284248_ukntsiv6zl9.ttf?t=1650858851872') format('truetype');
+  src: url('//at.alicdn.com/t/font_3284248_5z3977umzu3.woff2?t=1650874645487') format('woff2'),
+       url('//at.alicdn.com/t/font_3284248_5z3977umzu3.woff?t=1650874645487') format('woff'),
+       url('//at.alicdn.com/t/font_3284248_5z3977umzu3.ttf?t=1650874645487') format('truetype');
 }
 
 .iconfont {
@@ -13,8 +13,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-radiochecked:before {
-  content: "\e849";
+.icon-shanchu:before {
+  content: "\e600";
+}
+
+.icon-slack-circle-fill:before {
+  content: "\e889";
 }
 
 .icon-zengjia:before {
@@ -51,18 +55,6 @@
 
 .icon-error-fill:before {
   content: "\e86f";
-}
-
-.icon-fengxianyujing:before {
-  content: "\e608";
-}
-
-.icon-bg-warning:before {
-  content: "\e642";
-}
-
-.icon-qingchu:before {
-  content: "\e713";
 }
 
 .icon-paizhao:before {

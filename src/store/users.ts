@@ -133,13 +133,13 @@ export const useUserStore = defineStore('users', {
       showLoading.hideLoading();
       this.checkUserInfoBindingAction();
     },
-    logoutAction() {
+    logoutAction(msg = '退出成功') {
       this.resetStateAction();
       this.setUserInfoAction(null);
       this.setTokenAction(undefined);
       this.setUserStatusAction(null);
       this.setUserProfileAction(null);
-      ShowToast.success('退出成功');
+      ShowToast.success(msg);
     },
     resetStateAction() {
       this.userInfo = null;
