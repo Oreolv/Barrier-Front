@@ -1,31 +1,22 @@
 export default defineAppConfig({
-  pages: ['pages/home/index', 'pages/report/index', 'pages/discover/index', 'pages/mine/index'],
-  subpackages: [
-    {
-      root: 'pages/mine/children',
-      pages: ['user/index', 'setting/index'],
-    },
-    {
-      root: 'pages/home/children',
-      pages: ['risk/index', 'news/index'],
-    },
-    {
-      root: 'pages/discover/children',
-      pages: ['suggestion/index'],
-    },
-    {
-      root: 'pages/report/children',
-      pages: [
-        'visitor/index',
-        'trip/index',
-        'back/index',
-        'abnormal/index',
-        'health/index',
-        'material/index',
-        'agency/index',
-        'detail/index',
-      ],
-    },
+  pages: [
+    'pages/home/index',
+    'pages/report/index',
+    'pages/discover/index',
+    'pages/mine/index',
+    'pages/mine/children/user/index',
+    'pages/mine/children/setting/index',
+    'pages/home/children/news/index',
+    'pages/home/children/risk/index',
+    'pages/discover/children/suggestion/index',
+    'pages/report/children/visitor/index',
+    'pages/report/children/trip/index',
+    'pages/report/children/back/index',
+    'pages/report/children/abnormal/index',
+    'pages/report/children/health/index',
+    'pages/report/children/material/index',
+    'pages/report/children/agency/index',
+    'pages/report/children/detail/index',
   ],
   window: {
     backgroundTextStyle: 'light',
