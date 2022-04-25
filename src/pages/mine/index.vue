@@ -1,5 +1,5 @@
 <template>
-  <view class="index">
+  <div class="index">
     <div class="mine-back"></div>
     <div class="mine-user">
       <div class="user-profile" @click="loginAction">
@@ -24,28 +24,37 @@
       </div>
       <div class="user-setting">
         <nut-cell-group>
-          <nut-cell
-            v-for="item in SettingList"
-            :key="item.icon"
-            :title="item.title"
-            @click="item.click"
-            is-link
-          >
+          <nut-cell title="个人资料" @click="goUserProfile" is-link>
             <template v-slot:icon>
-              <nut-icon font-class-name="iconfont" class-prefix="icon" :name="item.icon" />
+              <nut-icon font-class-name="iconfont" class-prefix="icon" name="adduser" />
+            </template>
+          </nut-cell>
+          <nut-cell title="清除缓存" @click="goDeleteCache" is-link>
+            <template v-slot:icon>
+              <nut-icon font-class-name="iconfont" class-prefix="icon" name="delete" />
+            </template>
+          </nut-cell>
+          <nut-cell is-link>
+            <template #default>
+              <div class="nut-cell__icon">
+                <nut-icon font-class-name="iconfont" class-prefix="icon" name="share" />
+              </div>
+              <div class="nut-cell__title">分享好友</div>
+              <button id="share" open-type="share"></button>
+              <div class="nutui-iconfont nut-icon nut-icon-right nut-cell__link"></div>
             </template>
           </nut-cell>
         </nut-cell-group>
       </div>
     </div>
-  </view>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { SettingList } from './data';
-import { useDidShow } from '@tarojs/taro';
 import { useUserStore } from '/@/store/users';
-import { ShowModal } from '/@/hooks/useShowMessage';
+import { ShowModal, ShowToast } from '/@/hooks/useShowMessage';
+import { navigateTo, showModal, switchTab, useShareAppMessage, useDidShow } from '@tarojs/taro';
+
 const userStore = useUserStore();
 
 useDidShow(async () => {
@@ -67,6 +76,42 @@ const showBindingModal = () => {
     content: '由于用户未绑定个人信息，默认设置为高风险用户，进出小区将会受到限制。',
   });
 };
+
+useShareAppMessage(() => {
+  return {
+    title: '清疫小程序',
+    path: '/page/mine/index',
+  };
+});
+
+function goUserProfile() {
+  if (!userStore.getUserLoginStatus) {
+    ShowToast.info('请先登陆');
+    return;
+  }
+  navigateTo({
+    url: '/pages/mine/children/user/index',
+    events: {},
+  });
+}
+
+function goDeleteCache() {
+  showModal({
+    title: '提醒',
+    content: '清除缓存后需要重新登陆',
+    showCancel: true,
+    success: (res) => {
+      if (res.confirm) {
+        userStore.logoutAction('清除成功');
+        setTimeout(() => {
+          switchTab({
+            url: '/pages/mine/index',
+          });
+        }, 1500);
+      }
+    },
+  });
+}
 </script>
 
 <style lang="scss">
@@ -154,5 +199,11 @@ const showBindingModal = () => {
       font-size: 24px;
     }
   }
+}
+#share {
+  opacity: 0;
+  position: absolute;
+  height: 20px;
+  width: 100%;
 }
 </style>
