@@ -5,6 +5,7 @@ import { BasicPageParams } from '/@/api/model/baseModel';
 enum Api {
   CreateAbnormal = '/abnormal/createAbnormal',
   GetAbnormalList = '/abnormal/getAbnormalList',
+  RemoveAbnormal = '/abnormal/removeAbnormal',
 }
 
 export function createAbnormal(params: CreateAbnormalParams) {
@@ -13,4 +14,8 @@ export function createAbnormal(params: CreateAbnormalParams) {
 
 export function getAbnormalList(params: BasicPageParams) {
   return defHttp.get<GetAbnormalListResultModel>({ url: Api.GetAbnormalList, params });
+}
+
+export function removeAbnormal() {
+  return defHttp.delete<null>({ url: Api.RemoveAbnormal });
 }

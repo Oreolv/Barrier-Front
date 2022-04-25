@@ -4,6 +4,7 @@ import { BasicPageParams } from '/@/api/model/baseModel';
 enum Api {
   CreateMaterial = '/material/createMaterial',
   GetMaterialList = '/material/getMaterialList',
+  RemoveMaterial = '/material/removeMaterial',
 }
 
 export function createMaterial(params: CreateMaterialParams) {
@@ -12,4 +13,8 @@ export function createMaterial(params: CreateMaterialParams) {
 
 export function getMaterialList(params: BasicPageParams) {
   return defHttp.get<GetMaterialListResultModel>({ url: Api.GetMaterialList, params });
+}
+
+export function removeMaterial() {
+  return defHttp.delete<null>({ url: Api.RemoveMaterial });
 }

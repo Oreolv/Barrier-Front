@@ -4,6 +4,7 @@ import { CreateVisitorParams, GetVisitorListResultModel } from './model';
 enum Api {
   CreateVisitor = '/visitor/createVisitor',
   GetVisitorList = '/visitor/getVisitorList',
+  RemoveVisitor = '/visitor/removeVisitor',
 }
 
 export function createVisitor(params: CreateVisitorParams) {
@@ -12,4 +13,8 @@ export function createVisitor(params: CreateVisitorParams) {
 
 export function getVisitorList(params: BasicPageParams) {
   return defHttp.get<GetVisitorListResultModel>({ url: Api.GetVisitorList, params });
+}
+
+export function removeVisitor() {
+  return defHttp.delete<null>({ url: Api.RemoveVisitor });
 }

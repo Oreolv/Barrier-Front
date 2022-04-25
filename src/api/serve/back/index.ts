@@ -4,6 +4,7 @@ import { CreateBackParams, GetBackListResultModel } from './model';
 enum Api {
   CreateBack = '/back/createBack',
   GetBackList = '/back/getBackList',
+  RemoveBack = '/back/removeBack',
 }
 
 export function createBack(params: CreateBackParams) {
@@ -12,4 +13,8 @@ export function createBack(params: CreateBackParams) {
 
 export function getBackList(params: BasicPageParams) {
   return defHttp.get<GetBackListResultModel>({ url: Api.GetBackList, params });
+}
+
+export function removeBack() {
+  return defHttp.delete<null>({ url: Api.RemoveBack });
 }

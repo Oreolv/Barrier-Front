@@ -4,6 +4,7 @@ import { CreateTripParams, GetTripListResultModel } from './model';
 enum Api {
   CreateTrip = '/trip/createTrip',
   GetTripList = '/trip/getTripList',
+  RemoveTrip = '/trip/removeTrip',
 }
 
 export function createTrip(params: CreateTripParams) {
@@ -12,4 +13,8 @@ export function createTrip(params: CreateTripParams) {
 
 export function getTripList(params: BasicPageParams) {
   return defHttp.get<GetTripListResultModel>({ url: Api.GetTripList, params });
+}
+
+export function removeTrip() {
+  return defHttp.delete<null>({ url: Api.RemoveTrip });
 }
