@@ -30,7 +30,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-import { redirectTo } from '@tarojs/taro';
+import { switchTab } from '@tarojs/taro';
 import { validate } from '/@/hooks/useHandleFormValues';
 import { createSuggestion } from '/@/api/serve/suggestion';
 import { formValues, formSchema, suggestionType } from './data';
@@ -40,8 +40,8 @@ const submitFormValues = async () => {
   validate(formValues, formSchema);
   await createSuggestion(formValues);
   setTimeout(() => {
-    redirectTo({
-      url: '/pages/serve/children/suggestion/index',
+    switchTab({
+      url: '/pages/discover/index',
     });
   }, 1000);
 };
