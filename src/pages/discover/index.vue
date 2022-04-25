@@ -98,29 +98,41 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { navigateTo } from '@tarojs/taro';
 import { TabList, DataList } from './data';
+import { useUserStore } from '/@/store/users';
 import SearchBar from '/@/components/SearchBar.vue';
+import { ShowToast } from '/@/hooks/useShowMessage';
 import { getNoticeList } from '/@/api/index/information';
 import DiscussCardVue from '/@/components/DiscussCard.vue';
 import { getSuggestionList } from '/@/api/serve/suggestion';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
+import { navigateTo, useDidShow, switchTab } from '@tarojs/taro';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 
 const tabsTop = getNavBarHeigtht();
 const tabnineHeight = ref('100vh');
 const loadmoreHeight = ref('100vh');
 
-setTimeout(async () => {
-  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
-  tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
-}, 1000);
+const userStore = useUserStore();
+
+useDidShow(() => {
+  if (!userStore.getUserLoginStatus) {
+    ShowToast.error('请先登陆');
+    setTimeout(() => {
+      switchTab({
+        url: '/pages/mine/index',
+      });
+    }, 1000);
+    return;
+  }
+  refresh('notice', getNoticeList);
+});
 
 const loadMore = (name, data) => {
   DataList[`${name}List`].push(...data.rows);
 };
 
-const refresh = async (name, api, pageSize) => {
+const refresh = async (name, api, pageSize = 10) => {
   const data = await api({ page: 1, pageSize });
   DataList[`${name}List`].length = 0;
   DataList[`${name}List`].push(...data.rows);
@@ -131,6 +143,11 @@ const createSuggestion = () => {
     url: '/pages/discover/children/suggestion/index',
   });
 };
+
+setTimeout(async () => {
+  loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
+  tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
+}, 1000);
 </script>
 
 <style lang="scss">

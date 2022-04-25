@@ -47,13 +47,28 @@
 
 <script lang="ts" setup>
 import { ref } from 'vue';
-import { navigateTo, useDidShow } from '@tarojs/taro';
+import { useUserStore } from '/@/store/users';
+import { ShowToast } from '/@/hooks/useShowMessage';
 import ReportCardVue from '/@/components/ReportCard.vue';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
+import { navigateTo, useDidShow, switchTab } from '@tarojs/taro';
 import { TabList, DataList, FuncList, Flag, getContent, DetailData } from './data';
+import { getVisitorList } from '../../api/serve/visitor/index';
+
+const userStore = useUserStore();
 
 useDidShow(() => {
+  if (!userStore.getUserLoginStatus) {
+    ShowToast.error('请先登陆');
+    setTimeout(() => {
+      switchTab({
+        url: '/pages/mine/index',
+      });
+    }, 1000);
+    return;
+  }
+  refresh('visitor', getVisitorList);
   if (Flag.value) {
     refresh(TabList.tabValue, FuncList[TabList.tabValue], 10);
     Flag.value = false;
@@ -74,7 +89,7 @@ const create = (dir) => {
   });
 };
 
-const refresh = async (name, api, pageSize) => {
+const refresh = async (name, api, pageSize = 10) => {
   DataList[name].length = 0;
   const data = await api({ page: 1, pageSize });
   DataList[name].push(...data.rows);
