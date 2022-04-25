@@ -40,15 +40,14 @@
       </InfiniteLoading>
     </nut-tabpane>
   </nut-tabs>
-  <div class="push-button" @click="create(TabList.tabValue)">
-    <nut-icon font-class-name="iconfont" class-prefix="icon" name="zengjia" />
-  </div>
+  <PushButton @click="create(TabList.tabValue)" />
 </template>
 
 <script lang="ts" setup>
 import { ref } from 'vue';
 import { useUserStore } from '/@/store/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
+import PushButton from '/@/components/PushButton.vue';
 import ReportCardVue from '/@/components/ReportCard.vue';
 import { getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
@@ -117,16 +116,6 @@ setTimeout(async () => {
 </script>
 
 <style lang="scss">
-.push-button {
-  position: fixed;
-  bottom: 48px;
-  right: 32px;
-  text {
-    font-size: 36px;
-    opacity: 0.7;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-}
 .push-popup {
   height: 100%;
   .pop-content {

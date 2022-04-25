@@ -91,9 +91,7 @@
       </InfiniteLoading>
     </nut-tabpane>
   </nut-tabs>
-  <div class="push-button" v-show="TabList.tabValue === '1'" @click="createSuggestion">
-    <nut-icon font-class-name="iconfont" class-prefix="icon" name="zengjia" />
-  </div>
+  <PushButton v-show="TabList.tabValue === '1'" @click="createSuggestion" />
 </template>
 
 <script lang="ts" setup>
@@ -102,6 +100,7 @@ import { TabList, DataList } from './data';
 import { useUserStore } from '/@/store/users';
 import SearchBar from '/@/components/SearchBar.vue';
 import { ShowToast } from '/@/hooks/useShowMessage';
+import PushButton from '/@/components/PushButton.vue';
 import { getNoticeList } from '/@/api/index/information';
 import DiscussCardVue from '/@/components/DiscussCard.vue';
 import { getSuggestionList } from '/@/api/serve/suggestion';
@@ -190,24 +189,7 @@ setTimeout(async () => {
   // overflow: hidden;
 }
 
-::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-  color: transparent;
-}
-
 .container:first-child {
   padding-top: 0;
-}
-
-.push-button {
-  position: fixed;
-  bottom: 48px;
-  right: 32px;
-  text {
-    font-size: 36px;
-    opacity: 0.7;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
 }
 </style>
