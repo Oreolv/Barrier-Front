@@ -93,8 +93,8 @@ import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 
 const tabsTop = getNavBarHeigtht();
-const tabnineHeight = ref('80vh');
-const loadmoreHeight = ref('80vh');
+const tabnineHeight = ref('100vh');
+const loadmoreHeight = ref('100vh');
 
 setTimeout(async () => {
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;

@@ -209,8 +209,8 @@ interface RiskIncrease {
   per: string;
   count: number | string;
 }
-const tabnineHeight = ref('80vh');
-const loadmoreHeight = ref('80vh');
+const tabnineHeight = ref('100vh');
+const loadmoreHeight = ref('100vh');
 const showSkeletonLoading = ref(true);
 
 const state = reactive({

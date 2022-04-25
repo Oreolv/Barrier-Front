@@ -121,8 +121,8 @@ import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo
 
 const tabsTop = getNavBarHeigtht();
 const loading = ref(true);
-const tabnineHeight = ref('80vh');
-const loadmoreHeight = ref('80vh');
+const tabnineHeight = ref('100vh');
+const loadmoreHeight = ref('100vh');
 
 onBeforeMount(async () => {
   DataList.allData = await getCovidData();
