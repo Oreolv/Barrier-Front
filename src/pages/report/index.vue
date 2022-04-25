@@ -44,7 +44,7 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useUserStore } from '/@/store/users';
 import { ShowToast } from '/@/hooks/useShowMessage';
 import PushButton from '/@/components/PushButton.vue';
@@ -67,7 +67,9 @@ useDidShow(() => {
     }, 1000);
     return;
   }
-  refresh('visitor', getVisitorList);
+  if (DataList.visitor.length === 0) {
+    refresh('visitor', getVisitorList);
+  }
   if (Flag.value) {
     refresh(TabList.tabValue, FuncList[TabList.tabValue], 10);
     Flag.value = false;
@@ -81,6 +83,15 @@ useDidShow(() => {
 const loading = ref(true);
 const tabnineHeight = ref('100vh');
 const loadmoreHeight = ref('100vh');
+
+watch(
+  () => TabList.tabValue,
+  (val) => {
+    if (DataList[val].length === 0) {
+      refresh(val, FuncList[val]);
+    }
+  }
+);
 
 const create = (dir) => {
   navigateTo({

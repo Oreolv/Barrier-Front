@@ -1,6 +1,7 @@
 import { reactive } from 'vue';
 import { NewsItem } from '/@/api/index/model/informationModel';
 import { GetCovidDataResultModel } from '/@/api/index/model/covidModel';
+import { getTipsList, getNewsList } from '/@/api/index/information';
 
 interface DataListProps {
   allData: GetCovidDataResultModel;
@@ -59,19 +60,19 @@ export const CityColumn = [
 ];
 
 export const TabList = reactive({
-  tabValue: '0',
+  tabValue: 'covid',
   list: [
     {
       title: '疫情数据',
-      paneKey: '0',
+      paneKey: 'covid',
     },
     {
       title: '疫情新闻',
-      paneKey: '1',
+      paneKey: 'news',
     },
     {
       title: '防疫知识',
-      paneKey: '2',
+      paneKey: 'tips',
     },
   ],
 });
@@ -81,3 +82,8 @@ export const DataList = reactive<DataListProps>({
   newsList: [],
   tipsList: [],
 });
+
+export const FuncList = {
+  news: getNewsList,
+  tips: getTipsList,
+};

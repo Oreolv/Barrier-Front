@@ -13,7 +13,7 @@
         <span class="nut-tabs__titles-item__line"></span>
       </div>
     </template>
-    <nut-tabpane pane-key="0">
+    <nut-tabpane pane-key="covid">
       <div class="data">
         <!-- 国内疫情数据 -->
         <div class="china-data">
@@ -58,7 +58,7 @@
         </div>
       </div>
     </nut-tabpane>
-    <nut-tabpane pane-key="1">
+    <nut-tabpane pane-key="news">
       <InfiniteLoading
         name="news"
         :pageSize="5"
@@ -84,7 +84,7 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="2">
+    <nut-tabpane pane-key="tips">
       <InfiniteLoading
         name="tips"
         :pageSize="10"
@@ -107,7 +107,7 @@
 </template>
 
 <script lang="ts" setup>
-import { onBeforeMount, ref } from 'vue';
+import { onBeforeMount, ref, watch } from 'vue';
 import { navigateTo } from '@tarojs/taro';
 import Card from '../../components/Card.vue';
 import { getCovidData } from '/@/api/index/covid';
@@ -115,7 +115,7 @@ import SearchBar from '/@/components/SearchBar.vue';
 import { addPlusAndMinus } from '/@/hooks/useTransformData';
 import ChinaCovidItem from '/@/components/ChinaCovidItem.vue';
 import InfiniteLoading from '/@/components/InfiniteLoading.vue';
-import { CovidList, CityColumn, TabList, DataList } from './data';
+import { CovidList, CityColumn, TabList, DataList, FuncList } from './data';
 import { getTipsList, getNewsList } from '/@/api/index/information';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 
@@ -132,6 +132,15 @@ onBeforeMount(async () => {
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 });
 
+watch(
+  () => TabList.tabValue,
+  (val) => {
+    if (DataList[`${val}List`].length === 0) {
+      refresh(val, FuncList[val]);
+    }
+  }
+);
+
 const transformAllData = (data) => {
   data.city_data = data.city_data
     .sort((a, b) => {
@@ -146,7 +155,7 @@ const loadMore = (name, data) => {
   DataList[`${name}List`].push(...data.rows);
 };
 
-const refresh = async (name, api, pageSize) => {
+const refresh = async (name, api, pageSize = 10) => {
   DataList[`${name}List`].length = 0;
   const data = await api({ page: 1, pageSize });
   DataList[`${name}List`].push(...data.rows);

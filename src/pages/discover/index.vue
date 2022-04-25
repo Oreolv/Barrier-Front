@@ -13,7 +13,7 @@
         <span class="nut-tabs__titles-item__line"></span>
       </div>
     </template>
-    <nut-tabpane pane-key="0">
+    <nut-tabpane pane-key="notice">
       <InfiniteLoading
         name="notice"
         :pageSize="10"
@@ -64,7 +64,7 @@
         </template>
       </InfiniteLoading>
     </nut-tabpane>
-    <nut-tabpane pane-key="1">
+    <nut-tabpane pane-key="suggestion">
       <InfiniteLoading
         name="suggestion"
         :pageSize="10"
@@ -91,13 +91,13 @@
       </InfiniteLoading>
     </nut-tabpane>
   </nut-tabs>
-  <PushButton v-show="TabList.tabValue === '1'" @click="createSuggestion" />
+  <PushButton v-show="TabList.tabValue === 'suggestion'" @click="createSuggestion" />
 </template>
 
 <script lang="ts" setup>
-import { ref } from 'vue';
-import { TabList, DataList } from './data';
+import { ref, watch } from 'vue';
 import { useUserStore } from '/@/store/users';
+import { TabList, DataList, FuncList } from './data';
 import SearchBar from '/@/components/SearchBar.vue';
 import { ShowToast } from '/@/hooks/useShowMessage';
 import PushButton from '/@/components/PushButton.vue';
@@ -124,8 +124,19 @@ useDidShow(() => {
     }, 1000);
     return;
   }
-  refresh('notice', getNoticeList);
+  if (DataList.noticeList.length === 0) {
+    refresh('notice', getNoticeList);
+  }
 });
+
+watch(
+  () => TabList.tabValue,
+  (val) => {
+    if (DataList[`${val}List`].length === 0) {
+      refresh(val, FuncList[`${val}`]);
+    }
+  }
+);
 
 const loadMore = (name, data) => {
   DataList[`${name}List`].push(...data.rows);
