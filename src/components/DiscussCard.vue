@@ -100,7 +100,7 @@ const props = withDefaults(defineProps<AvatarHeaderProps>(), {
 
   .reply {
     padding: 16px;
-    margin-top: 8px;
+    margin: 8px 16px;
     background-color: #f5f5f5;
     .reply-content {
       margin-top: 12px;
