@@ -107,7 +107,7 @@
 <script lang="ts" setup>
 import { ref, watch } from 'vue';
 import { useUserStore } from '/@/store/users';
-import { TabList, DataList, FuncList } from './data';
+import { TabList, DataList, FuncList, Flag } from './data';
 import SearchBar from '/@/components/SearchBar.vue';
 import { ShowToast } from '/@/hooks/useShowMessage';
 import PushButton from '/@/components/PushButton.vue';
@@ -137,6 +137,10 @@ useDidShow(() => {
   }
   if (DataList.noticeList.length === 0) {
     refresh('notice', getNoticeList);
+  }
+  if (Flag.value) {
+    refresh('suggestion', getSuggestionList);
+    Flag.value = false;
   }
 });
 

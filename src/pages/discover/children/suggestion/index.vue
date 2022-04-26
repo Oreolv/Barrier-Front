@@ -31,18 +31,20 @@
 </template>
 <script lang="ts" setup>
 import { switchTab } from '@tarojs/taro';
-import { validate } from '/@/hooks/useHandleFormValues';
+import { Flag } from '/@/pages/discover/data';
+import { validate, reset } from '/@/hooks/useHandleFormValues';
 import { createSuggestion } from '/@/api/serve/suggestion';
 import { formValues, formSchema, suggestionType } from './data';
 
 const submitFormValues = async () => {
-  // 组件自带的实在是难用，还不如自己写
   validate(formValues, formSchema);
   await createSuggestion(formValues);
   setTimeout(() => {
+    Flag.value = true;
     switchTab({
       url: '/pages/discover/index',
     });
+    reset(formValues);
   }, 1000);
 };
 </script>

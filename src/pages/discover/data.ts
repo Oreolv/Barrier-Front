@@ -1,4 +1,4 @@
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { SuggestionItem } from '/@/api/serve/suggestion/model';
 import { NoticeItem } from '/@/api/index/model/informationModel';
 import { getNoticeList } from '/@/api/index/information';
@@ -31,3 +31,5 @@ export const FuncList = {
   notice: getNoticeList,
   suggestion: getSuggestionList,
 };
+
+export const Flag = ref(false);
