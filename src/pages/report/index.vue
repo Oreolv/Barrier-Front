@@ -16,6 +16,11 @@
       </scroll-view>
     </template>
     <nut-tabpane v-for="tab in TabList.list" :key="tab.paneKey" :pane-key="tab.paneKey">
+      <nut-empty
+        image="empty"
+        description="无内容"
+        v-if="!loading && DataList[tab.paneKey].length === 0"
+      ></nut-empty>
       <InfiniteLoading
         :name="tab.paneKey"
         :pageSize="10"

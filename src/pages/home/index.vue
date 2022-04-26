@@ -59,6 +59,11 @@
       </div>
     </nut-tabpane>
     <nut-tabpane pane-key="news">
+      <nut-empty
+        image="empty"
+        description="无内容"
+        v-if="!loading && DataList.newsList.length === 0"
+      ></nut-empty>
       <InfiniteLoading
         name="news"
         :pageSize="5"
@@ -85,6 +90,11 @@
       </InfiniteLoading>
     </nut-tabpane>
     <nut-tabpane pane-key="tips">
+      <nut-empty
+        image="empty"
+        description="无内容"
+        v-if="!loading && DataList.tipsList.length === 0"
+      ></nut-empty>
       <InfiniteLoading
         name="tips"
         :pageSize="10"

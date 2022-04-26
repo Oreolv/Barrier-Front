@@ -14,6 +14,11 @@
       </div>
     </template>
     <nut-tabpane pane-key="notice">
+      <nut-empty
+        image="empty"
+        description="无内容"
+        v-if="!loading && DataList.noticeList.length === 0"
+      ></nut-empty>
       <InfiniteLoading
         name="notice"
         :pageSize="10"
@@ -65,6 +70,11 @@
       </InfiniteLoading>
     </nut-tabpane>
     <nut-tabpane pane-key="suggestion">
+      <nut-empty
+        image="empty"
+        description="无内容"
+        v-if="!loading && DataList.suggestionList.length === 0"
+      ></nut-empty>
       <InfiniteLoading
         name="suggestion"
         :pageSize="10"
@@ -108,6 +118,7 @@ import InfiniteLoading from '/@/components/InfiniteLoading.vue';
 import { navigateTo, useDidShow, switchTab } from '@tarojs/taro';
 import { getNavBarHeigtht, getNodePositionInfo } from '/@/hooks/useGetSystemInfo';
 
+const loading = ref(true);
 const tabsTop = getNavBarHeigtht();
 const tabnineHeight = ref('100vh');
 const loadmoreHeight = ref('100vh');
@@ -146,6 +157,7 @@ const refresh = async (name, api, pageSize = 10) => {
   const data = await api({ page: 1, pageSize });
   DataList[`${name}List`].length = 0;
   DataList[`${name}List`].push(...data.rows);
+  loading.value = false;
 };
 
 const createSuggestion = () => {
