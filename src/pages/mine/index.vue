@@ -11,7 +11,7 @@
         </div>
         <div class="user-name">
           <div class="name">{{ userStore.getUserProfile.nickName || '立即登录' }}</div>
-          <div class="tips" @click="showBindingModal" v-if="!userStore.checkUserInfoBinding">
+          <div class="tips" @click="showBindingModal" v-if="!userStore.getUserBindingStatus">
             <nut-icon name="ask"></nut-icon>
           </div>
         </div>
@@ -80,7 +80,7 @@ const showBindingModal = () => {
 useShareAppMessage(() => {
   return {
     title: '清疫小程序',
-    path: '/page/mine/index',
+    path: 'pages/home/index',
   };
 });
 
