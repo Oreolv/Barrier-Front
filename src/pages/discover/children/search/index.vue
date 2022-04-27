@@ -168,6 +168,11 @@ watch(
 
 async function handleSearch(keyword) {
   state.searchStatus = true;
+  if (state.history.includes(keyword)) {
+    // 已搜索过的关键词，重复搜索后移到最前
+    const idx = state.history.indexOf(keyword);
+    state.history.splice(idx, 1);
+  }
   state.history.unshift(state.searchValue);
   setLocalCache(SEARCH_HISTORY_KEY, state.history);
   const notice = await getNoticeList({ keyword });
@@ -178,8 +183,8 @@ async function handleSearch(keyword) {
 }
 
 function hanleSearchOne(keyword) {
-  handleSearch(keyword);
   state.searchValue = keyword;
+  handleSearch(keyword);
 }
 
 function deleteAll() {
