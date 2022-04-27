@@ -145,7 +145,7 @@
 <script lang="ts" setup>
 import { reactive, ref, watch } from 'vue';
 import { switchTab } from '@tarojs/taro';
-import { SEARCH_HISTORY_KEY } from '/@/enums/cacheEnum';
+import { DISCOVER_HISTORY_KEY } from '/@/enums/cacheEnum';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
 import { TabList, DataList } from './data';
 import DiscussCardVue from '/@/components/DiscussCard.vue';
@@ -158,7 +158,7 @@ const state = reactive({
   editStatus: false,
   searchStatus: false,
   searchValue: '',
-  history: getLocalCache(SEARCH_HISTORY_KEY) || [],
+  history: getLocalCache(DISCOVER_HISTORY_KEY) || [],
 });
 
 watch(
@@ -178,7 +178,7 @@ async function handleSearch(keyword) {
     state.history.splice(idx, 1);
   }
   state.history.unshift(state.searchValue);
-  setLocalCache(SEARCH_HISTORY_KEY, state.history);
+  setLocalCache(DISCOVER_HISTORY_KEY, state.history);
   const notice = await getNoticeList({ keyword });
   const suggest = await getSuggestionList({ keyword });
   DataList.noticeList.push(...notice.rows);
@@ -200,13 +200,13 @@ function resetSearch() {
 
 function deleteAll() {
   state.history.length = 0;
-  setLocalCache(SEARCH_HISTORY_KEY, state.history);
+  setLocalCache(DISCOVER_HISTORY_KEY, state.history);
   state.editStatus = false;
 }
 
 function deleteOne(i) {
   state.history.splice(i, 1);
-  setLocalCache(SEARCH_HISTORY_KEY, state.history);
+  setLocalCache(DISCOVER_HISTORY_KEY, state.history);
 }
 
 function hanleBack() {
