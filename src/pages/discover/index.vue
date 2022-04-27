@@ -1,5 +1,5 @@
 <template>
-  <SearchBar></SearchBar>
+  <SearchBar @focus="handleFocus"></SearchBar>
   <nut-tabs v-model="TabList.tabValue" background="#FFF" title-gutter="15">
     <template v-slot:titles>
       <div
@@ -169,6 +169,12 @@ const createSuggestion = () => {
     url: '/pages/discover/children/suggestion/index',
   });
 };
+
+function handleFocus() {
+  navigateTo({
+    url: '/pages/discover/children/search/index',
+  });
+}
 
 setTimeout(async () => {
   loadmoreHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;

@@ -7,6 +7,7 @@ export default defineAppConfig({
     'pages/mine/children/user/index',
     'pages/home/children/news/index',
     'pages/home/children/risk/index',
+    'pages/discover/children/search/index',
     'pages/discover/children/suggestion/index',
     'pages/report/children/visitor/index',
     'pages/report/children/trip/index',

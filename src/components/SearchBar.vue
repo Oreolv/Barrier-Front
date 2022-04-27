@@ -1,7 +1,7 @@
 <template>
   <nut-navbar :left-show="false">
     <template #content>
-      <nut-searchbar :placeholder="placeholder">
+      <nut-searchbar :placeholder="placeholder" @change="handleSearch" @focus="handleFocus">
         <template v-slot:leftin>
           <nut-icon name="search2"></nut-icon>
         </template>
@@ -26,11 +26,22 @@ defineProps({
     type: String,
   },
 });
+const emit = defineEmits(['search', 'focus']);
 
 const navBarTop = getNavBarTop();
 const navBarHeight = getNavBarHeigtht();
 const searchBarHeight = getMenuButtonHeight();
 const searchBarWidth = getSearchBarWidth();
+
+function handleSearch(val) {
+  emit('search', val);
+}
+
+function handleFocus() {
+  console.log(123);
+
+  emit('focus');
+}
 </script>
 
 <style lang="scss">
