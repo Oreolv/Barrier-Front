@@ -1,12 +1,14 @@
 <template>
-  <nut-navbar :left-show="false">
-    <template #left>
-      <div class="search" @click="hanlefocus">
-        <nut-icon name="search2" color="#949494"></nut-icon>
-        <div class="search-input">请输入搜索内容</div>
-      </div>
-    </template>
-  </nut-navbar>
+  <div class="component">
+    <nut-navbar :left-show="false">
+      <template #left>
+        <div class="search" @click="hanlefocus">
+          <nut-icon name="search2" color="#949494"></nut-icon>
+          <div class="search-input">请输入搜索内容</div>
+        </div>
+      </template>
+    </nut-navbar>
+  </div>
 </template>
 
 <script lang="ts" setup>
@@ -50,22 +52,24 @@ const searchBarWidth = getSearchBarWidth();
     margin: 0;
   }
 }
-.search {
-  display: flex;
-  align-items: center;
-  box-sizing: border-box;
-  padding: 4px 12px;
-  margin: 0 16px;
-  border-radius: 16px;
-  background-color: #f5f5f5;
-  position: fixed;
-  top: v-bind(navBarTop);
-  width: v-bind(searchBarWidth);
-  height: v-bind(searchBarHeight);
-  .search-input {
-    font-size: 14px;
-    color: #949494;
-    margin-left: 8px;
+.component {
+  .search {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 4px 12px;
+    margin: 0 16px;
+    border-radius: 16px;
+    background-color: #f5f5f5;
+    position: fixed;
+    top: v-bind(navBarTop);
+    width: v-bind(searchBarWidth);
+    height: v-bind(searchBarHeight);
+    .search-input {
+      font-size: 14px;
+      color: #949494;
+      margin-left: 8px;
+    }
   }
 }
 </style>
