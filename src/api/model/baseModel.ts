@@ -20,6 +20,7 @@ export interface ResidentInfo {
   cname: string;
   uname: string;
   uphone: string;
+  nickName: string;
 }
 
 export interface UserInfo {

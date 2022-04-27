@@ -85,7 +85,7 @@
         <template #content>
           <DiscussCardVue
             :avatar="i.applicantInfo.avatar"
-            :name="i.applicantInfo.uname"
+            :name="i.applicantInfo.nickName"
             :description="i.applicantInfo.cname"
             :content="i.content"
             :time="i.createdAt"
