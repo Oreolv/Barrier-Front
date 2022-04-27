@@ -1,7 +1,11 @@
 <template>
   <div class="search">
     <div class="search-header">
-      <nut-searchbar v-model="state.searchValue" placeholder="请输入搜索关键词">
+      <nut-searchbar
+        v-model="state.searchValue"
+        placeholder="请输入搜索关键词"
+        @search="handleSearch(state.searchValue)"
+      >
         <template #leftin>
           <nut-icon size="14" name="search2"></nut-icon>
         </template>
