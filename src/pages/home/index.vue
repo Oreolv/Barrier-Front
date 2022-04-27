@@ -155,6 +155,7 @@ watch(
       return;
     }
     if (DataList[`${val}List`].length === 0) {
+      loading.value = true;
       refresh(val, FuncList[val]);
     }
   }
@@ -178,6 +179,7 @@ const refresh = async (name, api, pageSize = 10) => {
   DataList[`${name}List`].length = 0;
   const data = await api({ page: 1, pageSize });
   DataList[`${name}List`].push(...data.rows);
+  loading.value = false;
 };
 
 const navigateToRiskArea = () => {
