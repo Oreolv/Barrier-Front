@@ -304,6 +304,11 @@ const navigateToTipsInfo = (index) => {
     .tips-content__title {
       display: flex;
       font-weight: 600;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      display: -webkit-box;
+      -webkit-line-clamp: 1;
+      -webkit-box-orient: vertical;
     }
     .tips-content__info {
       .nut-tag {
