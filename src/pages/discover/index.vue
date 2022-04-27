@@ -225,4 +225,9 @@ setTimeout(async () => {
 .container:first-child {
   padding-top: 0;
 }
+.nut-infinite-bottom {
+  .tips {
+    margin-top: 8px;
+  }
+}
 </style>
