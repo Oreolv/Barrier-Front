@@ -15,12 +15,31 @@
       <div class="search-history__title">
         <div class="search-history__title-text">搜索记录</div>
         <div class="search-history__title-icon">
-          <nut-icon font-class-name="iconfont" class-prefix="icon" name="delete" />
+          <nut-icon
+            v-if="!state.editStatus"
+            font-class-name="iconfont"
+            class-prefix="icon"
+            name="delete"
+            @click="state.editStatus = true"
+          />
+          <div class="shti-action" v-if="state.editStatus">
+            <div @click="state.history.length = 0">全部删除</div>
+            <div class="shti-action__line">|</div>
+            <div @click="state.editStatus = false">完成</div>
+          </div>
         </div>
       </div>
       <div class="search-history__content">
         <div class="search-history__content-item" v-for="(i, idx) in state.history" :key="idx">
           {{ i }}
+          <nut-icon
+            v-if="state.editStatus"
+            @click="state.history.splice(idx, 1)"
+            font-class-name="iconfont"
+            class-prefix="icon"
+            name="close-circle-fill"
+            color="#f20c00"
+          />
         </div>
       </div>
     </div>
@@ -32,6 +51,7 @@ import { reactive } from 'vue';
 import { switchTab } from '@tarojs/taro';
 
 const state = reactive({
+  editStatus: false,
   searchValue: '',
   history: ['上海', '物资', '北京'],
 });
@@ -55,6 +75,7 @@ function hanleBack() {
     padding: 0 16px;
     .search-history__title {
       display: flex;
+      height: 24px;
       .search-history__title-text {
         flex: 1;
         font-size: 14px;
@@ -64,6 +85,14 @@ function hanleBack() {
         text {
           font-weight: bold;
         }
+        .shti-action {
+          display: flex;
+          color: #9a9a9a;
+          font-size: 12px;
+        }
+        .shti-action__line {
+          margin: 0 6px;
+        }
       }
     }
     .search-history__content {
@@ -71,12 +100,20 @@ function hanleBack() {
       flex-wrap: wrap;
       margin-top: 16px;
       .search-history__content-item {
+        position: relative;
         font-size: 13px;
         background: #f5f5f5;
         padding: 8px 12px;
         border-radius: 16px;
         margin-right: 12px;
         margin-bottom: 12px;
+        text {
+          position: absolute;
+          top: 0;
+          right: 0;
+          margin-top: -5px;
+          margin-right: -10px;
+        }
       }
     }
   }
