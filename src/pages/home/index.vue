@@ -252,6 +252,7 @@ const navigateToTipsInfo = (index) => {
 
 .news {
   padding: 16px;
+  padding-bottom: 0;
   .news-header {
     display: flex;
     align-items: center;
