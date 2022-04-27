@@ -72,25 +72,33 @@
         </div>
       </template>
       <nut-tabpane pane-key="news">
+        <nut-skeleton width="250px" height="15px" animated :loading="loading">
+          <div class="news" v-for="(i, idx) in DataList.newsList" :key="i.id">
+            <div class="news-header">
+              <div class="news-header__left"></div>
+              <div class="news-header__time">{{ i.publishTime }}</div>
+              <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
+            </div>
+            <div class="news-content" @click="navigateToNewsInfo(idx)">
+              <div class="news-content__title">{{ i.title }}</div>
+              <div class="news-content__footer">
+                <div class="news-content__info">点击查看详细报道 >></div>
+                <div class="news-content__source">{{ i.mediaInfo!.name }}</div>
+              </div>
+            </div>
+          </div>
+        </nut-skeleton>
+        <nut-skeleton
+          width="calc(100vw - 32px)"
+          height="106px"
+          animated
+          :loading="loading"
+        ></nut-skeleton>
         <nut-empty
           image="empty"
           description="无内容"
           v-if="!loading && DataList.newsList.length === 0"
         ></nut-empty>
-        <div class="news" v-for="(i, idx) in DataList.newsList" :key="i.id">
-          <div class="news-header">
-            <div class="news-header__left"></div>
-            <div class="news-header__time">{{ i.publishTime }}</div>
-            <nut-tag v-if="idx === 0" type="danger">最新</nut-tag>
-          </div>
-          <div class="news-content" @click="navigateToNewsInfo(idx)">
-            <div class="news-content__title">{{ i.title }}</div>
-            <div class="news-content__footer">
-              <div class="news-content__info">点击查看详细报道 >></div>
-              <div class="news-content__source">{{ i.mediaInfo!.name }}</div>
-            </div>
-          </div>
-        </div>
       </nut-tabpane>
       <nut-tabpane pane-key="tips">
         <nut-empty
@@ -154,10 +162,10 @@ async function handleSearch(keyword) {
   state.history.unshift(state.searchValue);
   setLocalCache(HOME_HISTORY_KEY, state.history);
   const news = await getNewsList({ keyword });
-  const tipst = await getTipsList({ keyword });
   DataList.newsList.push(...news.rows);
-  DataList.tipsList.push(...tipst.rows);
   loading.value = false;
+  const tipst = await getTipsList({ keyword });
+  DataList.tipsList.push(...tipst.rows);
   tabnineHeight.value = `calc(100vh - ${(await getNodePositionInfo('.nut-tabpane')).top}px)`;
 }
 
@@ -167,6 +175,7 @@ function hanleSearchOne(keyword) {
 }
 
 function resetSearch() {
+  loading.value = true;
   state.searchStatus = false;
   TabList.tabValue = 'news';
   DataList.newsList.length = 0;
@@ -299,7 +308,6 @@ function navigateToTipsInfo(index) {
     }
   }
 }
-
 .tips {
   .tips-content {
     padding: 16px;
@@ -337,9 +345,15 @@ function navigateToTipsInfo(index) {
 }
 </style>
 <style lang="scss">
+.skeleton {
+  margin: 16px 16px 0 16px;
+}
 .nut-tabpane {
   height: v-bind(tabnineHeight);
   padding: 0;
+  .skeleton:last-of-type {
+    margin-top: -15px;
+  }
 }
 .nut-searchbar__search-input {
   background-color: #f5f5f5 !important;
