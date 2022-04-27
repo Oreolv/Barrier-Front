@@ -145,6 +145,9 @@ onBeforeMount(async () => {
 watch(
   () => TabList.tabValue,
   (val) => {
+    if (val === 'covid') {
+      return;
+    }
     if (DataList[`${val}List`].length === 0) {
       refresh(val, FuncList[val]);
     }
