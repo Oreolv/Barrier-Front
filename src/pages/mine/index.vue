@@ -53,6 +53,8 @@
 <script setup lang="ts">
 import { useUserStore } from '/@/store/users';
 import { ShowModal, ShowToast } from '/@/hooks/useShowMessage';
+import { setLocalCache } from '/@/hooks/useLocalCache';
+import { HOME_HISTORY_KEY, DISCOVER_HISTORY_KEY } from '/@/enums/cacheEnum';
 import { navigateTo, showModal, switchTab, useShareAppMessage, useDidShow } from '@tarojs/taro';
 
 const userStore = useUserStore();
@@ -102,6 +104,8 @@ function goDeleteCache() {
     showCancel: true,
     success: (res) => {
       if (res.confirm) {
+        setLocalCache(HOME_HISTORY_KEY, []);
+        setLocalCache(DISCOVER_HISTORY_KEY, []);
         userStore.logoutAction('清除成功');
         setTimeout(() => {
           switchTab({
