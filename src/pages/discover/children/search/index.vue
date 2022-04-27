@@ -168,7 +168,7 @@ watch(
 
 async function handleSearch(keyword) {
   state.searchStatus = true;
-  state.history.push(state.searchValue);
+  state.history.unshift(state.searchValue);
   setLocalCache(SEARCH_HISTORY_KEY, state.history);
   const notice = await getNoticeList({ keyword });
   const suggest = await getSuggestionList({ keyword });
