@@ -6,7 +6,7 @@
           <nut-icon size="14" name="search2"></nut-icon>
         </template>
         <template #rightout>
-          <div class="search-header__text" v-if="state.searchValue">搜索</div>
+          <div class="search-header__text" v-if="state.searchValue" @click="handleSearch">搜索</div>
           <div class="search-header__text" v-else @click="hanleBack">取消</div>
         </template>
       </nut-searchbar>
@@ -23,7 +23,7 @@
             @click="state.editStatus = true"
           />
           <div class="shti-action" v-if="state.editStatus">
-            <div @click="state.history.length = 0">全部删除</div>
+            <div @click="deleteAll">全部删除</div>
             <div class="shti-action__line">|</div>
             <div @click="state.editStatus = false">完成</div>
           </div>
@@ -34,7 +34,7 @@
           {{ i }}
           <nut-icon
             v-if="state.editStatus"
-            @click="state.history.splice(idx, 1)"
+            @click="deleteOne(idx)"
             font-class-name="iconfont"
             class-prefix="icon"
             name="close-circle-fill"
@@ -49,12 +49,30 @@
 <script lang="ts" setup>
 import { reactive } from 'vue';
 import { switchTab } from '@tarojs/taro';
+import { SEARCH_HISTORY_KEY } from '/@/enums/cacheEnum';
+import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
 
 const state = reactive({
   editStatus: false,
   searchValue: '',
-  history: ['上海', '物资', '北京'],
+  history: getLocalCache(SEARCH_HISTORY_KEY) || [],
 });
+
+function handleSearch() {
+  state.history.push(state.searchValue);
+  setLocalCache(SEARCH_HISTORY_KEY, state.history);
+}
+
+function deleteAll() {
+  state.history.length = 0;
+  setLocalCache(SEARCH_HISTORY_KEY, state.history);
+  state.editStatus = false;
+}
+
+function deleteOne(i) {
+  state.history.splice(i, 1);
+  setLocalCache(SEARCH_HISTORY_KEY, state.history);
+}
 
 function hanleBack() {
   switchTab({
