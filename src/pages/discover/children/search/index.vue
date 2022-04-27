@@ -6,12 +6,18 @@
           <nut-icon size="14" name="search2"></nut-icon>
         </template>
         <template #rightout>
-          <div class="search-header__text" v-if="state.searchValue" @click="handleSearch">搜索</div>
+          <div
+            class="search-header__text"
+            v-if="state.searchValue"
+            @click="handleSearch(state.searchValue)"
+          >
+            搜索
+          </div>
           <div class="search-header__text" v-else @click="hanleBack">取消</div>
         </template>
       </nut-searchbar>
     </div>
-    <div class="search-history">
+    <div class="search-history" v-if="!state.searchStatus">
       <div class="search-history__title">
         <div class="search-history__title-text">搜索记录</div>
         <div class="search-history__title-icon">
@@ -31,7 +37,7 @@
       </div>
       <div class="search-history__content">
         <div class="search-history__content-item" v-for="(i, idx) in state.history" :key="idx">
-          {{ i }}
+          <div @click="hanleSearchOne(i)">{{ i }}</div>
           <nut-icon
             v-if="state.editStatus"
             @click="deleteOne(idx)"
@@ -43,24 +49,137 @@
         </div>
       </div>
     </div>
+    <nut-tabs
+      v-model="TabList.tabValue"
+      v-if="state.searchStatus"
+      background="#FFF"
+      title-gutter="15"
+    >
+      <template v-slot:titles>
+        <div
+          class="nut-tabs__titles-item"
+          @click="TabList.tabValue = item.paneKey"
+          :class="{ active: TabList.tabValue == item.paneKey }"
+          :key="item.paneKey"
+          v-for="item in TabList.list"
+        >
+          <span class="nut-tabs__titles-item__text">{{ item.title }}</span>
+          <span class="nut-tabs__titles-item__line"></span>
+        </div>
+      </template>
+      <nut-tabpane pane-key="notice">
+        <nut-empty
+          image="empty"
+          description="无内容"
+          v-if="!loading && DataList.noticeList.length === 0"
+        ></nut-empty>
+        <DiscussCardVue
+          :avatar="i.publisherInfo.avatar"
+          :name="i.publisherInfo.real_name"
+          :description="i.publisherInfo.roles.role_name"
+          :content="i.content"
+          :time="i.createdAt"
+          v-for="i in DataList.noticeList"
+          :key="i.id"
+        >
+          <template #tag>
+            <div class="discuss-footer__tag" v-if="i.grade == 0">
+              <nut-icon
+                font-class-name="iconfont"
+                class-prefix="icon"
+                name="slack-circle-fill"
+                color="#4FC08D"
+              ></nut-icon>
+              <div class="discuss-footer__tag-name">安全</div>
+            </div>
+            <div class="discuss-footer__tag" v-if="i.grade == 1">
+              <nut-icon
+                font-class-name="iconfont"
+                class-prefix="icon"
+                name="slack-circle-fill"
+                color="#F3812E"
+              ></nut-icon>
+              <div class="discuss-footer__tag-name">重要</div>
+            </div>
+            <div class="discuss-footer__tag" v-if="i.grade == 2">
+              <nut-icon
+                font-class-name="iconfont"
+                class-prefix="icon"
+                name="slack-circle-fill"
+                color="#EA290E"
+              ></nut-icon>
+              <div class="discuss-footer__tag-name">紧急</div>
+            </div>
+          </template>
+        </DiscussCardVue>
+      </nut-tabpane>
+      <nut-tabpane pane-key="suggestion">
+        <nut-empty
+          image="empty"
+          description="无内容"
+          v-if="!loading && DataList.suggestionList.length === 0"
+        ></nut-empty>
+        <DiscussCardVue
+          :avatar="i.applicantInfo.avatar"
+          :name="i.applicantInfo.uname"
+          :description="i.applicantInfo.cname"
+          :content="i.content"
+          :time="i.createdAt"
+          :type="i.type"
+          :replyAvat="i.approverInfo?.avatar"
+          :replyName="i.approverInfo?.real_name"
+          :replyDesc="i?.approve_time"
+          :replyCont="i?.description"
+          v-for="i in DataList.suggestionList"
+          :key="i.id"
+        />
+      </nut-tabpane>
+    </nut-tabs>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue';
+import { reactive, ref, watch } from 'vue';
 import { switchTab } from '@tarojs/taro';
 import { SEARCH_HISTORY_KEY } from '/@/enums/cacheEnum';
 import { setLocalCache, getLocalCache } from '/@/hooks/useLocalCache';
+import { TabList, DataList } from './data';
+import DiscussCardVue from '/@/components/DiscussCard.vue';
+import { getNoticeList } from '/@/api/index/information';
+import { getSuggestionList } from '/@/api/serve/suggestion';
+
+const loading = ref(true);
 
 const state = reactive({
   editStatus: false,
+  searchStatus: false,
   searchValue: '',
   history: getLocalCache(SEARCH_HISTORY_KEY) || [],
 });
 
-function handleSearch() {
+watch(
+  () => state.searchValue,
+  (val) => {
+    if (val.length === 0) {
+      state.searchStatus = false;
+    }
+  }
+);
+
+async function handleSearch(keyword) {
+  state.searchStatus = true;
   state.history.push(state.searchValue);
   setLocalCache(SEARCH_HISTORY_KEY, state.history);
+  const notice = await getNoticeList({ keyword });
+  const suggest = await getSuggestionList({ keyword });
+  DataList.noticeList.push(...notice.rows);
+  DataList.suggestionList.push(...suggest.rows);
+  loading.value = false;
+}
+
+function hanleSearchOne(keyword) {
+  handleSearch(keyword);
+  state.searchValue = keyword;
 }
 
 function deleteAll() {
@@ -140,5 +259,17 @@ function hanleBack() {
 <style lang="scss">
 .nut-searchbar__search-input {
   background-color: #f5f5f5 !important;
+}
+.nut-tabs__titles-item.active {
+  font-size: 16px !important;
+  .nut-tabs__titles-item__line {
+    background: #000;
+    width: 10%;
+    bottom: 4%;
+    border-radius: 10px;
+  }
+}
+.nut-tabpane {
+  padding: 0;
 }
 </style>

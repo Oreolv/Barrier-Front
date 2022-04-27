@@ -1,6 +1,7 @@
 export interface BasicPageParams {
-  page: number;
-  pageSize: number;
+  page?: number;
+  pageSize?: number;
+  keyword?: string;
 }
 
 export interface BasicFetchResult<T> {
