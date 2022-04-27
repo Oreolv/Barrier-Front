@@ -161,7 +161,7 @@ watch(
   () => state.searchValue,
   (val) => {
     if (val.length === 0) {
-      state.searchStatus = false;
+      resetSearch();
     }
   }
 );
@@ -185,6 +185,13 @@ async function handleSearch(keyword) {
 function hanleSearchOne(keyword) {
   state.searchValue = keyword;
   handleSearch(keyword);
+}
+
+function resetSearch() {
+  state.searchStatus = false;
+  TabList.tabValue = 'notice';
+  DataList.noticeList.length = 0;
+  DataList.suggestionList.length = 0;
 }
 
 function deleteAll() {
