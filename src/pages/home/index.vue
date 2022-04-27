@@ -105,8 +105,14 @@
         <template #content>
           <div class="tips" v-for="(i, idx) in DataList.tipsList" :key="i.id">
             <div class="tips-content" @click="navigateToTipsInfo(idx)">
-              <div class="tips-content__title">{{ i.title }}</div>
-              <div class="tips-content__info">{{ i.summary }}</div>
+              <div class="tips-content__title">
+                <nut-tag color="#ff4c00">问</nut-tag>
+                {{ i.title }}
+              </div>
+              <div class="tips-content__info">
+                <nut-tag type="success">答</nut-tag>
+                {{ i.summary }}
+              </div>
               <!-- <div class="news-content__source">{{ i?.mediaInfo.name || i.source }}</div> -->
             </div>
           </div>
@@ -291,10 +297,20 @@ const navigateToTipsInfo = (index) => {
   .tips-content {
     padding: 16px;
     border-bottom: 1px #f1f1f1 solid;
+    .nut-tag {
+      margin-right: 8px;
+      font-weight: normal;
+    }
     .tips-content__title {
+      display: flex;
       font-weight: 600;
     }
     .tips-content__info {
+      .nut-tag {
+        margin-right: 5px;
+        margin-bottom: 4px;
+      }
+      display: flex;
       justify-content: space-between;
       margin-top: 8px;
       font-size: 14px;
