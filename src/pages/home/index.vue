@@ -1,5 +1,5 @@
 <template>
-  <SearchBar></SearchBar>
+  <SearchBar @focus="handleFocus"></SearchBar>
   <nut-tabs v-model="TabList.tabValue" background="#FFF" title-gutter="15">
     <template v-slot:titles>
       <div
@@ -206,6 +206,12 @@ const navigateToTipsInfo = (index) => {
     url: `/pages/home/children/news/index?data=${encodeURIComponent(params)}`,
   });
 };
+
+function handleFocus() {
+  navigateTo({
+    url: '/pages/home/children/search/index',
+  });
+}
 </script>
 
 <style lang="scss">
