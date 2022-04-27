@@ -23,7 +23,7 @@ export function getMenuButtonHeight() {
   return `${menuButtonInfo.height}px`;
 }
 export function getSearchBarWidth() {
-  return `${menuButtonInfo.right - menuButtonInfo.width}px`;
+  return `${menuButtonInfo.right - menuButtonInfo.width - 32}px`;
 }
 export function getSearchBarHeight() {
   return `${(menuButtonInfo.top - systemInfo.statusBarHeight!) * 2 + menuButtonInfo.height}px`;
