@@ -156,7 +156,7 @@ export const useUserStore = defineStore('users', {
     },
     checkUserInfoBindingAction() {
       // eslint-disable-next-line eqeqeq
-      if (!this.checkUserInfoBinding) {
+      if (!this.getUserBindingStatus) {
         ShowModal.info({
           title: '提示',
           content: '请前往社区绑定个人详细信息，否则出入小区将会受到限制。',
