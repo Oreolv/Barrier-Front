@@ -12,9 +12,11 @@ import { removeAgency } from '/@/api/serve/agency/index';
 import { removeVisitor } from '/@/api/serve/visitor';
 import { removeAbnormal } from '/@/api/serve/abnormal';
 import { removeMaterial } from '/@/api/serve/material';
+import { HospitalEnum, TemperatureEnum } from '/@/enums/serveEnum';
 
 const riskStatus = ['低风险', '中风险', '高风险'];
 const vehicleColumns = ['驾车', '大巴', '火车', '高铁', '飞机'];
+const ifStatus = ['否', '是'];
 
 export const DetailList = {
   visitor: (params: VisitorItem) => {
@@ -105,23 +107,23 @@ export const DetailList = {
     return [
       {
         title: '今日体温',
-        content: params.temperature,
+        content: TemperatureEnum[params.temperature],
       },
       {
         title: '是否为疑似、确诊患者',
-        content: params.diagnosis,
+        content: ifStatus[params.diagnosis],
       },
       {
         title: '是否接触疑似、确诊患者',
-        content: params.contact,
+        content: ifStatus[params.contact],
       },
       {
         title: '是否有咳嗽、乏力等症状',
-        content: params.symptom,
+        content: ifStatus[params.symptom],
       },
       {
         title: '是否就诊或住院',
-        content: params.hospital,
+        content: HospitalEnum[params.hospital],
       },
     ];
   },
