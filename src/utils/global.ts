@@ -1,6 +1,6 @@
 const config = {
   development: {
-    apiUrl: 'http://192.168.0.233:3001',
+    apiUrl: 'http://192.168.0.233:3001/api',
   },
   production: {
     apiUrl: 'https://barrier.xinyu.ink/api',
