@@ -14,7 +14,7 @@
           <div
             class="tips"
             @click="showBindingModal"
-            v-if="!(userStore.getUserBindingStatus || userStore.getUserStatus)"
+            v-if="!userStore.getUserBindingStatus && userStore.getUserLoginStatus"
           >
             <nut-icon name="ask"></nut-icon>
           </div>
