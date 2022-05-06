@@ -49,11 +49,8 @@ const transform: AxiosTransform = {
     let timeoutMsg = '';
     switch (code) {
       case ResultEnum.TIMEOUT:
-        timeoutMsg = '登录超时,请重新登录!';
-        // TODO: 退出登录
-        // const userStore = useUserStoreWithOut();
-        // userStore.setToken(undefined);
-        // userStore.logout(true);
+        timeoutMsg = '登录过期';
+        userStore.logoutAction();
         break;
       default:
         if (message) {

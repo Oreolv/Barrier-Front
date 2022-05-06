@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia';
+import { switchTab } from '@tarojs/taro';
 import { ResultColorEnum } from '/@/enums/colorEnum';
 import { useWexinLogin } from '/@/hooks/useWexinLogin';
 import { useWexinProfile } from '/@/hooks/useWexinProfile';
@@ -139,6 +140,11 @@ export const useUserStore = defineStore('users', {
       this.setUserStatusAction(null);
       this.setUserProfileAction(null);
       ShowToast.success(msg);
+      setTimeout(() => {
+        switchTab({
+          url: '/pages/mine/index',
+        });
+      }, 1000);
     },
     resetStateAction() {
       this.userInfo = null;
