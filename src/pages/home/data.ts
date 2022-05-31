@@ -11,12 +11,12 @@ interface DataListProps {
 
 export const CovidList = [
   {
-    name: 'localConfirm',
-    des: '本土现有确诊',
-  },
-  {
     name: 'nowConfirm',
     des: '现有确诊',
+  },
+  {
+    name: 'localConfirm',
+    des: '本土现有确诊',
   },
   {
     name: 'confirm',

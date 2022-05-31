@@ -260,7 +260,7 @@ function handleFocus() {
   }
   .china-item {
     margin-top: 4px;
-    flex-basis: 33.3%;
+    flex-basis: 33%;
   }
   .china-item:nth-child(-n + 3) {
     margin: 8px 0;
